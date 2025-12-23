@@ -1,52 +1,51 @@
 import Link from 'next/link';
-import { Star, GitFork, Scale, Circle } from 'lucide-react';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+import { Star, GitFork, TrendingUp, Circle } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber, formatRelativeTime } from '@/lib/utils/formatters';
 
 // ============================================
-// REPO CARD COMPONENT (Server Component)
+// TRENDING CARD - Server Component
 // ============================================
-// Это Server Component потому что:
-// - Нет интерактивности (onClick, useState и т.д.)
-// - Просто отображение данных
-// - Может быть статически сгенерирован
+// Отображает репозиторий с ranking badge
+// Небольшие отличия от обычного RepoCard:
+// - Ranking badge (1, 2, 3...)
+// - Trending indicator
+// - Более компактный layout
 
-type RepoCardProps = {
+type TrendingCardProps = {
     repo: GitHubRepo;
+    rank: number;
 };
 
-export function RepoCard({ repo }: RepoCardProps) {
-    // ============================================
-    // DATA TRANSFORMATION
-    // ============================================
-    // Подготавливаем данные для отображения
-    // Это можно легко unit-тестировать
-
+export function TrendingCard({ repo, rank }: TrendingCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="flex h-full flex-col transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
-            <CardHeader>
-                {/* Repository Name - это Link (Client Component от Next.js) */}
-                {/* Next.js Link - оптимизированная навигация с prefetch */}
-                <CardTitle className="line-clamp-1 text-teal-600">
-                    <Link href={repoUrl} className="hover:underline">
-                        {repo.name}
-                    </Link>
-                </CardTitle>
+        <Card className="relative flex h-full flex-col transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
+            {/* Ranking Badge */}
+            <div className="absolute top-4 right-4">
+                <div
+                    className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold border-2 border-teal-400 ${rank === 1 ? 'bg-yellow-500/60 text-white h-11 w-11 text-xl' : ''} ${rank === 2 ? 'bg-gray-400/60 text-white  h-11 w-11 text-xl' : ''} ${rank === 3 ? 'bg-orange-600/60 text-white h-11 w-11 text-xl' : ''} ${rank > 3 ? 'bg-muted text-muted-foreground' : ''} `}
+                >
+                    {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
+                </div>
+            </div>
 
-                {/* Owner */}
-                <CardDescription className="flex items-center gap-2">
-                    <span className="text-xs">{repo.owner.login}</span>
-                </CardDescription>
+            <CardHeader>
+                {/* Repository Name */}
+                <div className="pr-10">
+                    {/* Отступ справа для ranking badge */}
+                    <Link href={repoUrl} className="hover:underline">
+                        <h3 className="line-clamp-1 text-lg font-semibold text-teal-600">
+                            {repo.name}
+                        </h3>
+                    </Link>
+                    <p className="text-muted-foreground text-sm">
+                        {repo.owner.login}
+                    </p>
+                </div>
             </CardHeader>
 
             <CardContent className="flex flex-1 flex-col justify-between space-y-4">
@@ -57,27 +56,22 @@ export function RepoCard({ repo }: RepoCardProps) {
 
                 {/* Stats */}
                 <div className="text-muted-foreground flex items-center gap-4 text-sm">
-                    {/* Stars */}
                     <div className="flex items-center gap-1">
                         <Star className="h-4 w-4" />
                         <span>{formatNumber(repo.stargazers_count)}</span>
                     </div>
 
-                    {/* Forks */}
                     <div className="flex items-center gap-1">
                         <GitFork className="h-4 w-4" />
                         <span>{formatNumber(repo.forks_count)}</span>
                     </div>
 
-                    {/* License */}
-                    {repo.license && (
-                        <div className="flex items-center gap-1">
-                            <Scale className="h-4 w-4" />
-                            <span className="text-xs">
-                                {repo.license.spdx_id}
-                            </span>
-                        </div>
-                    )}
+                    <div className="flex items-center gap-1">
+                        <TrendingUp className="h-4 w-4 text-green-600" />
+                        <span className="font-medium text-green-600">
+                            Trending
+                        </span>
+                    </div>
                 </div>
 
                 {/* Language & Updated */}

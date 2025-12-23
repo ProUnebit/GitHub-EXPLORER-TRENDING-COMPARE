@@ -42,7 +42,7 @@ export function SearchInput() {
                     placeholder="Search repositories... (e.g., react, vue, nextjs)"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 text-teal-600 font-semibold"
                     disabled={isPending} // Отключаем пока грузится
                 />
             </div>

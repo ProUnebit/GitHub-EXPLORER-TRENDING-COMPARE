@@ -46,7 +46,7 @@ export async function SearchResults({ query, sort }: SearchResultsProps) {
         return (
             <div className="py-12 text-center">
                 <p className="text-muted-foreground text-lg">
-                    No repositories found for &quot;{query}&quot;
+                    No repositories found for &quot;<span className="text-teal-600 font-semibold">{query}</span>&quot;
                 </p>
                 <p className="text-muted-foreground mt-2 text-sm">
                     Try different keywords or check spelling

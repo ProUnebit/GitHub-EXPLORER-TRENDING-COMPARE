@@ -19,7 +19,8 @@ export function LandingPage() {
                 {/* Hero Section */}
                 <div className="space-y-4 text-center">
                     <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                        GitHub Explorer Dashboard
+                        <span className="text-teal-600">GitHub Explorer </span> 
+                        <span>Dashboard</span>
                     </h1>
                     <p className="text-muted-foreground max-w-2xl text-lg">
                         Advanced GitHub repository explorer with analytics,

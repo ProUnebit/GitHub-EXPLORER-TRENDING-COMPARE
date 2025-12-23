@@ -2,7 +2,7 @@
 
 @layer theme {
   :root {
-    --color-background: oklch(100% 0 0);
+    --color-background: oklch(97.078% 0.00744 165.755 / 0.6);
     --color-foreground: oklch(9% 0 0);
 
     --color-card: oklch(100% 0 0);

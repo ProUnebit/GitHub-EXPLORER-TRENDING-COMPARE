@@ -25,7 +25,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
             {/* Repository Name & Owner */}
             <div className="flex items-start justify-between">
                 <div className="space-y-2">
-                    <h1 className="text-4xl font-bold tracking-tight">
+                    <h1 className="text-4xl font-bold tracking-tight text-teal-600">
                         {repo.name}
                     </h1>
                     <div className="text-muted-foreground flex items-center gap-2">
@@ -47,13 +47,13 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
                 </div>
 
                 {/* External Link Button */}
-                <Button asChild variant="outline">
+                <Button asChild variant="outline" className='hover:border-teal-400 hover:bg-slate-50'>
                     <Link
                         href={repo.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <ExternalLink className="mr-2 h-4 w-4" />
+                        <ExternalLink className="mr-2 h-4 w-4 text-teal-600" />
                         View on GitHub
                     </Link>
                 </Button>

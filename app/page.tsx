@@ -39,7 +39,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </div>
 
                 {/* Результаты с Suspense */}
-                <Suspense fallback={<SearchResultsSkeleton />}>
+                <Suspense key={query} fallback={<SearchResultsSkeleton />}>
                     <SearchResults query={query} sort={params.sort} />
                 </Suspense>
             </div>

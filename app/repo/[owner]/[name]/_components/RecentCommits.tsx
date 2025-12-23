@@ -92,7 +92,7 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
 
                                 {/* SHA & Link */}
                                 <div className="mt-2 flex items-center gap-2">
-                                    <code className="bg-muted rounded px-2 py-1 text-xs">
+                                    <code className="bg-muted rounded px-2 py-1 text-xs text-teal-700">
                                         {commit.sha.substring(0, 7)}
                                     </code>
                                     <Link

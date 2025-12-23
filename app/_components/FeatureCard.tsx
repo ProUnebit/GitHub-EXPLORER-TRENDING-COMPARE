@@ -16,7 +16,7 @@ type FeatureCardProps = {
 
 export function FeatureCard({ title, description }: FeatureCardProps) {
   return (
-    <div className="rounded-lg border bg-card p-6 shadow-sm">
+    <div className="rounded-lg border bg-slate-50 p-6 shadow-sm">
       <h3 className="font-semibold mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground">{description}</p>
     </div>
