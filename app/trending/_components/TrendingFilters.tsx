@@ -33,8 +33,20 @@ const POPULAR_LANGUAGES = [
     'C',
     'C++',
     'C#',
+    'F#',
     'PHP',
     'Ruby',
+    'Dart',
+    'Swift',
+    'WebAssembly',
+    'Kotlin',
+    'Scala',
+    'Haskell',
+    'Lua',
+    'Elixir',
+    'Erlang',
+    'Perl',
+    'Shell'
 ];
 
 export function TrendingFilters({
@@ -136,7 +148,7 @@ export function TrendingFilters({
                     )}
                 </div>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 max-w-5xl">
                     {POPULAR_LANGUAGES.map((language) => {
                         const isActive =
                             currentLanguage?.toLowerCase() ===

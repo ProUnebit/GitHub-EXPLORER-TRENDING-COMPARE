@@ -4,15 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber, formatRelativeTime } from '@/lib/utils/formatters';
-
-// ============================================
-// TRENDING CARD - Server Component
-// ============================================
-// Отображает репозиторий с ranking badge
-// Небольшие отличия от обычного RepoCard:
-// - Ranking badge (1, 2, 3...)
-// - Trending indicator
-// - Более компактный layout
+import { getLanguageColor } from '@/lib/constants/language-colors'; // ← Добавь
 
 type TrendingCardProps = {
     repo: GitHubRepo;
@@ -23,38 +15,40 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="relative flex h-full flex-col bg-stone-50 transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
+        <Card className="transition-border transition-bg relative flex h-full flex-col bg-stone-50 transition-shadow hover:border-teal-400 hover:bg-slate-50 hover:shadow-lg">
             {/* Ranking Badge */}
             <div className="absolute top-4 right-4">
                 <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold border-2 border-teal-400 ${rank === 1 ? 'bg-yellow-500/60 text-white h-11 w-11 text-xl' : ''} ${rank === 2 ? 'bg-gray-400/60 text-white  h-11 w-11 text-xl' : ''} ${rank === 3 ? 'bg-orange-600/60 text-white h-11 w-11 text-xl' : ''} ${rank > 3 ? 'bg-muted text-muted-foreground' : ''} `}
+                    className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-teal-400 text-sm font-bold ${rank === 1 ? 'h-11 w-11 bg-yellow-500/60 text-xl text-white' : ''} ${rank === 2 ? 'h-11 w-11 bg-gray-400/60 text-xl text-white' : ''} ${rank === 3 ? 'h-11 w-11 bg-orange-600/60 text-xl text-white' : ''} ${rank > 3 ? 'bg-muted text-muted-foreground' : ''} `}
                 >
-                    {rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
+                    {rank === 1
+                        ? '🥇'
+                        : rank === 2
+                          ? '🥈'
+                          : rank === 3
+                            ? '🥉'
+                            : rank}
                 </div>
             </div>
 
             <CardHeader>
-                {/* Repository Name */}
                 <div className="pr-10">
-                    {/* Отступ справа для ranking badge */}
                     <Link href={repoUrl} className="hover:underline">
                         <h3 className="line-clamp-1 text-lg font-semibold text-teal-600">
                             {repo.name}
                         </h3>
                     </Link>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-muted-foreground text-sm text-stone-500">
                         {repo.owner.login}
                     </p>
                 </div>
             </CardHeader>
 
             <CardContent className="flex flex-1 flex-col justify-between space-y-4">
-                {/* Description */}
                 <p className="text-muted-foreground line-clamp-2 text-sm">
                     {repo.description || 'No description available'}
                 </p>
 
-                {/* Stats */}
                 <div className="text-muted-foreground flex items-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
                         <Star className="h-4 w-4" />
@@ -78,7 +72,12 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
                 <div className="text-muted-foreground flex items-center justify-between text-xs">
                     {repo.language && (
                         <div className="flex items-center gap-1">
-                            <Circle className="h-2 w-2 fill-current" />
+                            <Circle
+                                className="h-4 w-4 fill-current"
+                                style={{
+                                    color: getLanguageColor(repo.language),
+                                }}
+                            />
                             <span>{repo.language}</span>
                         </div>
                     )}

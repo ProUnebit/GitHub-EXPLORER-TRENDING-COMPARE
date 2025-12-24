@@ -36,12 +36,12 @@ export default function RootLayout({
                                 </Link>
                                 <span>|</span>
                                 <Link href="/trending">
-                                    <span className="font-semibold transition-all hover:text-teal-400">
+                                    <span className="font-bold transition-all hover:text-teal-400 text-stone-700">
                                         TRENDING
                                     </span>
                                 </Link>
                                 <Link href="/compare">
-                                    <span className="font-semibold transition-all hover:text-teal-400">
+                                    <span className="font-semibold transition-all hover:text-teal-400 text-stone-700">
                                         COMPARE
                                     </span>
                                 </Link>

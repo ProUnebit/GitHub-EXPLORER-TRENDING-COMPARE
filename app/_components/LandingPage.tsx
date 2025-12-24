@@ -23,12 +23,11 @@ export function LandingPage() {
                         <Telescope className="inline-block mr-2 w-14 h-14" />
                         <span className="text-teal-600">GitHub Explorer</span>
                         &nbsp;
-                        <span>Dashboard</span>
+                        <span className='text-stone-700'>Dashboard</span>
                     </h1>
                     <p className="text-muted-foreground max-w-2xl text-lg">
-                        Advanced GitHub repository explorer with analytics,
-                        comparisons, and insights. Powered by React Server
-                        Components.
+                        Advanced GitHub repository explorer with trendings, analytics,
+                        comparisons, and insights.
                     </p>
                 </div>
 

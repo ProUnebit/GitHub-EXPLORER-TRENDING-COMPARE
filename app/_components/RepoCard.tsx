@@ -10,6 +10,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber, formatRelativeTime } from '@/lib/utils/formatters';
+import { getLanguageColor } from '@/lib/constants/language-colors';
 
 // ============================================
 // REPO CARD COMPONENT (Server Component)
@@ -33,7 +34,7 @@ export function RepoCard({ repo }: RepoCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="flex h-full flex-col bg-stone-50 transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
+        <Card className="transition-border transition-bg flex h-full flex-col bg-stone-50 transition-shadow hover:border-teal-400 hover:bg-slate-50 hover:shadow-lg">
             <CardHeader>
                 {/* Repository Name - это Link (Client Component от Next.js) */}
                 {/* Next.js Link - оптимизированная навигация с prefetch */}
@@ -45,7 +46,7 @@ export function RepoCard({ repo }: RepoCardProps) {
 
                 {/* Owner */}
                 <CardDescription className="flex items-center gap-2">
-                    <span className="text-xs">{repo.owner.login}</span>
+                    <span className="text-xs text-stone-500">{repo.owner.login}</span>
                 </CardDescription>
             </CardHeader>
 
@@ -84,7 +85,12 @@ export function RepoCard({ repo }: RepoCardProps) {
                 <div className="text-muted-foreground flex items-center justify-between text-xs">
                     {repo.language && (
                         <div className="flex items-center gap-1">
-                            <Circle className="h-2 w-2 fill-current" />
+                            <Circle
+                                className="h-4 w-4 fill-current"
+                                style={{
+                                    color: getLanguageColor(repo.language),
+                                }}
+                            />
                             <span>{repo.language}</span>
                         </div>
                     )}
