@@ -33,7 +33,7 @@ export function RepoCard({ repo }: RepoCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="flex h-full flex-col transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
+        <Card className="flex h-full flex-col bg-stone-50 transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
             <CardHeader>
                 {/* Repository Name - это Link (Client Component от Next.js) */}
                 {/* Next.js Link - оптимизированная навигация с prefetch */}

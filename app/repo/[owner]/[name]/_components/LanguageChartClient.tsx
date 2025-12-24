@@ -107,7 +107,7 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto ">
       <Doughnut data={chartData} options={options} />
       
       {/* Language List */}
@@ -121,9 +121,9 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
                   backgroundColor: LANGUAGE_COLORS[lang.name] || '#8b5cf6',
                 }}
               />
-              <span>{lang.name}</span>
+              <span className='text-lg'>{lang.name}</span>
             </div>
-            <span className="text-muted-foreground">
+            <span className="text-muted-foreground text-lg">
               {lang.percentage.toFixed(1)}%
             </span>
           </div>

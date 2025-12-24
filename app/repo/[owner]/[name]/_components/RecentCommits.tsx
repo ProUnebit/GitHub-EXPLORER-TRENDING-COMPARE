@@ -43,9 +43,9 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
     }
 
     return (
-        <Card>
+        <Card className='bg-stone-50'>
             <CardHeader>
-                <CardTitle>Recent Commits</CardTitle>
+                <CardTitle className='text-teal-600'>Recent Commits</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -56,8 +56,8 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
                         >
                             {/* Icon */}
                             <div className="mt-1 shrink-0">
-                                <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
-                                    <GitCommit className="text-muted-foreground h-4 w-4" />
+                                <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-full">
+                                    <GitCommit className="text-muted-foreground h-10 w-10 text-teal-500" />
                                 </div>
                             </div>
 

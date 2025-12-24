@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { TrendingFilters } from './_components/TrendingFilters';
 import { TrendingList } from './_components/TrendingList';
 import { TrendingListSkeleton } from './_components/TrendingListSkeleton';
+import { Flame } from 'lucide-react'
 
 // ============================================
 // METADATA
@@ -42,8 +43,9 @@ export default async function TrendingPage({
             <div className="space-y-8">
                 {/* Header */}
                 <div className="space-y-2">
-                    <h1 className="text-4xl font-bold tracking-tight text-teal-600">
-                        🔥 Trending Repositories
+                    <h1 className="text-4xl font-bold tracking-tight flex items-center">
+                        <Flame className="inline-block mr-2 w-12 h-12 text-orange-600" />
+                        <span className='text-teal-600'>Trending Repositories</span>
                     </h1>
                     <p className="text-muted-foreground text-lg">
                         Discover what the GitHub community is most excited about

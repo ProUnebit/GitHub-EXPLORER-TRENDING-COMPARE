@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Loader2, X, Check } from 'lucide-react';
+import { LoaderPinwheel, X, Check } from 'lucide-react';
 
 // ============================================
 // TRENDING FILTERS - Client Component
@@ -26,9 +26,10 @@ const POPULAR_LANGUAGES = [
     'JavaScript',
     'TypeScript',
     'Python',
-    'Java',
     'Go',
+    'Java',
     'Rust',
+    'Zig',
     'C',
     'C++',
     'C#',
@@ -127,9 +128,9 @@ export function TrendingFilters({
                             size="sm"
                             onClick={() => updateFilters({ language: null })}
                             disabled={isPending}
-                            className="hover:cursor-pointer"
+                            className="hover:cursor-pointer ring ring-orange-500"
                         >
-                            <X className="mr-1 h-3 w-3" />
+                            <X className="mr-1 h-3 w-3 text-orange-500" />
                             Clear
                         </Button>
                     )}
@@ -160,7 +161,7 @@ export function TrendingFilters({
                             >
                                 {/* Icon слева */}
                                 {isLoading ? (
-                                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                                    <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin" />
                                 ) : isActive ? (
                                     <Check className="mr-2 h-3 w-3 text-teal-500" />
                                 ) : null}

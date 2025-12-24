@@ -23,7 +23,7 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="relative flex h-full flex-col transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
+        <Card className="relative flex h-full flex-col bg-stone-50 transition-shadow transition-border transition-bg hover:shadow-lg hover:border-teal-400 hover:bg-slate-50">
             {/* Ranking Badge */}
             <div className="absolute top-4 right-4">
                 <div

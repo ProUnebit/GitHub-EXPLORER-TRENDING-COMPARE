@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, Loader2 } from 'lucide-react';
+import { Search, LoaderPinwheel  } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -34,10 +34,11 @@ export function SearchInput() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-2">
+        <form onSubmit={handleSubmit} className="flex w-full max-w-2xl gap-2 items-center">
             <div className="relative flex-1">
                 <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
+                    autoFocus
                     type="text"
                     placeholder="Search repositories... (e.g., react, vue, nextjs)"
                     value={query}
@@ -47,11 +48,11 @@ export function SearchInput() {
                 />
             </div>
 
-            <Button type="submit" disabled={!query.trim() || isPending}>
+            <Button type="submit" disabled={!query.trim() || isPending} className='hover:cursor-pointer'>
                 {/* Показываем spinner или иконку */}
                 {isPending ? (
                     <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <LoaderPinwheel className="mr-1 h-4 w-4 animate-spin" />
                         Searching...
                     </>
                 ) : (

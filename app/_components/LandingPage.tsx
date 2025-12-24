@@ -1,5 +1,6 @@
 import { SearchInput } from '@/components/SearchInput';
 import { FeatureCard } from './FeatureCard';
+import { Telescope } from 'lucide-react';
 
 // ============================================
 // LANDING PAGE COMPONENT
@@ -18,8 +19,10 @@ export function LandingPage() {
             <div className="flex flex-col items-center justify-center space-y-8">
                 {/* Hero Section */}
                 <div className="space-y-4 text-center">
-                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                        <span className="text-teal-600">GitHub Explorer </span> 
+                    <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl flex items-center justify-center">
+                        <Telescope className="inline-block mr-2 w-14 h-14" />
+                        <span className="text-teal-600">GitHub Explorer</span>
+                        &nbsp;
                         <span>Dashboard</span>
                     </h1>
                     <p className="text-muted-foreground max-w-2xl text-lg">

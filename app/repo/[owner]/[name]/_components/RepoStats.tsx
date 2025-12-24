@@ -47,18 +47,18 @@ export function RepoStats({ repo }: RepoStatsProps) {
     return (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
-                <Card key={stat.label}>
+                <Card key={stat.label} className='bg-slate-50'>
                     <CardContent className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-muted-foreground text-sm font-medium">
+                                <p className="text-muted-foreground text-sm font-medium text-teal-600">
                                     {stat.label}
                                 </p>
-                                <p className="mt-2 text-2xl font-bold">
+                                <p className="mt-2 text-4xl font-bold">
                                     {formatNumber(stat.value)}
                                 </p>
                             </div>
-                            <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                            <stat.icon className={`h-12 w-12 ${stat.color}`} />
                         </div>
                     </CardContent>
                 </Card>

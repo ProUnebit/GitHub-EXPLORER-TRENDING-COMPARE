@@ -50,9 +50,9 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
     }
 
     return (
-        <Card>
+        <Card className='bg-slate-50'>
             <CardHeader>
-                <CardTitle>Top Contributors</CardTitle>
+                <CardTitle className='text-teal-600'>Top Contributors</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -64,7 +64,7 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
                             {/* Contributor Info */}
                             <div className="flex items-center gap-3">
                                 {/* Rank Badge */}
-                                <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold">
+                                <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-stone-500">
                                     {index + 1}
                                 </div>
 

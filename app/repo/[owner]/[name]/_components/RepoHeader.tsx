@@ -70,7 +70,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
             {repo.topics.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                     {repo.topics.map((topic) => (
-                        <Badge key={topic} variant="secondary">
+                        <Badge key={topic} variant="secondary" className='font-semibold bg-stone-600/50 text-white rounded-md'>
                             {topic}
                         </Badge>
                     ))}
