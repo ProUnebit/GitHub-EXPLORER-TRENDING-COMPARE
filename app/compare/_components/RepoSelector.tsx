@@ -2,24 +2,11 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, X, Plus, LoaderPinwheel } from 'lucide-react';
+import { Search, X, Plus, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Lightbulb } from 'lucide-react';
-
-// ============================================
-// REPO SELECTOR - Client Component
-// ============================================
-// Управляет выбором репозиториев для сравнения
-//
-// Функционал:
-// - Input для поиска репо (формат: owner/repo)
-// - Добавление до 4 репо
-// - Удаление репо
-// - Обновление URL при изменении
-//
-// Паттерн: Controlled component with URL sync
+import { toast } from 'sonner';
 
 const MAX_REPOS = 4;
 
@@ -32,9 +19,6 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
     const [input, setInput] = useState('');
     const [isPending, startTransition] = useTransition();
 
-    // ============================================
-    // URL UPDATE HELPER
-    // ============================================
     const updateURL = (repos: string[]) => {
         const params = new URLSearchParams();
         if (repos.length > 0) {
@@ -48,27 +32,41 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
         });
     };
 
-    // ============================================
-    // HANDLERS
-    // ============================================
     const handleAdd = () => {
         const trimmed = input.trim();
 
         // Валидация формата owner/repo
         if (!trimmed.includes('/')) {
-            alert('Format should be: owner/repo (e.g., facebook/react)');
+            toast.error('Invalid format', {
+                description:
+                    'Format should be: owner/repo (e.g., facebook/react)',
+            });
+            return;
+        }
+
+        // Проверка на правильный формат (один слэш)
+        const parts = trimmed.split('/');
+        if (parts.length !== 2 || !parts[0] || !parts[1]) {
+            toast.error('Invalid format', {
+                description:
+                    'Format should be: owner/repo (e.g., facebook/react)',
+            });
             return;
         }
 
         // Проверка на дубликаты
         if (selectedRepos.includes(trimmed)) {
-            alert('Repository already added');
+            toast.warning('Already added', {
+                description: `${trimmed} is already in the comparison list`,
+            });
             return;
         }
 
         // Лимит репозиториев
         if (selectedRepos.length >= MAX_REPOS) {
-            alert(`Maximum ${MAX_REPOS} repositories allowed`);
+            toast.error('Maximum limit reached', {
+                description: `You can compare up to ${MAX_REPOS} repositories`,
+            });
             return;
         }
 
@@ -76,11 +74,20 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
         const newRepos = [...selectedRepos, trimmed];
         updateURL(newRepos);
         setInput('');
+
+        // Успешное добавление
+        toast.success('Repository added', {
+            description: `${trimmed} added to comparison`,
+        });
     };
 
     const handleRemove = (repo: string) => {
         const newRepos = selectedRepos.filter((r) => r !== repo);
         updateURL(newRepos);
+
+        toast.info('Repository removed', {
+            description: `${repo} removed from comparison`,
+        });
     };
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -97,7 +104,6 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                 <div className="relative max-w-xl flex-1">
                     <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <Input
-                        autoFocus
                         type="text"
                         placeholder="Enter repository (e.g., facebook/react)"
                         value={input}
@@ -106,12 +112,11 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                         disabled={
                             isPending || selectedRepos.length >= MAX_REPOS
                         }
-                        className="pl-10 font-semibold text-teal-600"
+                        className="pl-10"
                     />
                 </div>
 
                 <Button
-                    className="bg-slate-50 ring ring-stone-400 hover:cursor-pointer"
                     onClick={handleAdd}
                     disabled={
                         !input.trim() ||
@@ -120,7 +125,7 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                     }
                 >
                     {isPending ? (
-                        <LoaderPinwheel className="h-4 w-4 animate-spin" />
+                        <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
                         <>
                             <Plus className="mr-2 h-4 w-4" />
@@ -143,7 +148,7 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                             <button
                                 onClick={() => handleRemove(repo)}
                                 disabled={isPending}
-                                className="hover:text-destructive ml-2 transition-colors hover:cursor-pointer"
+                                className="hover:text-destructive ml-2 transition-colors"
                             >
                                 <X className="h-3 w-3" />
                             </button>
@@ -158,13 +163,11 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
             )}
 
             {/* Helper text */}
-            <p className="text-muted-foreground flex items-center gap-1 text-xs">
-                <Lightbulb className='w-4 h-4 text-amber-600' />
-                <span>Tip: Try comparing popular frameworks like </span>
+            <p className="text-muted-foreground text-xs">
+                💡 Tip: Try comparing popular frameworks like{' '}
                 <button
                     onClick={() => {
                         setInput('facebook/react');
-                        setTimeout(() => handleAdd(), 100);
                     }}
                     className="text-teal-600 hover:underline"
                 >
@@ -174,21 +177,28 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                 <button
                     onClick={() => {
                         setInput('vuejs/vue');
-                        setTimeout(() => handleAdd(), 100);
                     }}
                     className="text-teal-600 hover:underline"
                 >
                     vuejs/vue
                 </button>
-                , or{' '}
+                ,{' '}
                 <button
                     onClick={() => {
                         setInput('angular/angular');
-                        setTimeout(() => handleAdd(), 100);
                     }}
                     className="text-teal-600 hover:underline"
                 >
                     angular/angular
+                </button>
+                {' '}or{' '}
+                <button
+                    onClick={() => {
+                        setInput('sveltejs/svelte');
+                    }}
+                    className="text-teal-600 hover:underline"
+                >
+                    sveltejs/svelte
                 </button>
             </p>
         </div>

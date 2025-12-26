@@ -47,7 +47,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
                 </div>
 
                 {/* External Link Button */}
-                <Button asChild variant="outline" className='hover:border-teal-400 hover:bg-slate-50'>
+                <Button asChild variant="outline" className='hover:border-teal-400 hover:bg-slate-50 bg-stone-50'>
                     <Link
                         href={repo.html_url}
                         target="_blank"

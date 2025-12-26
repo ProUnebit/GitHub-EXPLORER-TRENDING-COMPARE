@@ -73,7 +73,7 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
                                     href={contributor.html_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:ring-primary relative h-10 w-10 overflow-hidden rounded-full transition-all hover:ring-2"
+                                    className="hover:ring-primary relative h-10 w-10 overflow-hidden rounded-full transition-all hover:ring-4 hover:ring-teal-400"
                                 >
                                     <Image
                                         src={contributor.avatar_url}

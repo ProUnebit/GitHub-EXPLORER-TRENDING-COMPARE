@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 import { Telescope } from 'lucide-react';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,20 +29,20 @@ export default function RootLayout({
                     <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b px-4 backdrop-blur-md">
                         <div className="container mx-auto flex h-14 items-center">
                             <div className="flex gap-6">
-                                <Link href="/" className='flex items-center'>
-                                    <Telescope className="inline-block mr-1 w-4 h-4" />
+                                <Link href="/" className="flex items-center">
+                                    <Telescope className="mr-1 inline-block h-4 w-4" />
                                     <span className="font-bold text-teal-600">
                                         GitHub Explorer
                                     </span>
                                 </Link>
                                 <span>|</span>
                                 <Link href="/trending">
-                                    <span className="font-bold transition-all hover:text-teal-400 text-stone-700">
+                                    <span className="font-bold text-stone-700 transition-all hover:text-teal-400">
                                         TRENDING
                                     </span>
                                 </Link>
                                 <Link href="/compare">
-                                    <span className="font-semibold transition-all hover:text-teal-400 text-stone-700">
+                                    <span className="font-semibold text-stone-700 transition-all hover:text-teal-400">
                                         COMPARE
                                     </span>
                                 </Link>
@@ -58,6 +59,13 @@ export default function RootLayout({
                         </div>
                     </footer>
                 </div>
+
+                <Toaster
+                    position="top-right"
+                    expand={true}
+                    richColors
+                    duration={6000}
+                />
             </body>
         </html>
     );

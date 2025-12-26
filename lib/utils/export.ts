@@ -26,6 +26,7 @@ export function exportComparisonToPDF(data: {
 
     // Title
     doc.setFontSize(20);
+    doc.setTextColor(20, 184, 166); // teal
     doc.text('GitHub Repository Comparison', 20, 20);
 
     // Date
@@ -42,26 +43,28 @@ export function exportComparisonToPDF(data: {
         // Repository Header
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
+        doc.setTextColor(20, 184, 166); // teal
         doc.text(`${index + 1}. ${repo.owner}/${repo.name}`, 20, yPos);
         yPos += 8;
 
         // Metrics
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0);
 
         const metrics = [
-            `⭐ Stars: ${repo.stars.toLocaleString()}`,
-            `🔱 Forks: ${repo.forks.toLocaleString()}`,
-            `👁 Watchers: ${repo.watchers.toLocaleString()}`,
-            `🐛 Open Issues: ${repo.issues.toLocaleString()}`,
-            `👥 Contributors: ${repo.contributors}+`,
-            `💻 Languages: ${repo.languages}`,
-            `📅 Created: ${repo.created}`,
-            `⚖ License: ${repo.license}`,
+            `Stars: ${repo.stars.toLocaleString()}`,
+            `Forks: ${repo.forks.toLocaleString()}`,
+            `Watchers: ${repo.watchers.toLocaleString()}`,
+            `Open Issues: ${repo.issues.toLocaleString()}`,
+            `Contributors: ${repo.contributors}+`,
+            `Languages: ${repo.languages}`,
+            `Created: ${repo.created}`,
+            `License: ${repo.license}`,
         ];
 
         metrics.forEach((metric) => {
-            doc.text(metric, 25, yPos);
+            doc.text(`  - ${metric}`, 25, yPos);
             yPos += 6;
         });
 
@@ -131,25 +134,25 @@ export function exportRepoStatsToPDF(data: {
     doc.setFontSize(14);
     doc.setTextColor(0);
     doc.setFont('helvetica', 'bold');
-    doc.text('📊 Key Metrics', 20, yPos);
+    doc.text('Key Metrics', 20, yPos);
     yPos += 10;
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
 
     const mainMetrics = [
-        `⭐ Stars: ${data.stars.toLocaleString()}`,
-        `🔱 Forks: ${data.forks.toLocaleString()}`,
-        `👁 Watchers: ${data.watchers.toLocaleString()}`,
-        `🐛 Open Issues: ${data.issues.toLocaleString()}`,
-        `💻 Primary Language: ${data.language}`,
-        `⚖ License: ${data.license}`,
-        `📅 Created: ${data.created}`,
-        `🔄 Last Updated: ${data.updated}`,
+        `Stars: ${data.stars.toLocaleString()}`,
+        `Forks: ${data.forks.toLocaleString()}`,
+        `Watchers: ${data.watchers.toLocaleString()}`,
+        `Open Issues: ${data.issues.toLocaleString()}`,
+        `Primary Language: ${data.language}`,
+        `License: ${data.license}`,
+        `Created: ${data.created}`,
+        `Last Updated: ${data.updated}`,
     ];
 
     mainMetrics.forEach((metric) => {
-        doc.text(metric, 25, yPos);
+        doc.text(`  - ${metric}`, 25, yPos);
         yPos += 7;
     });
 
@@ -158,7 +161,7 @@ export function exportRepoStatsToPDF(data: {
     // Top Contributors
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('👥 Top Contributors', 20, yPos);
+    doc.text('Top Contributors', 20, yPos);
     yPos += 10;
 
     doc.setFontSize(10);
@@ -166,7 +169,7 @@ export function exportRepoStatsToPDF(data: {
 
     data.contributors.slice(0, 10).forEach((contributor, index) => {
         doc.text(
-            `${index + 1}. ${contributor.login} - ${contributor.contributions} commits`,
+            `  ${index + 1}. ${contributor.login} - ${contributor.contributions} commits`,
             25,
             yPos
         );
@@ -183,14 +186,14 @@ export function exportRepoStatsToPDF(data: {
 
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('💻 Languages Distribution', 20, yPos);
+    doc.text('Languages Distribution', 20, yPos);
     yPos += 10;
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
 
     data.languages.forEach((lang) => {
-        doc.text(`${lang.name}: ${lang.percentage.toFixed(1)}%`, 25, yPos);
+        doc.text(`  - ${lang.name}: ${lang.percentage.toFixed(1)}%`, 25, yPos);
         yPos += 6;
     });
 

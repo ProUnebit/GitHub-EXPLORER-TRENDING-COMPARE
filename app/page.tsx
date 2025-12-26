@@ -4,6 +4,10 @@ import { SearchResults } from '@/app/_components/SearchResults';
 import { LandingPage } from '@/app/_components/LandingPage';
 import { SearchResultsSkeleton } from '@/app/_components/SearchResultsSkeleton';
 
+// import { db } from '@/db';
+// import { feedback } from '@/db/schema';
+// import FeedbackForm from '@/components/FeedbackForm';
+
 // ============================================
 // PAGE COMPONENT - ТОЛЬКО КОМПОЗИЦИЯ
 // ============================================
@@ -22,10 +26,16 @@ type HomePageProps = {
 export default async function HomePage({ searchParams }: HomePageProps) {
     const params = await searchParams;
     const query = params.q;
+    // const allFeedbacks = await db.select().from(feedback);
 
     // Нет query параметра → Landing Page
     if (!query) {
-        return <LandingPage />;
+        return (
+            <>
+                {/* <FeedbackForm initialItems={allFeedbacks} /> */}
+                <LandingPage />
+            </>
+        );
     }
 
     // Есть query → Search Results

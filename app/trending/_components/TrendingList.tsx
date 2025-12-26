@@ -1,5 +1,6 @@
 import { getTrendingRepositories } from '@/lib/github/api';
 import { TrendingCard } from './TrendingCard';
+import { TrendingExportButton } from './TrendingExportButton';
 
 // ============================================
 // TRENDING LIST - Server Component
@@ -43,6 +44,15 @@ export async function TrendingList({ since, language }: TrendingListProps) {
                     {data.items.length} trending{' '}
                     {language ? `${language} ` : ''}repositories
                 </p>
+            </div>
+
+            {/* Export Button */}
+            <div className="flex justify-end">
+                <TrendingExportButton
+                    repos={data.items}
+                    since={since}
+                    language={language}
+                />
             </div>
 
             {/* Repository List */}

@@ -38,7 +38,7 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
                             {repo.name}
                         </h3>
                     </Link>
-                    <p className="text-muted-foreground text-sm text-stone-500">
+                    <p className="text-muted-foreground text-sm text-stone-00">
                         {repo.owner.login}
                     </p>
                 </div>

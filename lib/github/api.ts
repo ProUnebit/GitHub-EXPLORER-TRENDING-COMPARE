@@ -7,6 +7,7 @@ import type {
     GitHubCommit,
     SearchParams,
 } from './types';
+import { toast } from 'sonner';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
@@ -28,10 +29,13 @@ function getHeaders(): HeadersInit {
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        throw new Error(
-            error.message || `GitHub API error: ${response.statusText}`
-        );
+        const message = error.message || `GitHub API error: ${response.statusText}`;
+
+        toast.error('API Error', {  description: message });
+
+        throw new Error(message);
     }
+    
     return response.json();
 }
 

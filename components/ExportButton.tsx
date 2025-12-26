@@ -9,6 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { toast } from 'sonner';
 
 // ============================================
 // EXPORT BUTTON - Client Component
@@ -44,12 +45,15 @@ export function ExportButton({
         try {
             if (format === 'pdf' && onExportPDF) {
                 await onExportPDF();
+                toast.success('PDF exported successfully!'); // ← Добавь
             } else if (format === 'csv' && onExportCSV) {
                 await onExportCSV();
+                toast.success('CSV exported successfully!'); // ← Добавь
             }
         } catch (error) {
-            console.error('Export failed:', error);
-            alert('Export failed. Please try again.');
+            toast.error(`Export failed`, {
+                description: 'Please try again',
+            });
         } finally {
             setIsExporting(false);
         }
@@ -62,12 +66,12 @@ export function ExportButton({
                 onClick={() => handleExport(formats[0])}
                 disabled={disabled || isExporting}
                 variant="outline"
-                size="sm"
+                className='hover:border-teal-400 hover:bg-slate-50 hover:cursor-pointer bg-stone-50'
             >
                 {isExporting ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                    <Download className="mr-2 h-4 w-4" />
+                    <Download className="mr-2 h-4 w-4 text-teal-600" />
                 )}
                 {label} ({formats[0].toUpperCase()})
             </Button>
