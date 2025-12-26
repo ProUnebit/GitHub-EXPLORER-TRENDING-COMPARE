@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, FileDown, Loader2 } from 'lucide-react';
+import { Download, FileDown, LoaderPinwheel } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -69,7 +69,7 @@ export function ExportButton({
                 className='hover:border-teal-400 hover:bg-slate-50 hover:cursor-pointer bg-stone-50'
             >
                 {isExporting ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin text-teal-600" />
                 ) : (
                     <Download className="mr-2 h-4 w-4 text-teal-600" />
                 )}
@@ -88,9 +88,9 @@ export function ExportButton({
                     size="sm"
                 >
                     {isExporting ? (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin text-teal-600" />
                     ) : (
-                        <FileDown className="mr-2 h-4 w-4" />
+                        <FileDown className="mr-2 h-4 w-4 text-teal-600" />
                     )}
                     {label}
                 </Button>

@@ -173,7 +173,7 @@ export function TrendingFilters({
                             >
                                 {/* Icon слева */}
                                 {isLoading ? (
-                                    <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin" />
+                                    <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600" />
                                 ) : isActive ? (
                                     <Check className="mr-2 h-3 w-3 text-teal-500" />
                                 ) : null}

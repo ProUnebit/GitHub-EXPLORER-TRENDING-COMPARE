@@ -43,7 +43,7 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
     }
 
     return (
-        <Card className='bg-stone-50'>
+        <Card className='bg-slate-50'>
             <CardHeader>
                 <CardTitle className='text-teal-600'>Recent Commits</CardTitle>
             </CardHeader>

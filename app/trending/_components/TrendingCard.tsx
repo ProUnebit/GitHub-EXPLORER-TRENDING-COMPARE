@@ -33,12 +33,12 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
 
             <CardHeader>
                 <div className="pr-10">
-                    <Link href={repoUrl} className="hover:underline">
+                    <Link href={repoUrl} className="hover:underline text-teal-600">
                         <h3 className="line-clamp-1 text-lg font-semibold text-teal-600">
                             {repo.name}
                         </h3>
                     </Link>
-                    <p className="text-muted-foreground text-sm text-stone-00">
+                    <p className="text-muted-foreground text-sm text-stone-500">
                         {repo.owner.login}
                     </p>
                 </div>

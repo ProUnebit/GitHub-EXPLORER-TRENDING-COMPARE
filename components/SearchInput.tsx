@@ -65,7 +65,7 @@ export function SearchInput() {
                 {/* Показываем spinner или иконку */}
                 {isPending ? (
                     <>
-                        <LoaderPinwheel className="mr-1 h-4 w-4 animate-spin" />
+                        <LoaderPinwheel className="mr-1 h-4 w-4 animate-spin text-teal-600" />
                         Searching...
                     </>
                 ) : (

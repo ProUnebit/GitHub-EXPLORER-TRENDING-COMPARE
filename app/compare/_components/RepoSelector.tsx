@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, X, Plus, Loader2 } from 'lucide-react';
+import { Search, X, Plus, LoaderPinwheel } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -104,6 +104,7 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                 <div className="relative max-w-xl flex-1">
                     <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                     <Input
+                        autoFocus
                         type="text"
                         placeholder="Enter repository (e.g., facebook/react)"
                         value={input}
@@ -112,11 +113,12 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                         disabled={
                             isPending || selectedRepos.length >= MAX_REPOS
                         }
-                        className="pl-10"
+                        className="pl-10 font-semibold text-teal-600"
                     />
                 </div>
 
                 <Button
+                    className='hover:cursor-pointer ring ring-stone-300 hover:bg-slate-50 bg-stone-50 hover:ring-teal-400 transition-all'
                     onClick={handleAdd}
                     disabled={
                         !input.trim() ||
@@ -125,10 +127,10 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                     }
                 >
                     {isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <LoaderPinwheel className="h-4 w-4 animate-spin text-teal-600" />
                     ) : (
                         <>
-                            <Plus className="mr-2 h-4 w-4" />
+                            <Plus className="mr-2 h-4 w-4 text-teal-600" />
                             Add
                         </>
                     )}
