@@ -56,15 +56,15 @@ export default async function RepoPage({ params }: PageProps) {
                     Back to search
                 </Link>
 
-                {/* Export Button */}
-                <RepoExportButton
-                    repo={repo}
-                    contributors={contributors}
-                    languages={languages}
-                />
+
             </div>
 
             <RepoHeader repo={repo} />
+            <RepoExportButton
+                repo={repo}
+                contributors={contributors}
+                languages={languages}
+            />
             <RepoStats repo={repo} />
 
             <div className="grid gap-8 lg:grid-cols-2">

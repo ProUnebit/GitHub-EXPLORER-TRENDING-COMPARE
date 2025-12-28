@@ -56,7 +56,7 @@ export function ComparisonExportWrapper({
     return (
         <div className="space-y-8">
             {/* Export Button */}
-            <div className="flex justify-end">
+            <div className="flex justify-start">
                 <ExportButton
                     onExportPDF={handleExportPDF}
                     formats={['pdf']}

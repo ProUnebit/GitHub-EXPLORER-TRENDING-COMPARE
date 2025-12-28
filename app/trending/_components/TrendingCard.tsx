@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { Star, GitFork, TrendingUp, Circle } from 'lucide-react';
+import { Star, GitFork, TrendingUp, Circle, Scale } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber, formatRelativeTime } from '@/lib/utils/formatters';
-import { getLanguageColor } from '@/lib/constants/language-colors'; // ← Добавь
+import { getLanguageColor } from '@/lib/constants/language-colors';
 
 type TrendingCardProps = {
     repo: GitHubRepo;
@@ -15,11 +15,19 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="transition-border transition-bg relative flex h-full flex-col bg-stone-50 transition-shadow hover:border-teal-400 hover:bg-slate-50 hover:shadow-lg">
+        <Card className="bg-card dark:border-teal-900/60 dark:hover:border-teal-400 hover:bg-accent relative flex h-full flex-col transition-all hover:border-teal-400 hover:shadow-lg">
             {/* Ranking Badge */}
             <div className="absolute top-4 right-4">
                 <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-teal-400 text-sm font-bold ${rank === 1 ? 'h-11 w-11 bg-yellow-500/60 text-xl text-white' : ''} ${rank === 2 ? 'h-11 w-11 bg-gray-400/60 text-xl text-white' : ''} ${rank === 3 ? 'h-11 w-11 bg-orange-600/60 text-xl text-white' : ''} ${rank > 3 ? 'bg-muted text-muted-foreground' : ''} `}
+                    className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-bold ${
+                        rank === 1
+                            ? 'h-11 w-11 border-teal-400 bg-yellow-500/80 text-xl text-white dark:border-yellow-500 dark:bg-yellow-600/80'
+                            : rank === 2
+                              ? 'h-11 w-11 border-teal-400 bg-gray-400/80 text-xl text-white dark:border-gray-400 dark:bg-gray-500/80'
+                              : rank === 3
+                                ? 'h-11 w-11 border-teal-400 bg-orange-600/80 text-xl text-white dark:border-orange-600 dark:bg-orange-700/80'
+                                : 'bg-muted text-muted-foreground border-teal-400'
+                    }`}
                 >
                     {rank === 1
                         ? '🥇'
@@ -33,43 +41,55 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
 
             <CardHeader>
                 <div className="pr-10">
-                    <Link href={repoUrl} className="hover:underline text-teal-600">
+                    <Link
+                        href={repoUrl}
+                        className="text-teal-600 hover:underline"
+                    >
                         <h3 className="line-clamp-1 text-lg font-semibold text-teal-600">
                             {repo.name}
                         </h3>
                     </Link>
-                    <p className="text-muted-foreground text-sm text-stone-500">
+                    <p className="text-muted-foreground text-sm">
                         {repo.owner.login}
                     </p>
                 </div>
             </CardHeader>
 
             <CardContent className="flex flex-1 flex-col justify-between space-y-4">
-                <p className="text-muted-foreground line-clamp-2 text-sm">
+                <p className=" line-clamp-2 text-sm">
                     {repo.description || 'No description available'}
                 </p>
 
-                <div className="text-muted-foreground flex items-center gap-4 text-sm">
+                <div className=" flex items-center gap-4 text-sm">
                     <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4" />
+                        <Star className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
                         <span>{formatNumber(repo.stargazers_count)}</span>
                     </div>
 
                     <div className="flex items-center gap-1">
-                        <GitFork className="h-4 w-4" />
+                        <GitFork className="h-4 w-4 text-blue-600 dark:text-blue-40" />
                         <span>{formatNumber(repo.forks_count)}</span>
                     </div>
 
+                    {repo.license && (
+                        <div className="flex items-center gap-1">
+                            <Scale className="h-4 w-4 text-amber-600 dark:text-amber-500" />
+                            <span className="text-xs">
+                                {repo.license.spdx_id}
+                            </span>
+                        </div>
+                    )}
+
                     <div className="flex items-center gap-1">
-                        <TrendingUp className="h-4 w-4 text-green-600" />
-                        <span className="font-medium text-green-600">
+                        <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                        <span className="font-medium text-green-600 dark:text-green-400">
                             Trending
                         </span>
                     </div>
                 </div>
 
                 {/* Language & Updated */}
-                <div className="text-muted-foreground flex items-center justify-between text-xs">
+                <div className="flex items-center justify-between text-xs">
                     {repo.language && (
                         <div className="flex items-center gap-1">
                             <Circle
@@ -81,7 +101,7 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
                             <span>{repo.language}</span>
                         </div>
                     )}
-                    <span>Updated {formatRelativeTime(repo.updated_at)}</span>
+                    <span className='text-muted-foreground'>Updated {formatRelativeTime(repo.updated_at)}</span>
                 </div>
 
                 {/* Topics */}

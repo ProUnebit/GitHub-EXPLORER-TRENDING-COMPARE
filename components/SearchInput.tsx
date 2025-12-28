@@ -60,12 +60,12 @@ export function SearchInput() {
             <Button
                 type="submit"
                 disabled={!query.trim() || isPending}
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer bg-stone-600 dark:bg-amber-300/80"
             >
                 {/* Показываем spinner или иконку */}
                 {isPending ? (
                     <>
-                        <LoaderPinwheel className="mr-1 h-4 w-4 animate-spin text-teal-600" />
+                        <LoaderPinwheel className="mr-1 h-4 w-4 animate-spin text-teal-700" />
                         Searching...
                     </>
                 ) : (

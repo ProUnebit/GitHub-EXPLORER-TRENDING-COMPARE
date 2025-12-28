@@ -10,6 +10,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { toast } from 'sonner';
+import { delay } from '@/lib/utils/async';
 
 // ============================================
 // EXPORT BUTTON - Client Component
@@ -42,20 +43,22 @@ export function ExportButton({
     const handleExport = async (format: 'pdf' | 'csv') => {
         setIsExporting(true);
 
+
         try {
             if (format === 'pdf' && onExportPDF) {
                 await onExportPDF();
-                toast.success('PDF exported successfully!'); // ← Добавь
+                toast.success('PDF exported successfully!'); 
             } else if (format === 'csv' && onExportCSV) {
                 await onExportCSV();
-                toast.success('CSV exported successfully!'); // ← Добавь
+                toast.success('CSV exported successfully!');
             }
+            await delay(1000);
         } catch (error) {
             toast.error(`Export failed`, {
                 description: 'Please try again',
             });
         } finally {
-            setIsExporting(false);
+            setIsExporting(false)
         }
     };
 
@@ -66,12 +69,12 @@ export function ExportButton({
                 onClick={() => handleExport(formats[0])}
                 disabled={disabled || isExporting}
                 variant="outline"
-                className='hover:border-teal-400 hover:bg-slate-50 hover:cursor-pointer bg-stone-50'
+                className='hover:border-teal-400 dark:hover:border-teal-500 dark:hover:bg-accent hover:bg-slate-50 cursor-pointer bg-stone-50 '
             >
                 {isExporting ? (
-                    <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin text-teal-600" />
+                    <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin text-teal-600 dark:text-amber-300/80" />
                 ) : (
-                    <Download className="mr-2 h-4 w-4 text-teal-600" />
+                    <Download className="mr-2 h-4 w-4 text-teal-600 " />
                 )}
                 {label} ({formats[0].toUpperCase()})
             </Button>

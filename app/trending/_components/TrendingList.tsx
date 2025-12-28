@@ -38,22 +38,25 @@ export async function TrendingList({ since, language }: TrendingListProps) {
 
     return (
         <div className="space-y-4">
-            {/* Results count */}
             <div className="flex items-center justify-between">
-                <p className="text-muted-foreground text-sm font-semibold">
-                    {data.items.length} trending{' '}
-                    {language ? `${language} ` : ''}repositories
-                </p>
+                {/* Results count */}
+                <div className="flex items-center justify-between">
+                    <p className="text-muted-foreground text-sm font-semibold">
+                        <span className="text-teal-600 font-bold">{data.items.length}</span> trending{' '}
+                        <span className="text-teal-600 font-bold">{language ? `${language} ` : ''}</span> repositories
+                    </p>
+                </div>
+
+                {/* Export Button */}
+                <div className="flex justify-end">
+                    <TrendingExportButton
+                        repos={data.items}
+                        since={since}
+                        language={language}
+                    />
+                </div>
             </div>
 
-            {/* Export Button */}
-            <div className="flex justify-end">
-                <TrendingExportButton
-                    repos={data.items}
-                    since={since}
-                    language={language}
-                />
-            </div>
 
             {/* Repository List */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

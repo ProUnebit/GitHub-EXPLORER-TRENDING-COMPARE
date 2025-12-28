@@ -9,7 +9,7 @@ import {
     Calendar,
     Scale,
     CodeXml,
-    TableProperties 
+    TableProperties,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -61,7 +61,9 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
     // const issues = repos.map((r) => r.repo.open_issues_count);
     const contributorsCount = repos.map((r) => r.contributors.length);
     const languagesCount = repos.map((r) => Object.keys(r.languages).length);
-    const createdDates = repos.map((r) => new Date(r.repo.created_at).getTime());
+    const createdDates = repos.map((r) =>
+        new Date(r.repo.created_at).getTime()
+    );
 
     // Winners indices
     const starWinner = getWinnerIndex(stars);
@@ -72,7 +74,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
     const oldestIndex = createdDates.indexOf(Math.min(...createdDates));
 
     return (
-        <Card className="bg-slate-50">
+        <Card className="bg-card">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <TableProperties className="mr-2 inline-block h-5 w-5" />
@@ -84,8 +86,8 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b">
-                                <th className="p-4 text-left font-semibold">
-                                    Metric
+                                <th className="p-4 text-left font-semibold text-muted-foreground">
+                                    REPOSITORIES
                                 </th>
                                 {repos.map((repo) => (
                                     <th
@@ -94,7 +96,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
                                     >
                                         <Link
                                             href={`/repo/${repo.owner}/${repo.name}`}
-                                            className="font-bold text-teal-600 hover:underline"
+                                            className="font-bold text-teal-600 hover:underline text-2xl"
                                         >
                                             {repo.name}
                                         </Link>
@@ -233,7 +235,7 @@ function MetricRow({
     }>;
 }) {
     return (
-        <tr className="hover:bg-muted/50 border-b transition-colors">
+        <tr className="hover:bg-accent/30 border-b transition-colors">
             <td className="p-4">
                 <div className="flex items-center gap-2 font-medium">
                     {icon}

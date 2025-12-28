@@ -41,14 +41,14 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                 {/* Header */}
                 <div className="space-y-2">
                     <h1 className="text-4xl font-bold tracking-tight flex items-center">
-                        <ChartBarStacked  className="inline-block mr-2 w-12 h-12 text-purple-800" />
-                        <span className='text-teal-600'>Compare Repositories</span>
+                        <ChartBarStacked  className="inline-block mr-2 w-12 h-12 text-purple-800 dark:text-purple-700" />
+                        <span className='text-teal-600 dark:text-amber-300/80'>Compare Repositories</span>
                     </h1>
                     <p className="text-muted-foreground text-lg">
                         Add repositories to compare them side-by-side
                     </p>
                     <p className="text-sm text-slate-600">
-                        Format: [ <span className='text-teal-600 font-semibold'>Owner</span> ]<span className='text-teal-600 font-semibold'> / </span>[ <span className='text-teal-600 font-semibold'>Repository</span> ]
+                        Format: [ <span className='text-teal-600 font-semibold'>owner</span> ]<span className='text-teal-600 font-semibold'> / </span>[ <span className='text-teal-600 font-semibold'>repository</span> ]
                     </p>
                 </div>
 

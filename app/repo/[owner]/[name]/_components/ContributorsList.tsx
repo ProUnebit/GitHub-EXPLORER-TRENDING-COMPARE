@@ -50,9 +50,9 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
     }
 
     return (
-        <Card className='bg-slate-50'>
+        <Card className="bg-card dark:border-teal-900/60">
             <CardHeader>
-                <CardTitle className='text-teal-600'>Top Contributors</CardTitle>
+                <CardTitle className="text-teal-600 dark:text-amber-300/80">Top Contributors</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -64,7 +64,7 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
                             {/* Contributor Info */}
                             <div className="flex items-center gap-3">
                                 {/* Rank Badge */}
-                                <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-stone-500">
+                                <div className="bg-muted text-muted-foreground flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold">
                                     {index + 1}
                                 </div>
 
@@ -73,7 +73,7 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
                                     href={contributor.html_url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:ring-primary relative h-10 w-10 overflow-hidden rounded-full transition-all hover:ring-4 hover:ring-teal-400"
+                                    className="relative h-10 w-10 overflow-hidden rounded-full transition-all hover:ring-4 hover:ring-teal-400"
                                 >
                                     <Image
                                         src={contributor.avatar_url}

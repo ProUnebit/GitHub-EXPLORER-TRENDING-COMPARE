@@ -63,7 +63,7 @@ export async function SearchResults({ query, sort }: SearchResultsProps) {
             {/* Results Header */}
             <div className="flex items-center justify-between">
                 <p className="text-muted-foreground text-sm font-semibold">
-                    Found {data.total_count.toLocaleString()} repositories
+                    Found <span className="text-teal-600 font-bold">{data.total_count.toLocaleString()}</span> repositories
                 </p>
             </div>
 

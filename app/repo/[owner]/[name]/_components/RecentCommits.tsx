@@ -43,9 +43,9 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
     }
 
     return (
-        <Card className='bg-slate-50'>
+        <Card className='bg-card dark:border-teal-900/60'>
             <CardHeader>
-                <CardTitle className='text-teal-600'>Recent Commits</CardTitle>
+                <CardTitle className='text-teal-600 dark:text-amber-300/80'>Recent Commits</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">
@@ -75,7 +75,7 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
                                             href={commit.author.html_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="hover:text-foreground transition-colors"
+                                            className="hover:text-foreground dark:text-amber-300/70 dark:hover:text-amber-300/90 transition-colors"
                                         >
                                             {commit.commit.author.name}
                                         </Link>

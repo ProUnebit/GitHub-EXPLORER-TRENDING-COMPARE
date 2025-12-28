@@ -17,8 +17,10 @@ import { LoaderPinwheel, X, Check } from 'lucide-react';
 // - Лоудер показывается на НОВОЙ кнопке (не старой)
 // - Более очевидная визуализация активного состояния
 
+type Since = 'daily' | 'weekly' | 'monthly';
+
 type TrendingFiltersProps = {
-    currentSince: 'daily' | 'weekly' | 'monthly';
+    currentSince: Since;
     currentLanguage?: string;
 };
 
@@ -98,7 +100,7 @@ export function TrendingFilters({
                     value={currentSince}
                     onValueChange={(value) =>
                         updateFilters({
-                            since: value as 'daily' | 'weekly' | 'monthly',
+                            since: value as Since,
                         })
                     }
                 >
@@ -106,21 +108,21 @@ export function TrendingFilters({
                         <TabsTrigger
                             value="daily"
                             disabled={isPending}
-                            className="data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
                         >
                             Today
                         </TabsTrigger>
                         <TabsTrigger
                             value="weekly"
                             disabled={isPending}
-                            className="data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
                         >
                             This Week
                         </TabsTrigger>
                         <TabsTrigger
                             value="monthly"
                             disabled={isPending}
-                            className="data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
                         >
                             This Month
                         </TabsTrigger>
@@ -167,13 +169,13 @@ export function TrendingFilters({
                                 disabled={isPending}
                                 className={
                                     isActive
-                                        ? 'ring-2 ring-teal-400 hover:cursor-default transition-all'
+                                        ? 'ring-2 ring-teal-400 hover:cursor-default transition-all bg-accent/80  text-primary hover:bg-accent/80'
                                         : 'ring-2 ring-neutral-100 hover:cursor-pointer transition-all'
                                 }
                             >
                                 {/* Icon слева */}
                                 {isLoading ? (
-                                    <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600" />
+                                    <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600 dark:text-amber-300/80" />
                                 ) : isActive ? (
                                     <Check className="mr-2 h-3 w-3 text-teal-500" />
                                 ) : null}

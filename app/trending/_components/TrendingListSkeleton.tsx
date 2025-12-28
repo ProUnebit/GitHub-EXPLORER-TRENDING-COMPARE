@@ -4,7 +4,10 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 export function TrendingListSkeleton() {
     return (
         <div className="space-y-4">
-            <Skeleton className="h-5 w-48" />
+            <div className="flex items-center justify-between">
+                <Skeleton className="h-5 w-42" />
+                <Skeleton className="h-8 w-38 justify-end" />
+            </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 9 }).map((_, i) => (

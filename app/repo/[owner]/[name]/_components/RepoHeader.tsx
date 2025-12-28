@@ -38,16 +38,16 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
                             {repo.owner.login}
                         </Link>
                         <span>•</span>
-                        <span className="text-sm">
+                        <span className="text-md font-semibold text-slate-500">
                             {repo.visibility === 'public'
-                                ? 'Public'
-                                : 'Private'}
+                                ? 'PUBLIC'
+                                : 'PRIVATE'}
                         </span>
                     </div>
                 </div>
 
                 {/* External Link Button */}
-                <Button asChild variant="outline" className='hover:border-teal-400 hover:bg-slate-50 bg-stone-50'>
+                <Button asChild variant="outline" className='hover:border-teal-400 bg-stone-50 hover:bg-slate-50 dark:hover:border-teal-500 dark:hover:bg-accent'>
                     <Link
                         href={repo.html_url}
                         target="_blank"
@@ -61,7 +61,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
 
             {/* Description */}
             {repo.description && (
-                <p className="text-muted-foreground max-w-3xl text-lg">
+                <p className="max-w-3xl text-lg">
                     {repo.description}
                 </p>
             )}
@@ -82,7 +82,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
                 {/* License */}
                 {repo.license && (
                     <div className="flex items-center gap-2">
-                        <Scale className="h-4 w-4" />
+                        <Scale className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />
                         <span>{repo.license.name}</span>
                     </div>
                 )}

@@ -2,7 +2,7 @@
 // FEATURE CARD - ПРОСТОЙ UI КОМПОНЕНТ
 // ============================================
 // Переиспользуемый UI блок
-// 
+//
 // Почему отдельный файл:
 // - Single Responsibility (одна задача)
 // - Легко стилизовать
@@ -10,15 +10,15 @@
 // - Легко unit-тестировать
 
 type FeatureCardProps = {
-  title: string;
-  description: string;
+    title: string;
+    description: string;
 };
 
 export function FeatureCard({ title, description }: FeatureCardProps) {
-  return (
-    <div className="rounded-lg border bg-slate-50 p-6 shadow-sm">
-      <h3 className="font-semibold mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
-    </div>
-  );
+    return (
+        <div className="bg-card dark:border-teal-900/60 rounded-lg border p-6 shadow-sm">
+            <h3 className="mb-2 font-semibold">{title}</h3>
+            <p className="text-muted-foreground text-sm">{description}</p>
+        </div>
+    );
 }

@@ -45,7 +45,7 @@ export default async function TrendingPage({
                 <div className="space-y-2">
                     <h1 className="text-4xl font-bold tracking-tight flex items-center">
                         <Flame className="inline-block mr-2 w-12 h-12 text-orange-600" />
-                        <span className='text-teal-600'>Trending Repositories</span>
+                        <span className='text-teal-600 dark:text-amber-300/80'>Trending Repositories</span>
                     </h1>
                     <p className="text-muted-foreground text-lg">
                         Discover what the GitHub community is most excited about

@@ -1,11 +1,38 @@
 @import 'tailwindcss';
 
-@layer theme {
+/* ============================================
+   THEME CONFIGURATION - Tailwind v4 способ
+   ============================================ */
+@theme {
+  /* Цвета через CSS переменные */
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-card: var(--color-card);
+  --color-card-foreground: var(--color-card-foreground);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+  --color-destructive: var(--color-destructive);
+  --color-destructive-foreground: var(--color-destructive-foreground);
+  --color-border: var(--color-border);
+  --color-input: var(--color-input);
+  --color-ring: var(--color-ring);
+}
+
+/* Dark mode variant */
+@variant dark (&:is(.dark *));
+
+@layer base {
   :root {
-    --color-background: oklch(97.078% 0.00744 165.755 / 0.6);
+    --color-background: #f0fdfa;
     --color-foreground: oklch(9% 0 0);
 
-    --color-card: oklch(100% 0 0);
+    --color-card: #fafaf9;
     --color-card-foreground: oklch(9% 0 0);
 
     --color-primary: oklch(11% 0 0);
@@ -14,7 +41,7 @@
     --color-secondary: oklch(96% 0 0);
     --color-secondary-foreground: oklch(11% 0 0);
 
-    --color-muted: oklch(96% 0 0);
+    --color-muted: #f8fafc;
     --color-muted-foreground: oklch(47% 0 0);
 
     --color-accent: oklch(96% 0 0);
@@ -25,16 +52,16 @@
 
     --color-border: oklch(91% 0 0);
     --color-input: oklch(91% 0 0);
-    --color-ring: oklch(5% 0 0);
+    --color-ring: #009689;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --color-background: oklch(9% 0 0);
+    --color-background: #071a15;
     --color-foreground: oklch(98% 0 0);
 
-    --color-card: oklch(9% 0 0);
+    --color-card: oklch(23.392% 0.04142 184.111);
     --color-card-foreground: oklch(98% 0 0);
 
     --color-primary: oklch(98% 0 0);
@@ -43,22 +70,20 @@
     --color-secondary: oklch(18% 0 0);
     --color-secondary-foreground: oklch(98% 0 0);
 
-    --color-muted: oklch(18% 0 0);
+    --color-muted: oklch(20% 0 0);
     --color-muted-foreground: oklch(65% 0 0);
 
-    --color-accent: oklch(18% 0 0);
+    --color-accent: oklch(29.815% 0.04769 184.093 / 0.8);
     --color-accent-foreground: oklch(98% 0 0);
 
     --color-destructive: oklch(31% 0.2 0);
     --color-destructive-foreground: oklch(98% 0 0);
 
-    --color-border: oklch(18% 0 0);
-    --color-input: oklch(18% 0 0);
-    --color-ring: oklch(84% 0 0);
+    --color-border: oklch(19.125% 0.00002 271.152);
+    --color-input: oklch(0% 0 0);
+    --color-ring: #009689;
   }
-}
 
-@layer base {
   * {
     border-color: var(--color-border);
   }

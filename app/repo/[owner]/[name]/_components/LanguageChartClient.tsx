@@ -8,7 +8,8 @@ import {
     Legend,
     ChartOptions,
 } from 'chart.js';
-import { getLanguageColor } from '@/lib/constants/language-colors'; // ← Добавь
+import { getLanguageColor } from '@/lib/constants/language-colors';
+import { Github } from 'lucide-react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,7 +34,7 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
                 backgroundColor: topLanguages.map((l) =>
                     getLanguageColor(l.name)
                 ),
-                borderWidth: 2,
+                borderWidth: 1,
                 borderColor: '#ffffff',
             },
         ],
@@ -44,20 +45,21 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
         maintainAspectRatio: true,
         plugins: {
             legend: {
+                display: false,
                 position: 'bottom',
                 labels: {
-                    padding: 15,
+                    padding: 20,
                     font: {
-                        size: 14,
+                        size: 0,
                     },
                 },
             },
             tooltip: {
                 callbacks: {
                     label: (context) => {
-                        const label = context.label || '';
+                        // const label = context.label + '!!!' || '';
                         const value = context.parsed;
-                        return `${label}: ${value.toFixed(1)}%`;
+                        return `  ${value.toFixed(1)}%`;
                     },
                 },
             },
@@ -66,15 +68,18 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
 
     return (
         <div className="mx-auto w-full max-w-md">
+          <div className='relative'>
+            <Github className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 text-stone-400 opacity-40' />
             <Doughnut data={chartData} options={options} />
+          </div>
 
             <div className="mt-6 space-y-2">
                 {topLanguages.map((lang) => (
                     <div
                         key={lang.name}
-                        className="flex items-center justify-between text-sm"
+                        className="flex items-center justify-between"
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3">
                             <div
                                 className="h-4 w-4 rounded-full"
                                 style={{
@@ -83,9 +88,9 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
                                     ),
                                 }}
                             />
-                            <span className="text-lg">{lang.name}</span>
+                            <span className="text-md">{lang.name}</span>
                         </div>
-                        <span className="text-muted-foreground text-lg">
+                        <span className="text-muted-foreground text-md">
                             {lang.percentage.toFixed(1)}%
                         </span>
                     </div>

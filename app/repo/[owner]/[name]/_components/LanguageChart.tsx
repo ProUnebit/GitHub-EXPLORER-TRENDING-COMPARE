@@ -45,9 +45,9 @@ export async function LanguageChart({ owner, name }: LanguageChartProps) {
 
     // Передаем данные в Client Component
     return (
-        <Card className='bg-slate-50'>
+        <Card className='bg-card dark:border-teal-900/60'>
             <CardHeader>
-                <CardTitle className='text-teal-600'>Languages</CardTitle>
+                <CardTitle className='text-teal-600 dark:text-amber-300/80'>Languages</CardTitle>
             </CardHeader>
             <CardContent>
                 <LanguageChartClient languages={languageData} />
