@@ -2,5 +2,6 @@
 ### GitHub EXPLORER 🔎 | TRENDING 📊 | COMPARE ⚖️
 ###### Next.js v16 • Drizzle • TypeScript • Chart.js • GitHub API
 ---
-![Demo](https://github.com/user-attachments/assets/fedfd6be-4f11-48d8-bd4d-ee747b93fab5)
+![Demo](https://github.com/user-attachments/assets/95a33b01-9bdf-4fdf-b1d7-0dabab617cc4)
+
 
