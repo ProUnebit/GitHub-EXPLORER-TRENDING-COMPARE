@@ -216,7 +216,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="pb-5 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="pb-5 grid gap-10 md:grid-cols-2 lg:grid-cols-4 pl-8 pr-8">
                         {repos.map((repo) => {
                             const total = Object.values(repo.languages).reduce(
                                 (sum: number, bytes: any) => sum + bytes,
