@@ -5,6 +5,7 @@ import { useState, useTransition } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { LoaderPinwheel, X, Check } from 'lucide-react';
+import { getLanguageColor } from '@/lib/constants/language-colors';
 
 // ============================================
 // TRENDING FILTERS - Client Component
@@ -17,7 +18,7 @@ import { LoaderPinwheel, X, Check } from 'lucide-react';
 // - Лоудер показывается на НОВОЙ кнопке (не старой)
 // - Более очевидная визуализация активного состояния
 
-type Since = 'daily' | 'weekly' | 'monthly';
+type Since = 'daily' | 'weekly' | 'monthly' | 'year';
 
 type TrendingFiltersProps = {
     currentSince: Since;
@@ -32,6 +33,7 @@ const POPULAR_LANGUAGES = [
     'Java',
     'Rust',
     'Zig',
+    'R',
     'C',
     'C++',
     'C#',
@@ -104,27 +106,34 @@ export function TrendingFilters({
                         })
                     }
                 >
-                    <TabsList className="grid w-full max-w-md grid-cols-3">
+                    <TabsList className="grid w-full max-w-lg grid-cols-4  ">
                         <TabsTrigger
                             value="daily"
                             disabled={isPending}
-                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md cursor-pointer"
                         >
                             Today
                         </TabsTrigger>
                         <TabsTrigger
                             value="weekly"
                             disabled={isPending}
-                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md cursor-pointer"
                         >
                             This Week
                         </TabsTrigger>
                         <TabsTrigger
                             value="monthly"
                             disabled={isPending}
-                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md hover:cursor-pointer"
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md cursor-pointer"
                         >
                             This Month
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="year"
+                            disabled={isPending}
+                            className="dark:data-[state=active]:bg-accent/80 data-[state=active]:ring-2 ring-teal-400 text-md cursor-pointer"
+                        >
+                            This Year
                         </TabsTrigger>
                     </TabsList>
                 </Tabs>
@@ -150,7 +159,7 @@ export function TrendingFilters({
                     )}
                 </div>
 
-                <div className="flex flex-wrap gap-2 max-w-5xl">
+                <div className="flex flex-wrap gap-3 max-w-6xl">
                     {POPULAR_LANGUAGES.map((language) => {
                         const isActive =
                             currentLanguage?.toLowerCase() ===
@@ -159,6 +168,8 @@ export function TrendingFilters({
                             isPending &&
                             pendingLanguage?.toLowerCase() ===
                                 language.toLowerCase();
+                        // const colorLanguage = getLanguageColor(language);
+                        const backgroundColorLanguage = `rgb(from ${getLanguageColor(language)} r g b / 0.25)`;
 
                         return (
                             <Button
@@ -169,9 +180,10 @@ export function TrendingFilters({
                                 disabled={isPending}
                                 className={
                                     isActive
-                                        ? 'ring-2 ring-teal-400 hover:cursor-default transition-all bg-accent/80  text-primary hover:bg-accent/80'
-                                        : 'ring-2 ring-neutral-100 hover:cursor-pointer transition-all'
+                                        ? 'ring-2 ring-teal-400 hover:cursor-default transition-all bg-accent/90!  text-primary hover:bg-accent/80'
+                                        : 'ring-2 ring-neutral-300 hover:cursor-pointer transition-all'
                                 }
+                                style={{ backgroundColor: backgroundColorLanguage }}
                             >
                                 {/* Icon слева */}
                                 {isLoading ? (

@@ -33,7 +33,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
                             href={repo.owner.html_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:text-foreground transition-colors"
+                            className="hover:text-foreground transition-colors dark:text-amber-300/80 dark:hover:text-amber-300"
                         >
                             {repo.owner.login}
                         </Link>

@@ -29,13 +29,14 @@ function getHeaders(): HeadersInit {
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
         const error = await response.json().catch(() => ({}));
-        const message = error.message || `GitHub API error: ${response.statusText}`;
+        const message =
+            error.message || `GitHub API error: ${response.statusText}`;
 
-        toast.error('API Error', {  description: message });
+        toast.error('API Error', { description: message });
 
         throw new Error(message);
     }
-    
+
     return response.json();
 }
 
@@ -159,18 +160,22 @@ export async function getCommits(
  */
 export async function getTrendingRepositories(
     language?: string,
-    since: 'daily' | 'weekly' | 'monthly' = 'weekly'
+    since: 'daily' | 'weekly' | 'monthly' | 'year' = 'weekly'
 ): Promise<GitHubSearchResponse> {
     const date = new Date();
 
     // Вычисляем дату для фильтра
-    if (since === 'daily') {
-        date.setDate(date.getDate() - 1);
-    } else if (since === 'weekly') {
-        date.setDate(date.getDate() - 7);
-    } else {
-        date.setMonth(date.getMonth() - 1);
-    }
+    // Описываем мапу трансформаций даты
+    // Record<typeof since, ...> гарантирует, что мы не забудем обработать все типы периода
+    const dateAdjusters: Record<typeof since, (d: Date) => void> = {
+        daily: (d) => d.setDate(d.getDate() - 1),
+        weekly: (d) => d.setDate(d.getDate() - 7),
+        monthly: (d) => d.setMonth(d.getMonth() - 1),
+        year: (d) => d.setFullYear(d.getFullYear() - 1),
+    };
+
+    // Вызываем нужный метод из мапы
+    dateAdjusters[since](date);
 
     const dateStr = date.toISOString().split('T')[0];
 
@@ -186,4 +191,57 @@ export async function getTrendingRepositories(
         order: 'desc',
         per_page: 30,
     });
+}
+
+/**
+ * CLIENT-SIDE: Поиск репозиториев для infinite scroll
+ * Используется в Client Components для подгрузки следующих страниц
+ *
+ * Отличия от searchRepositories:
+ * - Без next.revalidate (не работает на клиенте)
+ * - Без server-side кеширования
+ * - Для динамической подгрузки данных
+ */
+export async function searchRepositoriesClient(
+    params: SearchParams
+): Promise<GitHubSearchResponse> {
+    const {
+        q,
+        sort = 'stars',
+        order = 'desc',
+        per_page = 30,
+        page = 1,
+    } = params;
+
+    const searchParams = new URLSearchParams({
+        q,
+        sort,
+        order,
+        per_page: per_page.toString(),
+        page: page.toString(),
+    });
+
+    const headers: HeadersInit = {
+        Accept: 'application/vnd.github.v3+json',
+    };
+
+    // На клиенте используем обычный fetch без Next.js кеширования
+    const response = await fetch(
+        `${GITHUB_API_BASE}/search/repositories?${searchParams}`,
+        {
+            headers,
+            cache: 'no-store', // Всегда свежие данные
+        }
+    );
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        const message =
+            error.message || `GitHub API error: ${response.statusText}`;
+
+        // Toast будет показан в компоненте, здесь только throw
+        throw new Error(message);
+    }
+
+    return response.json();
 }

@@ -52,7 +52,7 @@ export const LANGUAGE_COLORS: Record<string, string> = {
 
     // Shell & scripting
     Shell: '#89e051',
-    Lua: '#000080',
+    Lua: '#2134dd',
     Perl: '#0298c3',
 
     // JVM languages

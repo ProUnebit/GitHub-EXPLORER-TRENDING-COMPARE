@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 
-const MAX_REPOS = 4;
+const MAX_REPOS = 8;
 
 type RepoSelectorProps = {
     selectedRepos: string[];
@@ -118,7 +118,7 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                 </div>
 
                 <Button
-                    className='hover:cursor-pointer ring ring-stone-300 hover:bg-slate-50 bg-stone-50 hover:ring-teal-400 transition-all'
+                    className='bg-stone-600 cursor-pointer dark:bg-amber-300/80'
                     onClick={handleAdd}
                     disabled={
                         !input.trim() ||
@@ -126,14 +126,14 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                         selectedRepos.length >= MAX_REPOS
                     }
                 >
-                    {isPending ? (
-                        <LoaderPinwheel className="h-4 w-4 animate-spin text-teal-600" />
-                    ) : (
-                        <>
-                            <Plus className="mr-2 h-4 w-4 text-teal-600" />
-                            Add
-                        </>
-                    )}
+                    <>
+                        {
+                            isPending 
+                                ? <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin text-teal-700" />
+                                : <Plus className="mr-2 h-4 w-4" />
+                        }
+                        Add
+                    </>
                 </Button>
             </div>
 
@@ -152,13 +152,13 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                                 disabled={isPending}
                                 className="hover:text-destructive ml-2 transition-colors"
                             >
-                                <X className="h-3 w-3" />
+                                <X className="h-3 w-3 transition-colors hover:text-orange-500 cursor-pointer" />
                             </button>
                         </Badge>
                     ))}
 
                     {/* Counter */}
-                    <Badge variant="outline" className="px-3 py-2 text-sm">
+                    <Badge variant="outline" className="px-3 py-2 text-sm dark:text-amber-300/80">
                         {selectedRepos.length} / {MAX_REPOS}
                     </Badge>
                 </div>

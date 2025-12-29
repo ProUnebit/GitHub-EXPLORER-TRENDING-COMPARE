@@ -4,38 +4,23 @@ import { SearchResults } from '@/app/_components/SearchResults';
 import { LandingPage } from '@/app/_components/LandingPage';
 import { SearchResultsSkeleton } from '@/app/_components/SearchResultsSkeleton';
 
-// import { db } from '@/db';
-// import { feedback } from '@/db/schema';
-// import FeedbackForm from '@/components/FeedbackForm';
-
-// ============================================
-// PAGE COMPONENT - ТОЛЬКО КОМПОЗИЦИЯ
-// ============================================
-// Задача: определить что показать на основе URL
-// Никакой бизнес-логики! Только композиция.
-//
-// Почему так:
-// - page.tsx = entry point, должен быть читаемым
-// - Бизнес-логика в отдельных компонентах
-// - Легко понять что делает страница с первого взгляда
-
 type HomePageProps = {
-    searchParams: Promise<{ q?: string; sort?: string; page?: string }>;
+    searchParams: Promise<{
+        q?: string;
+        sort?: string;
+        page?: string;
+        language?: string; // ← Новый параметр
+        minStars?: string; // ← Новый параметр
+    }>;
 };
 
 export default async function HomePage({ searchParams }: HomePageProps) {
     const params = await searchParams;
     const query = params.q;
-    // const allFeedbacks = await db.select().from(feedback);
 
     // Нет query параметра → Landing Page
     if (!query) {
-        return (
-            <>
-                {/* <FeedbackForm initialItems={allFeedbacks} /> */}
-                <LandingPage />
-            </>
-        );
+        return <LandingPage />;
     }
 
     // Есть query → Search Results
@@ -49,8 +34,16 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                 </div>
 
                 {/* Результаты с Suspense */}
-                <Suspense key={query} fallback={<SearchResultsSkeleton />}>
-                    <SearchResults query={query} sort={params.sort} />
+                <Suspense
+                    key={query + params.language + params.minStars}
+                    fallback={<SearchResultsSkeleton />}
+                >
+                    <SearchResults
+                        query={query}
+                        sort={params.sort}
+                        language={params.language} // ← Передаём фильтр
+                        minStars={params.minStars} // ← Передаём фильтр
+                    />
                 </Suspense>
             </div>
         </div>

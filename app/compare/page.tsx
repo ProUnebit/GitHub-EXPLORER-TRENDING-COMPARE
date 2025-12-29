@@ -66,7 +66,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                 ) : (
                     <div className="rounded-lg border-2 border-dashed py-16 text-center">
                         <p className="text-muted-foreground text-lg">
-                            Add at least 2 repositories to start comparison
+                            Add at least 2 repositories or more to start comparison
                         </p>
                         <p className="text-muted-foreground mt-2 text-sm">
                             Use the search above to find repositories
