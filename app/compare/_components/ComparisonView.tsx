@@ -63,7 +63,7 @@ export async function ComparisonView({ repos }: ComparisonViewProps) {
 
         return (
             <div className="space-y-6">
-                <div className="bg-destructive/10 border-destructive/20 rounded-lg border p-4">
+                <div className="bg-destructive/10 border-destructive/40 rounded-lg border p-4">
                     <p className="text-destructive text-sm">
                         Failed to load: {failed.join(', ')}
                     </p>

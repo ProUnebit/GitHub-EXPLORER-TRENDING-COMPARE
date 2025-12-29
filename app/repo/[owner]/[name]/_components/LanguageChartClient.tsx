@@ -57,7 +57,6 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
             tooltip: {
                 callbacks: {
                     label: (context) => {
-                        // const label = context.label + '!!!' || '';
                         const value = context.parsed;
                         return `  ${value.toFixed(1)}%`;
                     },

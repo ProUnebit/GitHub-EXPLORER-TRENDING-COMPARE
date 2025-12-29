@@ -25,7 +25,7 @@ type RecentCommitsProps = {
 };
 
 export async function RecentCommits({ owner, name }: RecentCommitsProps) {
-    const commits = await getCommits(owner, name, 10);
+    const commits = await getCommits(owner, name, 15);
 
     if (commits.length === 0) {
         return (

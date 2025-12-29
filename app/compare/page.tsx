@@ -47,7 +47,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                     <p className="text-muted-foreground text-lg">
                         Add repositories to compare them side-by-side
                     </p>
-                    <p className="text-sm text-slate-600">
+                    <p className="text-sm text-slate-500">
                         Format: [ <span className='text-teal-600 font-semibold'>owner</span> ]<span className='text-teal-600 font-semibold'> / </span>[ <span className='text-teal-600 font-semibold'>repository</span> ]
                     </p>
                 </div>

@@ -1,8 +1,5 @@
 @import 'tailwindcss';
 
-/* ============================================
-   THEME CONFIGURATION - Tailwind v4 способ
-   ============================================ */
 @theme {
   /* Цвета через CSS переменные */
   --color-background: var(--color-background);
@@ -84,7 +81,7 @@
     --color-accent: oklch(29.815% 0.04769 184.093 / 0.8);
     --color-accent-foreground: oklch(98% 0 0);
 
-    --color-destructive: oklch(31% 0.2 0);
+    --color-destructive: oklch(60% 0.2 0);
     --color-destructive-foreground: oklch(98% 0 0);
 
     --color-border: oklch(19.125% 0.00002 271.152);
@@ -103,4 +100,24 @@
       'rlig'1,
       'calt'1;
   }
+
+
+}
+
+.cut-corners {
+  --cut-size: 25px;
+
+  clip-path: polygon(0 0,
+      /* Top-left (не трогаем) */
+      calc(100% - var(--cut-size)) 0,
+      /* Top-right (начало среза) */
+      100% var(--cut-size),
+      /* Top-right (конец среза) */
+      100% 100%,
+      /* Bottom-right (не трогаем) */
+      var(--cut-size) 100%,
+      /* Bottom-left (начало среза) */
+      0 calc(100% - var(--cut-size))
+      /* Bottom-left (конец среза) */
+    );
 }

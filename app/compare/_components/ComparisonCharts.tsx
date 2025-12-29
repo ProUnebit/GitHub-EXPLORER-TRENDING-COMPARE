@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, ChartColumnIncreasing, CodeXml } from 'lucide-react';
+import { getLanguageColor } from '@/lib/constants/language-colors';
 
 // ============================================
 // CHART.JS SETUP
@@ -135,6 +136,12 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    // color: '#FFFFFF',
+                    font: {
+                        size: 14,
+                    },
+                },
             },
             tooltip: {
                 callbacks: {
@@ -173,7 +180,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
     return (
         <div className="grid gap-6 lg:grid-cols-2">
             {/* Main Metrics Chart */}
-            <Card className="bg-slate-50">
+            <Card className="bg-card">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <ChartColumnIncreasing className="mr-2 inline-block h-5 w-5" />
@@ -186,7 +193,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             </Card>
 
             {/* Activity Chart */}
-            <Card className="bg-slate-50">
+            <Card className="bg-card">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <Users className="mr-2 inline-block h-5 w-5" />
@@ -199,7 +206,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             </Card>
 
             {/* Languages Breakdown */}
-            <Card className="bg-slate-50 lg:col-span-2">
+            <Card className="bg-card lg:col-span-2">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <CodeXml className="mr-2 inline-block h-5 w-5" />
@@ -209,8 +216,8 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                        {repos.map((repo, index) => {
+                    <div className="pb-5 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+                        {repos.map((repo) => {
                             const total = Object.values(repo.languages).reduce(
                                 (sum: number, bytes: any) => sum + bytes,
                                 0
@@ -231,17 +238,19 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
 
                             return (
                                 <div key={repo.fullName} className="space-y-3">
-                                    <h4 className="font-bold text-teal-600">
+                                    <h4 className="text-lg font-bold text-teal-600">
                                         {repo.name}
                                     </h4>
-                                    <div className="space-y-2">
+                                    <div className="space-y-4">
                                         {topLanguages.map((lang) => (
                                             <div
                                                 key={lang.name}
                                                 className="space-y-1"
                                             >
                                                 <div className="flex justify-between text-sm">
-                                                    <span>{lang.name}</span>
+                                                    <span >
+                                                        {lang.name}
+                                                    </span>
                                                     <span className="text-muted-foreground">
                                                         {lang.percentage}%
                                                     </span>
@@ -251,6 +260,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
                                                         className="h-full bg-teal-500 transition-all"
                                                         style={{
                                                             width: `${lang.percentage}%`,
+                                                            backgroundColor: getLanguageColor(lang.name)
                                                         }}
                                                     />
                                                 </div>

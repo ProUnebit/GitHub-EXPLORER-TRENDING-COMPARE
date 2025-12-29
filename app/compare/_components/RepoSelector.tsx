@@ -163,7 +163,7 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
                     </Badge>
                 </div>
             )}
-
+            
             {/* Helper text */}
             <p className="text-muted-foreground text-xs">
                 💡 Tip: Try comparing popular frameworks like{' '}
