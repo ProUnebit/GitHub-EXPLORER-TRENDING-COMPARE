@@ -159,7 +159,7 @@ export function TrendingFilters({
                     )}
                 </div>
 
-                <div className="flex flex-wrap gap-3 max-w-6xl">
+                <div className="flex flex-wrap gap-3 max-w-7xl">
                     {POPULAR_LANGUAGES.map((language) => {
                         const isActive =
                             currentLanguage?.toLowerCase() ===
@@ -189,7 +189,7 @@ export function TrendingFilters({
                                 {isLoading ? (
                                     <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600 dark:text-amber-300/80" />
                                 ) : isActive ? (
-                                    <Check className="mr-2 h-3 w-3 text-teal-500" />
+                                    <Check className="mr-2 h-3 w-3 text-teal-300" />
                                 ) : null}
                                 {language}
                             </Button>
