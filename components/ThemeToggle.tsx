@@ -3,7 +3,7 @@
 import { Moon, Sun, MonitorCog, LoaderPinwheel } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { JSX, useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { ThemeOption } from '@/lib/constants/theme';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,11 +17,6 @@ import {
 // Кнопка переключения темы
 // Показывает текущую тему и позволяет выбрать light/dark/system
 
-enum ThemeOption {
-    LIGHT = 'light',
-    DARK = 'dark',
-    SYSTEM = 'system'
-}
 
 export function ThemeToggle() {
     const { setTheme, theme } = useTheme();

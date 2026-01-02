@@ -25,7 +25,7 @@ export function RepoHeader({ repo }: RepoHeaderProps) {
             {/* Repository Name & Owner */}
             <div className="flex items-start justify-between">
                 <div className="space-y-2">
-                    <h1 className="text-4xl font-bold tracking-tight text-teal-600">
+                    <h1 className="text-4xl font-bold tracking-tight text-teal-600" style={{ viewTransitionName: `repo-title-${repo.name}` }}>
                         {repo.name}
                     </h1>
                     <div className="text-muted-foreground flex items-center gap-2">

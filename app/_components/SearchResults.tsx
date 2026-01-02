@@ -1,6 +1,7 @@
 import { searchRepositories } from '@/lib/github/api';
 import type { SearchParams } from '@/lib/github/types';
 import { SearchResultsClient } from './SearchResultsClient';
+import { buildSearchQuery } from '@/lib/utils/query-builder';
 
 type SearchResultsProps = {
     query: string;
@@ -18,22 +19,10 @@ export async function SearchResults({
     // ============================================
     // BUILD QUERY WITH FILTERS
     // ============================================
-    // GitHub API использует специальный синтаксис в параметре q
-
-    let searchQuery = query;
-
-    // Добавляем фильтр по языку
-    if (language) {
-        searchQuery += ` language:${language}`;
-    }
-
-    // Добавляем фильтр по звёздам
-    if (minStars && parseInt(minStars) > 0) {
-        searchQuery += ` stars:>=${minStars}`;
-    }
+    const searchQuery = buildSearchQuery({ query, language, minStars });
 
     const searchParams: SearchParams = {
-        q: searchQuery, // ← Теперь включает фильтры
+        q: searchQuery,
         sort: (sort as 'stars' | 'forks' | 'updated') || 'stars',
         order: 'desc',
         per_page: 30,

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from 'next-view-transitions'
 import { ArrowLeft } from 'lucide-react';
 import { getRepository, getContributors, getLanguages } from '@/lib/github/api';
 import { RepoHeader } from './_components/RepoHeader';
@@ -49,7 +50,7 @@ export default async function RepoPage({ params }: PageProps) {
             {/* Back Button */}
             <div className="flex items-center justify-between">
                 <Link
-                    href="/"
+                    href={`/?q=${name}`}
                     className="text-muted-foreground hover:text-foreground inline-flex items-center text-sm transition-colors"
                 >
                     <ArrowLeft className="mr-2 h-4 w-4" />

@@ -1,4 +1,5 @@
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from 'next-view-transitions'
 import { Star, GitFork, TrendingUp, Circle, Scale } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -45,7 +46,7 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
                         href={repoUrl}
                         className="text-teal-600 hover:underline"
                     >
-                        <h3 className="line-clamp-1 text-lg font-semibold text-teal-600">
+                        <h3 className="line-clamp-1 text-lg font-semibold text-teal-600" style={{ viewTransitionName: `repo-title-${repo.name}` }}>
                             {repo.name}
                         </h3>
                     </Link>

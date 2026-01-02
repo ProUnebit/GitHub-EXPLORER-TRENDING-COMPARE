@@ -1,11 +1,10 @@
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from 'next-view-transitions'
 import { Star, GitFork, Scale, Circle } from 'lucide-react';
 import {
     Card,
     CardContent,
-    CardDescription,
     CardHeader,
-    CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { GitHubRepo } from '@/lib/github/types';
@@ -24,7 +23,7 @@ type RepoCardProps = {
     repo: GitHubRepo;
 };
 
-export function RepoCard({ repo }: RepoCardProps) {
+export function RepoCard({ repo }: Readonly<RepoCardProps>) {
     // ============================================
     // DATA TRANSFORMATION
     // ============================================
@@ -38,18 +37,19 @@ export function RepoCard({ repo }: RepoCardProps) {
             <CardHeader>
                 {/* Repository Name - это Link (Client Component от Next.js) */}
                 {/* Next.js Link - оптимизированная навигация с prefetch */}
-                <CardTitle className="line-clamp-1 text-teal-600">
-                    <Link href={repoUrl} className="hover:underline">
-                        {repo.name}
+                <div className="pr-10">
+                    <Link
+                        href={repoUrl}
+                        className="text-teal-600 hover:underline"
+                    >
+                        <h3 className="line-clamp-1 text-lg font-semibold text-teal-600" style={{ viewTransitionName: `repo-title-${repo.name}` }}>
+                            {repo.name}
+                        </h3>
                     </Link>
-                </CardTitle>
-
-                {/* Owner */}
-                <CardDescription className="flex items-center gap-2">
-                    <span className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-sm">
                         {repo.owner.login}
-                    </span>
-                </CardDescription>
+                    </p>
+                </div>
             </CardHeader>
 
             <CardContent className="flex flex-1 flex-col justify-between space-y-4">

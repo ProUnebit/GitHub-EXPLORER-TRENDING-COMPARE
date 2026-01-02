@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from 'next-view-transitions'
 import {
     Star,
     GitFork,
@@ -98,7 +99,9 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
                                             href={`/repo/${repo.owner}/${repo.name}`}
                                             className="font-bold text-teal-600 hover:underline text-2xl"
                                         >
-                                            {repo.name}
+                                            <p style={{ viewTransitionName: `repo-title-${repo.name}` }}>
+                                                {repo.name}
+                                            </p>
                                         </Link>
                                         <p className="text-muted-foreground mt-1 text-xs font-normal">
                                             {repo.owner}
