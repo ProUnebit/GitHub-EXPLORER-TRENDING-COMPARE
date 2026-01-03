@@ -180,8 +180,8 @@ export function TrendingFilters({
                                 disabled={isPending}
                                 className={
                                     isActive
-                                        ? 'ring-2 ring-teal-400 hover:cursor-default transition-all bg-accent/90!  text-primary hover:bg-accent/80'
-                                        : 'ring-2 ring-neutral-300 hover:cursor-pointer transition-all'
+                                        ? 'ring-2 ring-teal-400 cursor-default transition-all bg-accent/90!  text-primary hover:bg-accent/80'
+                                        : 'ring-2 ring-neutral-400/60 dark:ring-neutral-300 cursor-pointer transition-all'
                                 }
                                 style={{ backgroundColor: backgroundColorLanguage }}
                             >
@@ -189,7 +189,7 @@ export function TrendingFilters({
                                 {isLoading ? (
                                     <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600 dark:text-amber-300/80" />
                                 ) : isActive ? (
-                                    <Check className="mr-2 h-3 w-3 text-teal-300" />
+                                    <Check className="mr-2 h-3 w-3 text-teal-500 dark:text-teal-300" />
                                 ) : null}
                                 {language}
                             </Button>
