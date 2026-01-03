@@ -1,6 +1,7 @@
 import { getTrendingRepositories } from '@/lib/github/api';
-import { TrendingListClient } from './TrendingListClient'; // ← Добавить
+import { TrendingListClient } from './TrendingListClient';
 import { TrendingExportButton } from './TrendingExportButton';
+import { TrendingLanguagesOverview } from './TrendingLanguagesOverview'; // ← Добавить
 
 type TrendingListProps = {
     since: 'daily' | 'weekly' | 'monthly';
@@ -24,7 +25,15 @@ export async function TrendingList({ since, language }: TrendingListProps) {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
+            {' '}
+            {/* ← Было space-y-4, теперь 6 */}
+            {/* ============================================
+                LANGUAGES OVERVIEW - НОВОЕ!
+                ============================================ */}
+            {/* Показываем только если НЕ выбран конкретный язык */}
+  
+            {/* Header с кнопкой экспорта */}
             <div className="flex items-center justify-between">
                 <p className="text-muted-foreground text-sm font-semibold">
                     <span className="font-bold text-teal-600">
@@ -34,7 +43,7 @@ export async function TrendingList({ since, language }: TrendingListProps) {
                     <span className="font-bold text-teal-600">
                         {language ? `${language} ` : ''}
                     </span>{' '}
-                    repositories
+                    repositories analyzed
                 </p>
 
                 <div className="flex justify-end">
@@ -45,8 +54,8 @@ export async function TrendingList({ since, language }: TrendingListProps) {
                     />
                 </div>
             </div>
-
-            {/* ← Заменяем grid на TrendingListClient */}
+            {/* Repository List */}
+            {!language && <TrendingLanguagesOverview repos={data.items} />}
             <TrendingListClient repos={data.items} />
         </div>
     );
