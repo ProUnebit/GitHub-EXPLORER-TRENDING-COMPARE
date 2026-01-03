@@ -1,17 +1,6 @@
 import { getTrendingRepositories } from '@/lib/github/api';
-import { TrendingCard } from './TrendingCard';
+import { TrendingListClient } from './TrendingListClient'; // ← Добавить
 import { TrendingExportButton } from './TrendingExportButton';
-
-// ============================================
-// TRENDING LIST - Server Component
-// ============================================
-// Фетчит данные на сервере
-// Next.js автоматически кеширует результат
-//
-// Caching strategy:
-// - Daily: 30 минут
-// - Weekly: 1 час
-// - Monthly: 6 часов
 
 type TrendingListProps = {
     since: 'daily' | 'weekly' | 'monthly';
@@ -19,10 +8,8 @@ type TrendingListProps = {
 };
 
 export async function TrendingList({ since, language }: TrendingListProps) {
-    // Fetch trending repositories
     const data = await getTrendingRepositories(language, since);
 
-    // Edge case: No results
     if (data.items.length === 0) {
         return (
             <div className="py-12 text-center">
@@ -39,15 +26,17 @@ export async function TrendingList({ since, language }: TrendingListProps) {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                {/* Results count */}
-                <div className="flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm font-semibold">
-                        <span className="text-teal-600 font-bold">{data.items.length}</span> trending{' '}
-                        <span className="text-teal-600 font-bold">{language ? `${language} ` : ''}</span> repositories
-                    </p>
-                </div>
+                <p className="text-muted-foreground text-sm font-semibold">
+                    <span className="font-bold text-teal-600">
+                        {data.items.length}
+                    </span>{' '}
+                    trending{' '}
+                    <span className="font-bold text-teal-600">
+                        {language ? `${language} ` : ''}
+                    </span>{' '}
+                    repositories
+                </p>
 
-                {/* Export Button */}
                 <div className="flex justify-end">
                     <TrendingExportButton
                         repos={data.items}
@@ -57,13 +46,8 @@ export async function TrendingList({ since, language }: TrendingListProps) {
                 </div>
             </div>
 
-
-            {/* Repository List */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {data.items.map((repo, index) => (
-                    <TrendingCard key={repo.id} repo={repo} rank={index + 1} />
-                ))}
-            </div>
+            {/* ← Заменяем grid на TrendingListClient */}
+            <TrendingListClient repos={data.items} />
         </div>
     );
 }

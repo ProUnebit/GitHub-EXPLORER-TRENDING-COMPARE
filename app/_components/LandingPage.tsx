@@ -1,5 +1,5 @@
 import { SearchInput } from '@/components/SearchInput';
-import { FeatureCard } from './FeatureCard';
+import { FeatureCardList } from './FeatureCardList';
 import { Telescope } from 'lucide-react';
 
 // ============================================
@@ -32,37 +32,10 @@ export function LandingPage() {
                         analytics, comparisons, and insights.
                     </p>
                 </div>
-
                 {/* Search */}
                 <SearchInput />
-
                 {/* Features Grid */}
-                <div className="mt-12 grid w-full max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <FeatureCard
-                        title="Repository Search"
-                        description="Search millions of GitHub repositories with advanced filters"
-                    />
-                    <FeatureCard
-                        title="Detailed Analytics"
-                        description="View commits, contributors, languages, and activity trends"
-                    />
-                    <FeatureCard
-                        title="Trending Repos"
-                        description="Discover what's trending in the open source community"
-                    />
-                    <FeatureCard
-                        title="Side-by-Side Comparison"
-                        description="Compare multiple repositories to make informed decisions"
-                    />
-                    <FeatureCard
-                        title="Export Data"
-                        description="Export repository data to PDF or CSV for reporting"
-                    />
-                    <FeatureCard
-                        title="Real-time Updates"
-                        description="Server-side data fetching with smart caching strategies"
-                    />
-                </div>
+                <FeatureCardList />
             </div>
         </div>
     );
