@@ -183,8 +183,8 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             <Card className="bg-card">
                 <CardHeader>
                     <CardTitle className="flex items-center">
-                        <ChartColumnIncreasing className="mr-2 inline-block h-5 w-5" />
-                        <span className="font-bold">Popularity Metrics</span>
+                        <ChartColumnIncreasing className="mr-2 inline-block h-5 w-5 text-teal-500" />
+                        <span className="font-bold text-teal-600 dark:text-amber-300/80">Popularity Metrics</span>
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -196,8 +196,8 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             <Card className="bg-card">
                 <CardHeader>
                     <CardTitle className="flex items-center">
-                        <Users className="mr-2 inline-block h-5 w-5" />
-                        <span className="font-bold">Community Activity</span>
+                        <Users className="mr-2 inline-block h-5 w-5 text-teal-500" />
+                        <span className="font-bold text-teal-600 dark:text-amber-300/80">Community Activity</span>
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -209,8 +209,8 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             <Card className="bg-card lg:col-span-2">
                 <CardHeader>
                     <CardTitle className="flex items-center">
-                        <CodeXml className="mr-2 inline-block h-5 w-5" />
-                        <span className="font-bold">
+                        <CodeXml className="mr-2 inline-block h-5 w-5 text-teal-500" />
+                        <span className="font-bold text-teal-600 dark:text-amber-300/80">
                             Languages Distribution
                         </span>
                     </CardTitle>

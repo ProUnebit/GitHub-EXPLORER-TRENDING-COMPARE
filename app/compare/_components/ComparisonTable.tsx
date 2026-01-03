@@ -78,8 +78,8 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
         <Card className="bg-card">
             <CardHeader>
                 <CardTitle className="flex items-center">
-                    <TableProperties className="mr-2 inline-block h-5 w-5" />
-                    <span className="font-bold">Metrics Comparison</span>
+                    <TableProperties className="mr-2 inline-block h-5 w-5 text-teal-500" />
+                    <span className="font-bold text-teal-600 dark:text-amber-300/80">Metrics Comparison</span>
                 </CardTitle>
             </CardHeader>
             <CardContent>
@@ -113,7 +113,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
                         <tbody>
                             {/* Stars */}
                             <MetricRow
-                                icon={<Star className="h-4 w-4" />}
+                                icon={<Star className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />}
                                 label="Stars"
                                 values={repos.map((r, i) => ({
                                     value: formatNumber(
@@ -125,7 +125,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Forks */}
                             <MetricRow
-                                icon={<GitFork className="h-4 w-4" />}
+                                icon={<GitFork className="h-4 w-4 text-blue-600 dark:text-blue-400" />}
                                 label="Forks"
                                 values={repos.map((r, i) => ({
                                     value: formatNumber(r.repo.forks_count),
@@ -135,7 +135,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Watchers */}
                             <MetricRow
-                                icon={<Eye className="h-4 w-4" />}
+                                icon={<Eye className="h-4 w-4 text-green-600 dark:text-green-400" />}
                                 label="Watchers"
                                 values={repos.map((r, i) => ({
                                     value: formatNumber(r.repo.watchers_count),
@@ -145,7 +145,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Open Issues */}
                             <MetricRow
-                                icon={<AlertCircle className="h-4 w-4" />}
+                                icon={<AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />}
                                 label="Open Issues"
                                 values={repos.map((r) => ({
                                     value: formatNumber(
@@ -157,7 +157,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Contributors */}
                             <MetricRow
-                                icon={<Users className="h-4 w-4" />}
+                                icon={<Users className="h-4 w-4 text-fuchsia-600 dark:text-fuchsia-400" />}
                                 label="Contributors"
                                 values={repos.map((r, i) => ({
                                     value:
@@ -168,7 +168,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Languages */}
                             <MetricRow
-                                icon={<CodeXml className="h-4 w-4" />}
+                                icon={<CodeXml className="h-4 w-4 text-teal-500" />}
                                 label="Languages"
                                 values={repos.map((r, i) => ({
                                     value: Object.keys(
@@ -180,7 +180,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Created Date */}
                             <MetricRow
-                                icon={<Calendar className="h-4 w-4" />}
+                                icon={<Calendar className="h-4 w-4 text-lime-600 dark:text-lime-600" />}
                                 label="Created"
                                 values={repos.map((r, i) => ({
                                     value: formatDate(r.repo.created_at),
@@ -193,7 +193,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* Last Updated */}
                             <MetricRow
-                                icon={<Calendar className="h-4 w-4" />}
+                                icon={<Calendar className="h-4 w-4 text-cyan-600 dark:text-cyan-600" />}
                                 label="Last Updated"
                                 values={repos.map((r) => ({
                                     value: formatRelativeTime(
@@ -205,7 +205,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
 
                             {/* License */}
                             <MetricRow
-                                icon={<Scale className="h-4 w-4" />}
+                                icon={<Scale className="h-4 w-4 text-indigo-500 dark:text-indigo-400" />}
                                 label="License"
                                 values={repos.map((r) => ({
                                     value: r.repo.license?.spdx_id || 'None',
@@ -250,7 +250,7 @@ function MetricRow({
                     key={i}
                     className={`p-4 text-center ${
                         val.isWinner
-                            ? 'bg-green-50 font-bold text-green-700 dark:bg-green-950/20 dark:text-green-400'
+                            ? 'bg-green-100 font-bold text-green-700 dark:bg-green-950/50 dark:text-green-400'
                             : ''
                     }`}
                 >

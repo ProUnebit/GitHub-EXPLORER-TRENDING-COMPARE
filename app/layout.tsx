@@ -1,5 +1,4 @@
-import type { Metadata } from 'next';
-// import Link from 'next/link';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/config/site';
@@ -25,7 +24,66 @@ export const metadata: Metadata = {
         template: `%s | ${siteConfig.name}`,
     },
     description: siteConfig.description,
-    keywords: ['GitHub', 'Repository', 'Analytics', 'Explorer', 'Trending'],
+    keywords: [
+        'GitHub',
+        'Repository Explorer',
+        'GitHub Analytics',
+        'Trending Repositories',
+        'Repository Comparison',
+        'Open Source',
+        'Developer Tools',
+        'GitHub API',
+        'Code Analysis',
+        'Repository Statistics',
+    ],
+    authors: [{ name: 'Alexey Ratnikov' }],
+    creator: 'Alexey Ratnikov',
+
+    // App Meta
+    applicationName: 'GitHub Explorer | Trending | Compare',
+    category: 'Developer Tools',
+
+    // URLs
+    metadataBase: new URL(siteConfig.url),
+    alternates: {
+        canonical: '/',
+    },
+    openGraph: {
+        type: 'website',
+        locale: 'en_US',
+        url: siteConfig.url,
+        title: siteConfig.name,
+        description: siteConfig.description,
+        siteName: siteConfig.name,
+        images: [
+            {
+                url: '/og-image.png', // Создадим потом
+                width: 1200,
+                height: 630,
+                alt: 'GitHub Explorer Dashboard',
+                type: 'image/png',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: siteConfig.name,
+        description: siteConfig.description,
+        images: ['/og-image.png'],
+        creator: '@ProUnebit', // Замени на свой Twitter handle
+    },
+    robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
+    },
     other: {
         // DNS prefetch для GitHub API
         'x-dns-prefetch-control': 'on',
@@ -36,6 +94,7 @@ export const viewport = {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
+    userScalable: true,
     // themeColor: [
     //     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     //     { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
@@ -85,12 +144,12 @@ export default function RootLayout({
                                         </Link>
                                         <span>|</span>
                                         <Link href="/trending">
-                                            <span className="text-stone-600 dark:text-white font-semibold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
+                                            <span className="font-semibold text-stone-600 transition-all hover:text-teal-400 dark:text-white dark:hover:text-amber-300/80">
                                                 TRENDING
                                             </span>
                                         </Link>
                                         <Link href="/compare">
-                                            <span className="text-stone-600 dark:text-white font-semibold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
+                                            <span className="font-semibold text-stone-600 transition-all hover:text-teal-400 dark:text-white dark:hover:text-amber-300/80">
                                                 COMPARE
                                             </span>
                                         </Link>
