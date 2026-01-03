@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 // import Link from 'next/link';
-import { Link } from 'next-view-transitions'
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/config/site';
@@ -9,8 +8,9 @@ import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { ViewTransitions } from 'next-view-transitions';
+import { ViewTransitions, Link } from 'next-view-transitions';
 import { ThemeOption } from '@/lib/constants/theme';
+import { InitialLoader } from '@/components/InitialLoader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
         template: `%s | ${siteConfig.name}`,
     },
     description: siteConfig.description,
-    keywords: ['GitHub', 'Repository', 'Analytics', 'Explorer'],
+    keywords: ['GitHub', 'Repository', 'Analytics', 'Explorer', 'Trending'],
     // icons: {
     //     icon: [
     //         {
@@ -39,6 +39,7 @@ export default function RootLayout({
         <ViewTransitions>
             <html lang="en" suppressHydrationWarning>
                 <body className={inter.className} suppressHydrationWarning>
+                    <InitialLoader />
                     <ThemeProvider
                         attribute="class"
                         defaultTheme={ThemeOption.DARK}
