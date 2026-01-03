@@ -1,17 +1,9 @@
+import { Suspense } from 'react'; // ← Добавить import
 import { SearchInput } from '@/components/SearchInput';
 import { FeatureCardList } from './FeatureCardList';
+import { QuickStats } from './QuickStats'; // ← Добавить
+import { QuickStatsLoading } from './QuickStatsLoading'; // ← Добавить
 import { Telescope } from 'lucide-react';
-
-// ============================================
-// LANDING PAGE COMPONENT
-// ============================================
-// Изолированный компонент для главной страницы
-//
-// Почему отдельный файл:
-// - Четкая ответственность (landing content)
-// - Можно легко изменить дизайн
-// - Не загромождает page.tsx
-// - Переиспользуемый (можно показать в других местах)
 
 export function LandingPage() {
     return (
@@ -32,9 +24,13 @@ export function LandingPage() {
                         analytics, comparisons, and insights.
                     </p>
                 </div>
-                {/* Search */}
+
                 <SearchInput />
-                {/* Features Grid */}
+
+                <Suspense fallback={<QuickStatsLoading />}>
+                    <QuickStats />
+                </Suspense>
+
                 <FeatureCardList />
             </div>
         </div>

@@ -32,7 +32,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
         const message =
             error.message || `GitHub API error: ${response.statusText}`;
 
-        toast.error('API Error', { description: message });
+        // toast.error('API Error', { description: message });
 
         throw new Error(message);
     }
@@ -244,4 +244,66 @@ export async function searchRepositoriesClient(
     }
 
     return response.json();
+}
+
+/**
+ * Получить содержимое файла из репозитория
+ */
+export async function getRepoFile(
+    owner: string,
+    repo: string,
+    path: string
+): Promise<string | null> {
+    try {
+        const response = await fetch(
+            `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${path}`,
+            {
+                headers: getHeaders(),
+                next: {
+                    revalidate: CACHE_REVALIDATION.STATIC, // 1 час
+                },
+            }
+        );
+
+        if (!response.ok) {
+            return null; // Файл не найден
+        }
+
+        const data = await response.json();
+
+        // GitHub API возвращает base64 encoded content
+        if (data.content) {
+            const decoded = Buffer.from(data.content, 'base64').toString(
+                'utf-8'
+            );
+            return decoded;
+        }
+
+        return null;
+    } catch (error) {
+        console.error(`Failed to fetch file ${path}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Получить package.json из репозитория
+ */
+export async function getPackageJson(
+    owner: string,
+    repo: string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<any | null> {
+    const content = await getRepoFile(owner, repo, 'package.json');
+
+    if (!content) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(content);
+    } catch (error) {
+        console.error('Failed to parse package.json:', error);
+        return null;
+    }
 }

@@ -1,54 +1,45 @@
-// import Link from 'next/link';
-import { Link } from 'next-view-transitions'
+import { Link } from 'next-view-transitions';
 import { Star, GitFork, Scale, Circle } from 'lucide-react';
-import {
-    Card,
-    CardContent,
-    CardHeader,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { HealthBadge } from '@/components/HealthBadge'; // ← Добавить
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber, formatRelativeTime } from '@/lib/utils/formatters';
 import { getLanguageColor } from '@/lib/constants/language-colors';
-
-// ============================================
-// REPO CARD COMPONENT (Server Component)
-// ============================================
-// Это Server Component потому что:
-// - Нет интерактивности (onClick, useState и т.д.)
-// - Просто отображение данных
-// - Может быть статически сгенерирован
 
 type RepoCardProps = {
     repo: GitHubRepo;
 };
 
 export function RepoCard({ repo }: Readonly<RepoCardProps>) {
-    // ============================================
-    // DATA TRANSFORMATION
-    // ============================================
-    // Подготавливаем данные для отображения
-    // Это можно легко unit-тестировать
-
     const repoUrl = `/repo/${repo.owner.login}/${repo.name}`;
 
     return (
-        <Card className="bg-card dark:border-teal-900/60 dark:hover:border-teal-400 hover:bg-accent flex h-full flex-col transition-all hover:border-teal-400 hover:shadow-lg">
+        <Card className="bg-card hover:bg-accent flex h-full flex-col transition-all hover:border-teal-400 hover:shadow-lg dark:border-teal-900/60 dark:hover:border-teal-400">
             <CardHeader>
-                {/* Repository Name - это Link (Client Component от Next.js) */}
-                {/* Next.js Link - оптимизированная навигация с prefetch */}
-                <div className="pr-10">
-                    <Link
-                        href={repoUrl}
-                        className="text-teal-600 hover:underline"
-                    >
-                        <h3 className="line-clamp-1 text-lg font-semibold text-teal-600" style={{ viewTransitionName: `repo-title-${repo.name}` }}>
-                            {repo.name}
-                        </h3>
-                    </Link>
-                    <p className="text-muted-foreground text-sm">
-                        {repo.owner.login}
-                    </p>
+                {/* Repository Name & Health Badge */}
+                <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                        {' '}
+                        {/* min-w-0 для text truncate */}
+                        <Link
+                            href={repoUrl}
+                            className="text-teal-600 hover:underline"
+                        >
+                            <h3
+                                className="line-clamp-1 text-lg font-semibold text-teal-600"
+                                style={{
+                                    viewTransitionName: `repo-title-${repo.name}`,
+                                }}
+                            >
+                                {repo.name}
+                            </h3>
+                        </Link>
+                        <p className="text-muted-foreground text-sm">
+                            {repo.owner.login}
+                        </p>
+                    </div>
+                    <HealthBadge repo={repo} />
                 </div>
             </CardHeader>
 
@@ -68,7 +59,7 @@ export function RepoCard({ repo }: Readonly<RepoCardProps>) {
 
                     {/* Forks */}
                     <div className="flex items-center gap-1">
-                        <GitFork className="h-4 w-4 text-blue-600 dark:text-blue-40" />
+                        <GitFork className="dark:text-blue-40 h-4 w-4 text-blue-600" />
                         <span>{formatNumber(repo.forks_count)}</span>
                     </div>
 
@@ -96,7 +87,9 @@ export function RepoCard({ repo }: Readonly<RepoCardProps>) {
                             <span>{repo.language}</span>
                         </div>
                     )}
-                    <span className='text-muted-foreground'>Updated {formatRelativeTime(repo.updated_at)}</span>
+                    <span className="text-muted-foreground">
+                        Updated {formatRelativeTime(repo.updated_at)}
+                    </span>
                 </div>
 
                 {/* Topics */}

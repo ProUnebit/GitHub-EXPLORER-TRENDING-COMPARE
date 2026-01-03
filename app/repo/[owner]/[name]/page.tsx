@@ -1,16 +1,17 @@
 import { Suspense } from 'react';
-// import Link from 'next/link';
 import { Link } from 'next-view-transitions';
 import { ArrowLeft } from 'lucide-react';
 import { getRepository, getContributors, getLanguages } from '@/lib/github/api';
 import { RepoHeader } from './_components/RepoHeader';
 import { RepoStats } from './_components/RepoStats';
+import { HealthScoreCard } from './_components/HealthScoreCard';
 import { LanguageChart } from './_components/LanguageChart';
 import { ContributorsList } from './_components/ContributorsList';
 import { RecentCommits } from './_components/RecentCommits';
 import { RepoSkeleton } from './_components/RepoSkeleton';
 import { RepoExportButton } from './_components/RepoExportButton';
 import { Metadata } from 'next/types';
+import { DependencyAnalysis } from './_components/DependencyAnalysis';
 
 type PageProps = {
     params: Promise<{ owner: string; name: string }>;
@@ -29,7 +30,6 @@ export async function generateMetadata({
             repo.description ||
             `Explore ${repo.full_name} repository on GitHub - ${repo.stargazers_count.toLocaleString()} stars, ${repo.forks_count.toLocaleString()} forks`;
 
-        // Формируем keywords из topics + basic info
         const keywords = [
             owner,
             name,
@@ -45,7 +45,6 @@ export async function generateMetadata({
             description,
             keywords,
 
-            // Open Graph
             openGraph: {
                 type: 'website',
                 title,
@@ -61,7 +60,6 @@ export async function generateMetadata({
                 url: `/repo/${owner}/${name}`,
             },
 
-            // Twitter Card
             twitter: {
                 card: 'summary',
                 title,
@@ -69,7 +67,6 @@ export async function generateMetadata({
                 images: [repo.owner.avatar_url],
             },
 
-            // Canonical URL
             alternates: {
                 canonical: `/repo/${owner}/${name}`,
             },
@@ -90,7 +87,6 @@ export async function generateMetadata({
 export default async function RepoPage({ params }: PageProps) {
     const { owner, name } = await params;
 
-    // Fetch critical data + data for export
     const [repo, contributors, languages] = await Promise.all([
         getRepository(owner, name),
         getContributors(owner, name, 100),
@@ -132,8 +128,11 @@ export default async function RepoPage({ params }: PageProps) {
             {/* Structured Data */}
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData),
+                }}
             />
+
             {/* Page Content */}
             <div className="container mx-auto space-y-8 py-8">
                 {/* Back Button */}
@@ -155,19 +154,31 @@ export default async function RepoPage({ params }: PageProps) {
                 />
                 <RepoStats repo={repo} />
 
-                <div className="grid gap-8 lg:grid-cols-2">
+                {/* ROW 1: Health Score | Languages | Dependencies */}
+                <div className="grid gap-8 lg:grid-cols-3">
+                    <HealthScoreCard repo={repo} />
                     <Suspense fallback={<RepoSkeleton.Chart />}>
                         <LanguageChart owner={owner} name={name} />
                     </Suspense>
+                    <Suspense fallback={<RepoSkeleton.Chart />}>
+                        <DependencyAnalysis owner={owner} name={name} />
+                    </Suspense>
+                </div>
 
+                {/* ROW 2: Commits | Contributors */}
+                <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+                    <Suspense fallback={<RepoSkeleton.Commits />}>
+                        <RecentCommits owner={owner} name={name} />
+                    </Suspense>
                     <Suspense fallback={<RepoSkeleton.Contributors />}>
                         <ContributorsList owner={owner} name={name} />
                     </Suspense>
                 </div>
 
-                <Suspense fallback={<RepoSkeleton.Commits />}>
+                {/* ROW 3: */}
+                {/* <Suspense fallback={<RepoSkeleton.Commits />}>
                     <RecentCommits owner={owner} name={name} />
-                </Suspense>
+                </Suspense> */}
             </div>
         </>
     );

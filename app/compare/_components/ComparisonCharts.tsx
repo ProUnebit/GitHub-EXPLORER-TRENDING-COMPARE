@@ -123,8 +123,8 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             {
                 label: 'Contributors',
                 data: contributorsData,
-                backgroundColor: CHART_COLORS[0],
-                borderColor: CHART_BORDER_COLORS[0],
+                backgroundColor: CHART_COLORS[1],
+                borderColor: CHART_BORDER_COLORS[1],
                 borderWidth: 2,
             },
         ],

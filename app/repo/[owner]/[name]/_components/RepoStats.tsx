@@ -1,4 +1,4 @@
-import { Star, GitFork, Eye, AlertCircle } from 'lucide-react';
+import { Star, GitFork, Eye, Bug } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber } from '@/lib/utils/formatters';
@@ -38,13 +38,13 @@ export function RepoStats({ repo }: RepoStatsProps) {
         {
             label: 'Open Issues',
             value: repo.open_issues_count,
-            icon: AlertCircle,
+            icon: Bug,
             color: 'text-red-600 dark:text-red-400',
         },
     ];
 
     return (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => (
                 <Card
                     key={stat.label}

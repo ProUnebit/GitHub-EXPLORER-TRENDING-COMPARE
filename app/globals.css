@@ -96,6 +96,9 @@
   }
 
   body {
+    padding-left: 10px;
+    padding-right: 10px;
+    
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-feature-settings:
@@ -107,7 +110,7 @@
 }
 
 .cut-corners {
-  --cut-size: 25px;
+  --cut-size: 35px;
 
   clip-path: polygon(0 0,
       /* Top-left (не трогаем) */

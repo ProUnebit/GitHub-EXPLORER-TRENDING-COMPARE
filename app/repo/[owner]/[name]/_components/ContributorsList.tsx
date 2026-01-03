@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getContributors } from '@/lib/github/api';
 import { formatNumber } from '@/lib/utils/formatters';
+import { Crown } from 'lucide-react';
 
 // ============================================
 // CONTRIBUTORS LIST - Server Component
@@ -52,7 +53,10 @@ export async function ContributorsList({ owner, name }: ContributorsListProps) {
     return (
         <Card className="bg-card dark:border-teal-900/60">
             <CardHeader>
-                <CardTitle className="text-teal-600 dark:text-amber-300/80">Top Contributors</CardTitle>
+                <CardTitle className="flex items-center">
+                    <Crown  className="mr-2 inline-block h-5 w-5 text-teal-500" />
+                    <span className="font-bold text-teal-600 dark:text-amber-300/80">Top Contributors</span>
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4">

@@ -3,7 +3,7 @@
 import { motion, Variants } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Code2, ChessQueen  } from 'lucide-react';
+import { Code2, Crown } from 'lucide-react';
 import type { GitHubRepo } from '@/lib/github/types';
 import { getLanguageColor } from '@/lib/constants/language-colors';
 
@@ -115,7 +115,7 @@ export function TrendingLanguagesOverview({
                                     }}
                                 >
                                     {index === 0 && (
-                                        <ChessQueen  className="h-3 w-3 text-amber-500 dark:text-amber-400" />
+                                        <Crown  className="h-3 w-3 text-amber-500 dark:text-amber-400" />
                                     )}
                                     <span className='font-semibold'>{lang.name}</span>
                                     <span className="font-bold text-teal-600 dark:text-amber-300/80">

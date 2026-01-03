@@ -1,5 +1,7 @@
 // GitHub API Response Types
 export interface GitHubRepo {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    has_wiki?: any;
     id: number;
     name: string;
     full_name: string;
@@ -81,3 +83,19 @@ export interface SearchParams {
     per_page?: number;
     page?: number;
 }
+
+// Dependency Analysis Types
+export type PackageJson = {
+    name?: string;
+    version?: string;
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+    optionalDependencies?: Record<string, string>;
+};
+
+export type DependencyInfo = {
+    name: string;
+    version: string;
+    type: 'production' | 'development' | 'peer' | 'optional';
+};

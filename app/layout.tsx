@@ -57,7 +57,7 @@ export const metadata: Metadata = {
         siteName: siteConfig.name,
         images: [
             {
-                url: '/og-image.png', // Создадим потом
+                url: '/og-image.png',  
                 width: 1200,
                 height: 630,
                 alt: 'GitHub Explorer Dashboard',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
         title: siteConfig.name,
         description: siteConfig.description,
         images: ['/og-image.png'],
-        creator: '@ProUnebit', // Замени на свой Twitter handle
+        creator: '@ProUnebit',  
     },
     robots: {
         index: true,
@@ -159,11 +159,12 @@ export default function RootLayout({
                                     <ThemeToggle />
                                 </div>
                             </header>
+                            
                             <main className="flex-1 px-4">{children}</main>
 
                             <footer className="border-t px-4 py-6 md:py-0">
-                                <div className="container mx-auto flex h-14 items-center justify-end">
-                                    <span className="text-muted-foreground text-xs italic">
+                                <div className="container mx-auto flex h-10 items-center justify-end">
+                                    <span className="text-stone-500 text-xs italic">
                                         by Alexey Ratnikov
                                     </span>
                                 </div>

@@ -28,7 +28,7 @@ const itemVariants: Variants = {
 export function FeatureCardList() {
     return (
         <motion.div
-            className="mt-12 grid w-full max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="  grid w-full max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
             animate="show"

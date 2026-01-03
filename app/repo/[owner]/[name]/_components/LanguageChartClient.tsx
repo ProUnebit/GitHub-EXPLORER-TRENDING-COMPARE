@@ -24,7 +24,7 @@ type LanguageChartClientProps = {
 };
 
 export function LanguageChartClient({ languages }: LanguageChartClientProps) {
-    const topLanguages = languages.slice(0, 5);
+    const topLanguages = languages.slice(0, 10);
 
     const chartData = {
         labels: topLanguages.map((l) => l.name),
@@ -67,7 +67,7 @@ export function LanguageChartClient({ languages }: LanguageChartClientProps) {
 
     return (
         <div className="mx-auto w-full max-w-md">
-          <div className='relative'>
+          <div className='relative px-5'>
             <Github className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 text-stone-400 opacity-40' />
             <Doughnut data={chartData} options={options} />
           </div>
