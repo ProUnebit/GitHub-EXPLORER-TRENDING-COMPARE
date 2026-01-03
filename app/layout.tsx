@@ -12,7 +12,12 @@ import { ViewTransitions, Link } from 'next-view-transitions';
 import { ThemeOption } from '@/lib/constants/theme';
 import { InitialLoader } from '@/components/InitialLoader';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+    subsets: ['latin'],
+    display: 'swap',
+    preload: true,
+    // variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
     title: {
@@ -21,13 +26,20 @@ export const metadata: Metadata = {
     },
     description: siteConfig.description,
     keywords: ['GitHub', 'Repository', 'Analytics', 'Explorer', 'Trending'],
-    // icons: {
-    //     icon: [
-    //         {
-    //             url: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXRlbGVzY29wZS1pY29uIGx1Y2lkZS10ZWxlc2NvcGUiPjxwYXRoIGQ9Im0xMC4wNjUgMTIuNDkzLTYuMTggMS4zMThhLjkzNC45MzQgMCAwIDEtMS4xMDgtLjcwMmwtLjUzNy0yLjE1YTEuMDcgMS4wNyAwIDAgMSAuNjkxLTEuMjY1bDEzLjUwNC00LjQ0Ii8+PHBhdGggZD0ibTEzLjU2IDExLjc0NyA0LjMzMi0uOTI0Ii8+PHBhdGggZD0ibTE2IDIxLTMuMTA1LTYuMjEiLz48cGF0aCBkPSJNMTYuNDg1IDUuOTRhMiAyIDAgMCAxIDEuNDU1LTIuNDI1bDEuMDktLjI3MmExIDEgMCAwIDEgMS4yMTIuNzI3bDEuNTE1IDYuMDZhMSAxIDAgMCAxLS43MjcgMS4yMTNsLTEuMDkuMjcyYTIgMiAwIDAgMS0yLjQyNS0xLjQ1NXoiLz48cGF0aCBkPSJtNi4xNTggOC42MzMgMS4xMTQgNC40NTYiLz48cGF0aCBkPSJtOCAyMSAzLjEwNS02LjIxIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMyIgcj0iMiIvPjwvc3ZnPg==',
-    //         },
-    //     ],
-    // },
+    other: {
+        // DNS prefetch для GitHub API
+        'x-dns-prefetch-control': 'on',
+    },
+};
+
+export const viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    // themeColor: [
+    //     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    //     { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+    // ],
 };
 
 export default function RootLayout({
@@ -38,6 +50,17 @@ export default function RootLayout({
     return (
         <ViewTransitions>
             <html lang="en" suppressHydrationWarning>
+                <head>
+                    {/* DNS Prefetch для GitHub API */}
+                    <link rel="dns-prefetch" href="https://api.github.com" />
+                    <link rel="preconnect" href="https://api.github.com" />
+
+                    {/* Prefetch для avatars (если будут использоваться) */}
+                    <link
+                        rel="dns-prefetch"
+                        href="https://avatars.githubusercontent.com"
+                    />
+                </head>
                 <body className={inter.className} suppressHydrationWarning>
                     <InitialLoader />
                     <ThemeProvider
@@ -62,12 +85,12 @@ export default function RootLayout({
                                         </Link>
                                         <span>|</span>
                                         <Link href="/trending">
-                                            <span className="text-foreground font-bold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
+                                            <span className="text-stone-600 dark:text-white font-semibold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
                                                 TRENDING
                                             </span>
                                         </Link>
                                         <Link href="/compare">
-                                            <span className="text-foreground font-semibold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
+                                            <span className="text-stone-600 dark:text-white font-semibold transition-all hover:text-teal-400 dark:hover:text-amber-300/80">
                                                 COMPARE
                                             </span>
                                         </Link>
