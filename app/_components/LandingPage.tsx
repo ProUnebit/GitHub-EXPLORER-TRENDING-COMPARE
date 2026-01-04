@@ -4,6 +4,7 @@ import { FeatureCardList } from './FeatureCardList';
 import { QuickStats } from './QuickStats'; // ← Добавить
 import { QuickStatsLoading } from './QuickStatsLoading'; // ← Добавить
 import { Telescope } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 
 export function LandingPage() {
     return (
@@ -13,6 +14,7 @@ export function LandingPage() {
                 <div className="space-y-4 text-center">
                     <h1 className="flex items-center justify-center text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                         <Telescope className="mr-2 inline-block h-14 w-14" />
+                        {/* <Logo className="mr-1 h-15 w-15" /> */}
                         <span className="text-teal-600">GitHub Explorer</span>
                         &nbsp;
                         <span className="text-stone-600 dark:text-stone-300">

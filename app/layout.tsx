@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/config/site';
@@ -10,6 +10,7 @@ import { ScrollToTop } from '@/components/ScrollToTop';
 import { ViewTransitions, Link } from 'next-view-transitions';
 import { ThemeOption } from '@/lib/constants/theme';
 import { InitialLoader } from '@/components/InitialLoader';
+import { Logo } from '@/components/Logo';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -138,6 +139,7 @@ export default function RootLayout({
                                             className="flex items-center"
                                         >
                                             <Telescope className="mr-1 inline-block h-4 w-4" />
+                                            {/* <Logo className="mr-1 h-4 w-auto" /> */}
                                             <span className="font-bold text-teal-600">
                                                 GitHub Explorer
                                             </span>

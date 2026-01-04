@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="telescopeH" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="100%" style="stop-color:#1f6feb"/>
+    </linearGradient>
+    <radialGradient id="glowH">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Telescope Section (Left) -->
+  <g transform="translate(25, 35)">
+    <!-- Tripod -->
+    <line x1="-12" y1="15" x2="0" y2="5" stroke="#58a6ff" stroke-width="1.8"/>
+    <line x1="12" y1="15" x2="0" y2="5" stroke="#58a6ff" stroke-width="1.8"/>
+    <circle cx="-12" cy="15" r="2" fill="#1f6feb"/>
+    <circle cx="12" cy="15" r="2" fill="#1f6feb"/>
+    
+    <!-- Mount -->
+    <circle cx="0" cy="5" r="4" fill="#1f6feb" stroke="#58a6ff" stroke-width="1.3"/>
+    
+    <!-- Telescope tube -->
+    <g transform="rotate(-40)">
+      <rect x="2" y="-4" width="32" height="8" rx="1.5" 
+            fill="url(#telescopeH)" stroke="#58a6ff" stroke-width="1.3"/>
+      <rect x="10" y="-4" width="1.5" height="8" fill="#0d1117" opacity="0.3"/>
+      <rect x="24" y="-4" width="1.5" height="8" fill="#0d1117" opacity="0.3"/>
+      
+      <!-- Eyepiece -->
+      <rect x="-2" y="-3" width="4" height="6" rx="1" fill="#1f6feb"/>
+      
+      <!-- Lens -->
+      <ellipse cx="34" cy="0" rx="2.5" ry="4" fill="#58a6ff" opacity="0.6"/>
+      <ellipse cx="34" cy="0" rx="1.8" ry="3" fill="#fff" opacity="0.3"/>
+    </g>
+  </g>
+  
+  <!-- GitHub Stars (Middle) -->
+  <g transform="translate(55, 20)">
+    <circle r="10" fill="url(#glowH)" opacity="0.3"/>
+    <path d="M 0,-6 L 1.8,-1.9 L 6.2,-1.9 L 2.8,0.9 L 4.3,4.9 L 0,2.1 L -4.3,4.9 L -2.8,0.9 L -6.2,-1.9 L -1.8,-1.9 Z" 
+          fill="#f97316" stroke="#fff" stroke-width="0.8"/>
+  </g>
+  
+  <g transform="translate(65, 38)">
+    <circle r="7" fill="url(#glowH)" opacity="0.25"/>
+    <path d="M 0,-4 L 1.2,-1.3 L 4.1,-1.3 L 1.8,0.6 L 2.9,3.3 L 0,1.4 L -2.9,3.3 L -1.8,0.6 L -4.1,-1.3 L -1.2,-1.3 Z" 
+          fill="#f97316" stroke="#fff" stroke-width="0.6"/>
+  </g>
+  
+  <circle cx="50" cy="32" r="1" fill="#f97316" opacity="0.7"/>
+  <circle cx="72" cy="25" r="0.8" fill="#f97316" opacity="0.6"/>
+  
+  <!-- Text -->
+  <text x="85" y="26" font-family="'Segoe UI', system-ui, sans-serif" 
+        font-size="16" font-weight="700" fill="#58a6ff" letter-spacing="0.5">
+    GitHub
+  </text>
+  <text x="85" y="42" font-family="'Segoe UI', system-ui, sans-serif" 
+        font-size="13" font-weight="500" fill="#8b949e" letter-spacing="0.3">
+    Explorer
+  </text>
+  
+  <!-- Connecting line -->
+  <line x1="47" y1="22" x2="55" y2="18" 
+        stroke="#f97316" stroke-width="0.8" opacity="0.3" stroke-dasharray="2,2"/>
+</svg>

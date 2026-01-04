@@ -41,8 +41,8 @@ export default async function HomePage({ searchParams }: HomePageProps) {
                     <SearchResults
                         query={query}
                         sort={params.sort}
-                        language={params.language} // ← Передаём фильтр
-                        minStars={params.minStars} // ← Передаём фильтр
+                        language={params.language}
+                        minStars={params.minStars}
                     />
                 </Suspense>
             </div>
