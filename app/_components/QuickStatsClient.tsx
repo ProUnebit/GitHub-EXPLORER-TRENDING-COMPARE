@@ -91,7 +91,7 @@ export function QuickStatsClient({ data }: { data: GitHubSearchResponse }) {
 
     return (
         <motion.div
-            className="grid w-full max-w-5xl grid-cols-2 gap-4 md:grid-cols-4"
+            className="grid w-full max-w-5xl grid-cols-2 gap-6 md:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             animate="show"

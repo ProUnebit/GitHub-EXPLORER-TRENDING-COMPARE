@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, X, Plus, LoaderPinwheel } from 'lucide-react';
+import { Search, X, Plus, LoaderPinwheel, Lightbulb  } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -165,8 +165,10 @@ export function RepoSelector({ selectedRepos }: RepoSelectorProps) {
             )}
             
             {/* Helper text */}
-            <p className="text-muted-foreground text-xs">
-                💡 Tip: Try comparing popular frameworks like{' '}
+            <p className="text-muted-foreground text-xs ">
+                <Lightbulb className='h-4 w-4 mr-1 text-amber-500/90 dark:text-amber-300/80 inline' />
+                <span className='font-semibold'>Tip: </span> <span>Try comparing popular frameworks like</span>
+                 {' '}
                 <button
                     onClick={() => {
                         setInput('facebook/react');
