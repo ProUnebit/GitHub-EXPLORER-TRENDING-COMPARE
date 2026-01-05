@@ -1,44 +1,45 @@
 import { http, HttpResponse } from 'msw';
 import {
-    mockSearchResponse,
-    mockSearchResponsePage2,
     mockRepo,
+    mockRepo2,
+    mockSearchResponse,
+    mockSearchResponseEmpty,
+    mockSearchResponsePage2,
     mockContributors,
     mockLanguages,
+    mockCommits,
+    mockPackageJson,
 } from './fixtures';
-
-// ============================================
-// MSW HANDLERS - Моки GitHub API
-// ============================================
-// Перехватываем все запросы к api.github.com
 
 const GITHUB_API = 'https://api.github.com';
 
+// ============================================
+// MSW HANDLERS
+// ============================================
+
 export const handlers = [
-    // Search repositories
+    // ============================================
+    // SEARCH REPOSITORIES
+    // ============================================
     http.get(`${GITHUB_API}/search/repositories`, ({ request }) => {
         const url = new URL(request.url);
-        const query = url.searchParams.get('q');
-        const page = url.searchParams.get('page');
-        const perPage = url.searchParams.get('per_page');
+        const query = url.searchParams.get('q') || '';
+        const page = url.searchParams.get('page') || '1';
 
-        // Проверка разных сценариев
-        if (query?.includes('notfound')) {
-            return HttpResponse.json({
-                total_count: 0,
-                incomplete_results: false,
-                items: [],
-            });
-        }
-
-        if (query?.includes('error')) {
+        // Error simulation
+        if (query.includes('error')) {
             return HttpResponse.json(
                 { message: 'API rate limit exceeded' },
                 { status: 403 }
             );
         }
 
-        // Пагинация
+        // Not found simulation
+        if (query.includes('notfound') || query.includes('nonexistent')) {
+            return HttpResponse.json(mockSearchResponseEmpty);
+        }
+
+        // Pagination
         if (page === '2') {
             return HttpResponse.json(mockSearchResponsePage2);
         }
@@ -46,50 +47,155 @@ export const handlers = [
         return HttpResponse.json(mockSearchResponse);
     }),
 
-    // Get single repository
+    // ============================================
+    // GET SINGLE REPOSITORY
+    // ============================================
     http.get(`${GITHUB_API}/repos/:owner/:repo`, ({ params }) => {
         const { owner, repo } = params;
 
-        if (repo === 'notfound') {
-            return HttpResponse.json({ message: 'Not Found' }, { status: 404 });
+        if (repo === 'notfound' || owner === 'notfound') {
+            return HttpResponse.json(
+                { message: 'Not Found' },
+                { status: 404 }
+            );
         }
 
-        return HttpResponse.json(mockRepo);
+        if (owner === 'error') {
+            return HttpResponse.json(
+                { message: 'Server Error' },
+                { status: 500 }
+            );
+        }
+
+        if (owner === 'facebook' && repo === 'react') {
+            return HttpResponse.json(mockRepo);
+        }
+
+        if (owner === 'vuejs' && repo === 'vue') {
+            return HttpResponse.json(mockRepo2);
+        }
+
+        // Default response
+        return HttpResponse.json({
+            ...mockRepo,
+            name: repo as string,
+            full_name: `${owner}/${repo}`,
+            owner: {
+                ...mockRepo.owner,
+                login: owner as string,
+            },
+        });
     }),
 
-    // Get contributors
-    http.get(`${GITHUB_API}/repos/:owner/:repo/contributors`, () => {
-        return HttpResponse.json(mockContributors);
+    // ============================================
+    // GET CONTRIBUTORS
+    // ============================================
+    http.get(`${GITHUB_API}/repos/:owner/:repo/contributors`, ({ params, request }) => {
+        const { owner } = params;
+        const url = new URL(request.url);
+        const perPage = parseInt(url.searchParams.get('per_page') || '10');
+
+        if (owner === 'notfound') {
+            return HttpResponse.json(
+                { message: 'Not Found' },
+                { status: 404 }
+            );
+        }
+
+        return HttpResponse.json(mockContributors.slice(0, perPage));
     }),
 
-    // Get languages
-    http.get(`${GITHUB_API}/repos/:owner/:repo/languages`, () => {
+    // ============================================
+    // GET LANGUAGES
+    // ============================================
+    http.get(`${GITHUB_API}/repos/:owner/:repo/languages`, ({ params }) => {
+        const { owner } = params;
+
+        if (owner === 'notfound') {
+            return HttpResponse.json(
+                { message: 'Not Found' },
+                { status: 404 }
+            );
+        }
+
         return HttpResponse.json(mockLanguages);
     }),
 
-    // Get commits
-    http.get(`${GITHUB_API}/repos/:owner/:repo/commits`, () => {
-        return HttpResponse.json([
-            {
-                sha: 'abc123',
-                commit: {
-                    author: {
-                        name: 'Dan Abramov',
-                        email: 'dan@example.com',
-                        date: '2024-12-30T10:00:00Z',
-                    },
-                    message: 'Fix: Update hooks implementation',
-                },
-                html_url: 'https://github.com/facebook/react/commit/abc123',
-                author: {
-                    login: 'gaearon',
-                    id: 810438,
-                    avatar_url:
-                        'https://avatars.githubusercontent.com/u/810438',
-                    html_url: 'https://github.com/gaearon',
-                    type: 'User',
-                },
-            },
-        ]);
+    // ============================================
+    // GET COMMITS
+    // ============================================
+    http.get(`${GITHUB_API}/repos/:owner/:repo/commits`, ({ params, request }) => {
+        const { owner } = params;
+        const url = new URL(request.url);
+        const perPage = parseInt(url.searchParams.get('per_page') || '10');
+
+        if (owner === 'notfound') {
+            return HttpResponse.json(
+                { message: 'Not Found' },
+                { status: 404 }
+            );
+        }
+
+        return HttpResponse.json(mockCommits.slice(0, perPage));
+    }),
+
+    // ============================================
+    // GET FILE CONTENTS (for package.json)
+    // ============================================
+    http.get(`${GITHUB_API}/repos/:owner/:repo/contents/:path`, ({ params }) => {
+        const { owner, path } = params;
+
+        if (owner === 'notfound') {
+            return HttpResponse.json(
+                { message: 'Not Found' },
+                { status: 404 }
+            );
+        }
+
+        if (path === 'package.json') {
+            const content = Buffer.from(JSON.stringify(mockPackageJson)).toString('base64');
+            return HttpResponse.json({
+                name: 'package.json',
+                path: 'package.json',
+                content,
+                encoding: 'base64',
+            });
+        }
+
+        return HttpResponse.json(
+            { message: 'Not Found' },
+            { status: 404 }
+        );
     }),
 ];
+
+// ============================================
+// ERROR HANDLERS (for specific test cases)
+// ============================================
+
+export const errorHandlers = {
+    searchRateLimit: http.get(`${GITHUB_API}/search/repositories`, () => {
+        return HttpResponse.json(
+            { message: 'API rate limit exceeded' },
+            { status: 403 }
+        );
+    }),
+
+    searchServerError: http.get(`${GITHUB_API}/search/repositories`, () => {
+        return HttpResponse.json(
+            { message: 'Internal Server Error' },
+            { status: 500 }
+        );
+    }),
+
+    repoNotFound: http.get(`${GITHUB_API}/repos/:owner/:repo`, () => {
+        return HttpResponse.json(
+            { message: 'Not Found' },
+            { status: 404 }
+        );
+    }),
+
+    networkError: http.get(`${GITHUB_API}/search/repositories`, () => {
+        return HttpResponse.error();
+    }),
+};

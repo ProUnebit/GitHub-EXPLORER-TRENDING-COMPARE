@@ -2,8 +2,8 @@ import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
 // ============================================
-// MSW SERVER - для Node.js тестов
+// MSW SERVER
 // ============================================
-// Запускается в beforeAll, останавливается в afterAll
+// This configures a Service Worker with the given request handlers.
 
 export const server = setupServer(...handlers);

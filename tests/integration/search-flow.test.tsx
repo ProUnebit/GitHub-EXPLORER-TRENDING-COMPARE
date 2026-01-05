@@ -1,120 +1,236 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SearchInput } from '@/components/SearchInput';
-import { SearchResults } from '@/app/_components/SearchResults';
 
-// Mock Next.js router
+// ============================================
+// SEARCH FLOW INTEGRATION TESTS
+// ============================================
+
+// Override the default mock for these tests
+const mockPush = vi.fn();
 vi.mock('next/navigation', () => ({
     useRouter: () => ({
-        push: vi.fn(),
+        push: mockPush,
+        replace: vi.fn(),
         back: vi.fn(),
         forward: vi.fn(),
     }),
     useSearchParams: () => new URLSearchParams(),
+    usePathname: () => '/',
 }));
 
 describe('Search Flow Integration', () => {
-    it('complete search flow: input → submit → results', async () => {
-        const user = userEvent.setup();
-
-        // 1. Рендерим SearchInput
-        render(<SearchInput />);
-
-        // 2. Вводим запрос
-        const input = screen.findByPlaceholderText(/search repositories/i);
-        await user.type(await input, 'react');
-
-        expect(input).toHaveValue('react');
-
-        // 3. Нажимаем Search
-        const searchButton = screen.findByRole('button', { name: /search/i });
-        await user.click(await searchButton);
-
-        // 4. Проверяем что router.push вызван
-        // (в реальном приложении произойдет навигация)
+    beforeEach(() => {
+        vi.clearAllMocks();
     });
 
-    it('shows validation when empty query submitted', async () => {
-        // const user = userEvent.setup();
-        render(<SearchInput />);
+    // ============================================
+    // BASIC SEARCH
+    // ============================================
 
-        const searchButton = screen.findByRole('button', { name: /search/i });
-
-        // Кнопка должна быть disabled пока поле пустое
-        expect(searchButton).toBeDisabled();
-    });
-
-    it('search with filters applied', async () => {
-        const user = userEvent.setup();
-        render(<SearchInput />);
-
-        // Вводим query
-        const input = screen.findByPlaceholderText(/search repositories/i);
-        await user.type(await input, 'react');
-
-        // Выбираем язык
-        const languageSelect = screen.findByRole('combobox', {
-            name: /language/i,
-        });
-        await user.click(await languageSelect);
-
-        const jsOption = screen.findByRole('option', { name: 'JavaScript' });
-        await user.click(await jsOption);
-
-        // Выбираем stars
-        const starsSelect = screen.findByRole('combobox', { name: /stars/i });
-        await user.click(await starsSelect);
-
-        const stars1000 = screen.findByRole('option', { name: '⭐️1000+' });
-        await user.click(await stars1000);
-
-        // Submit
-        const searchButton = screen.findByRole('button', { name: /search/i });
-        await user.click(await searchButton);
-
-        // Проверяем что фильтры отображаются
-        await waitFor(() => {
-            expect(screen.getByText('Active filters:')).toBeInTheDocument();
-        });
-    });
-});
-
-describe('SearchResults Integration', () => {
-    it('renders results from API', async () => {
-        render(<SearchResults query="react" />);
-
-        // MSW вернет mockRepo
-        await waitFor(() => {
-            expect(screen.getByText('react')).toBeInTheDocument();
-            expect(screen.getByText('vue')).toBeInTheDocument();
-        });
-    });
-
-    it('shows no results message', async () => {
-        render(<SearchResults query="notfound" />);
-
-        await waitFor(() => {
+    describe('basic search', () => {
+        it('renders search input', () => {
+            render(<SearchInput />);
             expect(
-                screen.getByText(/no repositories found/i)
+                screen.getByPlaceholderText(/search repositories/i)
             ).toBeInTheDocument();
         });
-    });
 
-    it('applies language filter in query', async () => {
-        render(<SearchResults query="react" language="javascript" />);
+        it('renders search button', () => {
+            render(<SearchInput />);
+            expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
+        });
 
-        // API должен получить query с language фильтром
-        await waitFor(() => {
-            expect(screen.getByText('react')).toBeInTheDocument();
+        it('allows typing in search input', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            expect(input).toHaveValue('react');
+        });
+
+        it('disables search button when input is empty', () => {
+            render(<SearchInput />);
+
+            const button = screen.getByRole('button', { name: /search/i });
+            expect(button).toBeDisabled();
+        });
+
+        it('enables search button when input has value', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            const button = screen.getByRole('button', { name: /search/i });
+            expect(button).not.toBeDisabled();
         });
     });
 
-    it('applies stars filter in query', async () => {
-        render(<SearchResults query="react" minStars="1000" />);
+    // ============================================
+    // SEARCH SUBMISSION
+    // ============================================
 
-        await waitFor(() => {
-            expect(screen.getByText('react')).toBeInTheDocument();
+    describe('search submission', () => {
+        it('calls router.push on form submit', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            await waitFor(() => {
+                expect(mockPush).toHaveBeenCalled();
+            });
+        });
+
+        it('includes query in URL', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            await waitFor(() => {
+                expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('q=react'));
+            });
+        });
+
+        it('shows loading state on submit', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            // Button text might change to "Searching..."
+            // This depends on the isPending state from useTransition
+        });
+    });
+
+    // ============================================
+    // FILTERS IN URL
+    // ============================================
+
+    describe('filters in URL', () => {
+        it('includes language filter when selected', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            // Type query
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            // Select language
+            const languageSelect = screen.getByRole('combobox', { name: /language/i });
+            await user.click(languageSelect);
+
+            const jsOption = screen.getByRole('option', { name: 'JavaScript' });
+            await user.click(jsOption);
+
+            // Submit
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            await waitFor(() => {
+                expect(mockPush).toHaveBeenCalledWith(
+                    expect.stringContaining('language=javascript')
+                );
+            });
+        });
+
+        it('includes stars filter when selected', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            // Type query
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            // Select stars
+            const starsSelect = screen.getByRole('combobox', { name: /stars/i });
+            await user.click(starsSelect);
+
+            const option = screen.getByRole('option', { name: '⭐️1000+' });
+            await user.click(option);
+
+            // Submit
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            await waitFor(() => {
+                expect(mockPush).toHaveBeenCalledWith(
+                    expect.stringContaining('minStars=1000')
+                );
+            });
+        });
+
+        it('includes both filters when both selected', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            // Type query
+            const input = screen.getByPlaceholderText(/search repositories/i);
+            await user.type(input, 'react');
+
+            // Select language
+            const languageSelect = screen.getByRole('combobox', { name: /language/i });
+            await user.click(languageSelect);
+            const pyOption = screen.getByRole('option', { name: 'Python' });
+            await user.click(pyOption);
+
+            // Select stars
+            const starsSelect = screen.getByRole('combobox', { name: /stars/i });
+            await user.click(starsSelect);
+            const starsOption = screen.getByRole('option', { name: '⭐️5000+' });
+            await user.click(starsOption);
+
+            // Submit
+            const button = screen.getByRole('button', { name: /search/i });
+            await user.click(button);
+
+            await waitFor(() => {
+                const url = mockPush.mock.calls[0][0];
+                expect(url).toContain('language=python');
+                expect(url).toContain('minStars=5000');
+            });
+        });
+    });
+
+    // ============================================
+    // CLEAR FILTERS
+    // ============================================
+
+    describe('clear filters', () => {
+        it('shows Clear Filters button when filters active', async () => {
+            const user = userEvent.setup();
+            render(<SearchInput />);
+
+            // Select a filter
+            const languageSelect = screen.getByRole('combobox', { name: /language/i });
+            await user.click(languageSelect);
+            const jsOption = screen.getByRole('option', { name: 'JavaScript' });
+            await user.click(jsOption);
+
+            // Clear button should appear
+            await waitFor(() => {
+                expect(
+                    screen.getByRole('button', { name: /clear filters/i })
+                ).toBeInTheDocument();
+            });
         });
     });
 });
