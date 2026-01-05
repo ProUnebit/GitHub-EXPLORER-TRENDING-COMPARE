@@ -1,98 +1,91 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 import { RepoCard } from '@/app/_components/RepoCard';
-import { mockRepo } from '@/tests/mocks/fixtures';
+import { mockRepo, mockRepo2 } from '@/tests/mocks/fixtures';
 
-describe('Navigation Flow Integration', () => {
-    it('repo card links to detail page', () => {
-        render(<RepoCard repo={mockRepo} />);
+// ============================================
+// NAVIGATION INTEGRATION TESTS
+// ============================================
 
-        const link = screen.getByRole('link', { name: 'react' });
-        expect(link).toHaveAttribute('href', '/repo/facebook/react');
+describe('Navigation Integration', () => {
+    // ============================================
+    // REPOSITORY CARD NAVIGATION
+    // ============================================
+
+    describe('repository card navigation', () => {
+        it('repo card links to correct detail page', () => {
+            render(<RepoCard repo={mockRepo} />);
+
+            const link = screen.getByRole('link', { name: 'react' });
+            expect(link).toHaveAttribute('href', '/repo/facebook/react');
+        });
+
+        it('repo card link is an anchor element', () => {
+            render(<RepoCard repo={mockRepo} />);
+
+            const link = screen.getByRole('link', { name: 'react' });
+            expect(link.tagName).toBe('A');
+        });
+
+        it('different repos link to different pages', () => {
+            const { rerender } = render(<RepoCard repo={mockRepo} />);
+            let link = screen.getByRole('link', { name: 'react' });
+            expect(link).toHaveAttribute('href', '/repo/facebook/react');
+
+            rerender(<RepoCard repo={mockRepo2} />);
+            link = screen.getByRole('link', { name: 'vue' });
+            expect(link).toHaveAttribute('href', '/repo/vuejs/vue');
+        });
     });
 
-    it('clicking repo card navigates (link behavior)', async () => {
-        // const user = userEvent.setup();
-        render(<RepoCard repo={mockRepo} />);
+    // ============================================
+    // MULTIPLE CARDS
+    // ============================================
 
-        const link = screen.getByRole('link', { name: 'react' });
+    describe('multiple cards', () => {
+        it('renders multiple cards with correct links', () => {
+            render(
+                <>
+                    <RepoCard repo={mockRepo} />
+                    <RepoCard repo={mockRepo2} />
+                </>
+            );
 
-        // Проверяем что это <a> элемент с правильным href
-        expect(link.tagName).toBe('A');
-        expect(link).toHaveAttribute('href', '/repo/facebook/react');
+            const reactLink = screen.getByRole('link', { name: 'react' });
+            const vueLink = screen.getByRole('link', { name: 'vue' });
+
+            expect(reactLink).toHaveAttribute('href', '/repo/facebook/react');
+            expect(vueLink).toHaveAttribute('href', '/repo/vuejs/vue');
+        });
     });
 
-    it('owner link navigates to GitHub profile', () => {
-        render(<RepoCard repo={mockRepo} />);
+    // ============================================
+    // URL STRUCTURE
+    // ============================================
 
-        // В RepoCard нет прямой ссылки на owner, но можно добавить
-        // Этот тест демонстрирует как можно проверить внешние ссылки
-        const ownerText = screen.getByText('facebook');
-        expect(ownerText).toBeInTheDocument();
-    });
+    describe('URL structure', () => {
+        it('uses correct URL format: /repo/owner/name', () => {
+            render(<RepoCard repo={mockRepo} />);
 
-    it('multiple cards render with correct links', () => {
-        const mockRepo2 = {
-            ...mockRepo,
-            id: 2,
-            name: 'vue',
-            full_name: 'vuejs/vue',
-            owner: { ...mockRepo.owner, login: 'vuejs' },
-        };
+            const link = screen.getByRole('link', { name: 'react' });
+            const href = link.getAttribute('href');
 
-        render(
-            <>
-                <RepoCard repo={mockRepo} />
-                <RepoCard repo={mockRepo2} />
-            </>
-        );
+            // Should match pattern /repo/{owner}/{repo}
+            expect(href).toMatch(/^\/repo\/[^/]+\/[^/]+$/);
+        });
 
-        const reactLink = screen.getByRole('link', { name: 'react' });
-        const vueLink = screen.getByRole('link', { name: 'vue' });
+        it('handles special characters in repo names', () => {
+            const specialRepo = {
+                ...mockRepo,
+                name: 'next.js',
+                full_name: 'vercel/next.js',
+                owner: { ...mockRepo.owner, login: 'vercel' },
+            };
 
-        expect(reactLink).toHaveAttribute('href', '/repo/facebook/react');
-        expect(vueLink).toHaveAttribute('href', '/repo/vuejs/vue');
-    });
+            render(<RepoCard repo={specialRepo} />);
 
-    it('preserves URL parameters in navigation', () => {
-        // Этот тест демонстрирует концепцию
-        // В реальности Next.js Link автоматически обрабатывает параметры
-
-        render(<RepoCard repo={mockRepo} />);
-
-        const link = screen.getByRole('link', { name: 'react' });
-
-        // Link использует Next.js router, который сохраняет history
-        expect(link).toHaveAttribute('href', '/repo/facebook/react');
-    });
-});
-
-describe('Back Navigation', () => {
-    it('browser back button should work (conceptual test)', () => {
-        // Этот тест концептуальный - показывает что мы думали о back navigation
-        // В реальности это обеспечивается Next.js router автоматически
-
-        // Next.js Link компоненты автоматически:
-        // 1. Добавляют history entry
-        // 2. Prefetch данные
-        // 3. Обеспечивают client-side navigation
-
-        expect(true).toBe(true); // Placeholder
-    });
-});
-
-describe('External Links', () => {
-    it('GitHub repo link opens in new tab', () => {
-        // Проверка что внешние ссылки открываются правильно
-        // Это важно для UX - пользователь не теряет контекст
-
-        render(<RepoCard repo={mockRepo} />);
-
-        // В RepoCard нет прямой ссылки на GitHub
-        // Но в RepoHeader есть кнопка "View on GitHub"
-        // Это демонстрирует паттерн проверки внешних ссылок
-
-        expect(mockRepo.html_url).toBe('https://github.com/facebook/react');
+            const link = screen.getByRole('link', { name: 'next.js' });
+            expect(link).toHaveAttribute('href', '/repo/vercel/next.js');
+        });
     });
 });
