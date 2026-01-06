@@ -10,7 +10,7 @@ import { ScrollToTop } from '@/components/ScrollToTop';
 import { ViewTransitions, Link } from 'next-view-transitions';
 import { ThemeOption } from '@/lib/constants/theme';
 import { InitialLoader } from '@/components/InitialLoader';
-import { Logo } from '@/components/Logo';
+// import { Logo } from '@/components/Logo';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
         siteName: siteConfig.name,
         images: [
             {
-                url: '/og-image.png',  
+                url: '/og-image.png',
                 width: 1200,
                 height: 630,
                 alt: 'GitHub Explorer Dashboard',
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
         title: siteConfig.name,
         description: siteConfig.description,
         images: ['/og-image.png'],
-        creator: '@ProUnebit',  
+        creator: '@ProUnebit',
     },
     robots: {
         index: true,
@@ -155,18 +155,24 @@ export default function RootLayout({
                                                 COMPARE
                                             </span>
                                         </Link>
+                                        <span>|</span>
+                                        <Link href="/feedback">
+                                            <span className="font-semibold text-stone-600 transition-all hover:text-teal-400 dark:text-white dark:hover:text-amber-300/80">
+                                                FEEDBACK
+                                            </span>
+                                        </Link>
                                     </div>
 
                                     {/* Theme Toggle */}
                                     <ThemeToggle />
                                 </div>
                             </header>
-                            
+
                             <main className="flex-1 px-4">{children}</main>
 
                             <footer className="border-t px-4 py-6 md:py-0">
                                 <div className="container mx-auto flex h-10 items-center justify-end">
-                                    <span className="text-stone-500 text-xs italic">
+                                    <span className="text-xs text-stone-500 italic">
                                         by Alexey Ratnikov
                                     </span>
                                 </div>
