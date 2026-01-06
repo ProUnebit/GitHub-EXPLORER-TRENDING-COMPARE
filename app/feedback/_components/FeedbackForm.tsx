@@ -115,7 +115,7 @@ export function FeedbackForm({
     }
 
     return (
-        <Card>
+        <Card className='bg-card dark:border-teal-900/60'>
             <CardHeader>
                 <CardTitle>
                     {mode === 'create'

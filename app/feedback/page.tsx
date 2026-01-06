@@ -96,7 +96,7 @@ async function UserFeedbackSection() {
     const userFeedback = await feedbackQueries.getUserFeedback(userId);
 
     return (
-        <Card>
+        <Card className='bg-card dark:border-teal-900/60'>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-teal-600 dark:text-amber-300/80">
                     <MessageSquareMore className="h-5 w-5 text-teal-500" />
@@ -146,7 +146,7 @@ export default function FeedbackPage() {
                     </h1>
                     <p className="text-muted-foreground text-lg">
                         Share your experience with GitHub Explorer | Trending | Compare.
-                         <br /> Your feedback helps us improve!
+                         <br /> Your feedback helps me improve!
                     </p>
                 </div>
 

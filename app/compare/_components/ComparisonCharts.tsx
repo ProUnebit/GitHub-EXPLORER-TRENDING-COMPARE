@@ -180,7 +180,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
     return (
         <div className="grid gap-6 lg:grid-cols-2">
             {/* Main Metrics Chart */}
-            <Card className="bg-card">
+            <Card className="bg-card dark:border-teal-900/60">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <ChartColumnIncreasing className="mr-2 inline-block h-5 w-5 text-teal-500" />
@@ -193,7 +193,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             </Card>
 
             {/* Activity Chart */}
-            <Card className="bg-card">
+            <Card className="bg-card dark:border-teal-900/60">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <Users className="mr-2 inline-block h-5 w-5 text-teal-500" />
@@ -206,7 +206,7 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             </Card>
 
             {/* Languages Breakdown */}
-            <Card className="bg-card lg:col-span-2">
+            <Card className="bg-card lg:col-span-2 dark:border-teal-900/60">
                 <CardHeader>
                     <CardTitle className="flex items-center">
                         <CodeXml className="mr-2 inline-block h-5 w-5 text-teal-500" />

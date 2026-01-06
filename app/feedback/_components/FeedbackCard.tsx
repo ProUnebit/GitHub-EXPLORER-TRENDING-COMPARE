@@ -29,6 +29,7 @@ import { Pencil, Trash2, X, LoaderPinwheel } from 'lucide-react';
 import { deleteFeedbackAction } from '@/app/actions';
 import { toast } from 'sonner';
 import type { Feedback } from '@/db/schema';
+import { getGradientById } from '@/lib/utils/gradients';
 
 // ============================================
 // TYPES
@@ -48,6 +49,8 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isPending, startTransition] = useTransition();
+
+    const gradient = getGradientById(feedback.id);
 
     // ============================================
     // HANDLERS
@@ -113,7 +116,7 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
                         variant="ghost"
                         size="sm"
                         onClick={() => setIsEditing(false)}
-                        className="ring ring-orange-500 hover:cursor-pointer ml-auto"
+                        className="ml-auto ring ring-orange-500 hover:cursor-pointer"
                     >
                         <X className="mr-1 h-3 w-3 text-orange-500" />
                         Cancel
@@ -136,12 +139,13 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
     return (
         <Card
             id={`feedback-${feedback.id}`}
-            className={`transition-all duration-300 ${isDeleting ? 'pointer-events-none opacity-50' : ''} `}
+            className={`group relative overflow-hidden border-none bg-linear-to-br ${gradient} backdrop-blur-lg transition-all duration-300 ${isDeleting ? 'pointer-events-none opacity-50' : ''} `}
         >
-            <CardContent className="p-6">
-                {/* ============================================ */}
+            {/* ✅ HOVER OVERLAY - появляется при наведении */}
+            <div className="absolute inset-0 -z-10 bg-linear-to-br from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+            <CardContent className="relative z-10 p-6">
                 {/* HEADER - Name, Rating, Date */}
-                {/* ============================================ */}
                 <div className="mb-4 flex items-start justify-between gap-4">
                     <div className="flex-1">
                         {/* Name + Edited badge */}
@@ -150,7 +154,6 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
                                 {feedback.userName}
                             </h3>
 
-                            {/* Badge "edited" если отредактирован */}
                             {feedback.edited && (
                                 <Badge variant="secondary" className="text-xs">
                                     edited
@@ -172,25 +175,21 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
                     </div>
                 </div>
 
-                {/* ============================================ */}
                 {/* CONTENT - Feedback text */}
-                {/* ============================================ */}
                 <p className="mb-4 text-base leading-relaxed whitespace-pre-wrap">
                     {feedback.content}
                 </p>
 
-                {/* ============================================ */}
-                {/* ACTIONS - Edit/Delete buttons (только для владельца) */}
-                {/* ============================================ */}
+                {/* ACTIONS - Edit/Delete buttons */}
                 {isOwner && (
-                    <div className="flex gap-2 border-t pt-4">
+                    <div className="flex gap-2 border-t border-white/10 pt-4">
                         {/* Edit button */}
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={() => setIsEditing(true)}
                             disabled={isPending}
-                            className='cursor-pointer'
+                            className="cursor-pointer border-white/20 bg-white/5 hover:bg-white/50"
                         >
                             <Pencil className="mr-2 h-4 w-4" />
                             Edit
@@ -202,10 +201,10 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
                             size="sm"
                             onClick={handleDelete}
                             disabled={isPending}
-                            className="text-destructive hover:text-destructive cursor-pointer"
+                            className="text-destructive hover:text-destructive cursor-pointer border-white/20 bg-white/5 hover:bg-red-500/10"
                         >
                             {isPending && isDeleting ? (
-                                <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin dark:bg-amber-300/80" />
+                                <LoaderPinwheel className="mr-2 h-4 w-4 animate-spin" />
                             ) : (
                                 <Trash2 className="mr-2 h-4 w-4" />
                             )}

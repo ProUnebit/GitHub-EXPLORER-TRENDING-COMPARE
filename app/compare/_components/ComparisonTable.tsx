@@ -75,7 +75,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
     const oldestIndex = createdDates.indexOf(Math.min(...createdDates));
 
     return (
-        <Card className="bg-card">
+        <Card className="bg-card dark:border-teal-900/60">
             <CardHeader>
                 <CardTitle className="flex items-center">
                     <TableProperties className="mr-2 inline-block h-5 w-5 text-teal-500" />

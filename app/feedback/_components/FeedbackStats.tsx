@@ -37,7 +37,7 @@ export async function FeedbackStats() {
   const maxCount = Math.max(...fullDistribution.map(d => d.count));
   
   return (
-    <Card>
+    <Card className='bg-card dark:border-teal-900/60'>
       <CardHeader>
         <CardTitle></CardTitle>
         <CardTitle className="flex items-center gap-2 text-teal-600 dark:text-amber-300/80">
