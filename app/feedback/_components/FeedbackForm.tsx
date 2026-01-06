@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useTransition, useRef } from 'react'; // ← Добавили useRef
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { RatingStars } from './RatingStars';
 import { Button } from '@/components/ui/button';
