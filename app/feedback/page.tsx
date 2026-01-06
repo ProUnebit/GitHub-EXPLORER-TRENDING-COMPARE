@@ -134,19 +134,21 @@ async function UserFeedbackSection() {
 // ============================================
 export default function FeedbackPage() {
     return (
-        <div className="container mx-auto py-10">
-            <div className="mx-auto max-w-4xl space-y-8">
+        <div className="container mx-auto py-6 sm:py-10">
+            <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8 px-4 sm:px-0">
                 {/* ============================================ */}
                 {/* HEADER */}
                 {/* ============================================ */}
-                <div className="space-y-4 text-center">
-                    <h1 className="text-4xl font-bold tracking-tight">
-                        <MessagesSquare className="inline-block mr-3 w-12 h-12 text-emerald-600" />
+                <div className="space-y-3 sm:space-y-4 text-center">
+                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight flex flex-col sm:flex-row items-center justify-center gap-2">
+                        <MessagesSquare className="mr-1 w-10 h-10 sm:w-12 sm:h-12 text-emerald-600" />
                         <span className='text-teal-600 dark:text-amber-300/80'>Feedback & Reviews</span>
                     </h1>
-                    <p className="text-muted-foreground text-lg">
+                    <p className="text-muted-foreground text-base sm:text-lg px-4 sm:px-0">
                         Share your experience with GitHub Explorer | Trending | Compare.
-                         <br /> Your feedback helps me improve!
+                         <br className="hidden sm:inline" />
+                         <span className="sm:hidden"> </span>
+                         Your feedback helps me improve!
                     </p>
                 </div>
 

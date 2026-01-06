@@ -21,7 +21,7 @@ export function FeatureCard({ title, description }: FeatureCardProps) {
         <div className="relative p-px" style={{ clipPath: polygon }}>
             <div className="absolute inset-0 rounded-md bg-stone-300 dark:bg-teal-900/60" />
             <div
-                className="bg-card relative rounded-md p-6 shadow-sm"
+                className="bg-card relative rounded-md p-6 shadow-sm select-none"
                 style={{ clipPath: polygon }}
             >
                 <h3 className="mb-2 font-semibold">{title}</h3>

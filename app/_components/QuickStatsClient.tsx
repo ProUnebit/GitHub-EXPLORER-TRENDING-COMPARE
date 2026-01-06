@@ -91,7 +91,7 @@ export function QuickStatsClient({ data }: { data: GitHubSearchResponse }) {
 
     return (
         <motion.div
-            className="grid w-full max-w-5xl grid-cols-2 gap-6 md:grid-cols-4"
+            className="grid w-full max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-4 px-4 sm:px-0"
             variants={containerVariants}
             initial="hidden"
             animate="show"
@@ -108,7 +108,7 @@ export function QuickStatsClient({ data }: { data: GitHubSearchResponse }) {
                             </div>
 
                             {/* Value */}
-                            <div className="mb-1 text-3xl font-bold text-foreground">
+                            <div className="mb-1 text-2xl sm:text-3xl font-bold text-foreground">
                                 {stat.value}
                             </div>
 
