@@ -157,7 +157,7 @@ export default function RootLayout({
                                         </Link>
                                         <span>|</span>
                                         <Link href="/feedback">
-                                            <span className="font-semibold text-stone-600 transition-all hover:text-teal-400 dark:text-white dark:hover:text-amber-300/80">
+                                            <span className="font-semibold text-slate-500 transition-all hover:text-teal-400 dark:text-slate-400 dark:hover:text-amber-300/80">
                                                 FEEDBACK
                                             </span>
                                         </Link>

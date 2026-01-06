@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+# drizzle migrations
+/drizzle/migrations
+
 # testing
 /coverage
 
