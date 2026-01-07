@@ -409,7 +409,7 @@ export async function getIssuesAnalytics(
             percentage: (data.count / total) * 100,
         }))
         .sort((a, b) => b.count - a.count)
-        .slice(0, 5);
+        .slice(0, 10); // ✅ Увеличил с 5 до 10
 
     // Top Contributors (кто закрывает issues)
     const contributorMap = new Map<
@@ -466,10 +466,10 @@ export async function getIssuesAnalytics(
 /**
  * Генерация timeline данных (последние 6 месяцев)
  * 
- * ПОЧЕМУ ТАК:
+ * ЛОГИКА:
  * - Группируем issues по месяцам
- * - Считаем open/closed на каждый месяц
- * - Показываем динамику
+ * - Считаем сколько issues было создано в каждом месяце
+ * - Разделяем на open и closed
  */
 function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
     const timeline: IssueTimelineData[] = [];

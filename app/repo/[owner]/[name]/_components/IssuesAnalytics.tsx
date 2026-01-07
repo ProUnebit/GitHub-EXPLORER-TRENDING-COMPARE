@@ -25,7 +25,7 @@ import { IssuesTimelineChart } from './IssuesTimelineChart';
 import { IssuesLabelsChart } from './IssuesLabelsChart';
 import { TopIssuesList } from './TopIssuesList';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MessageSquareText, Tags, ThermometerSun } from 'lucide-react';
+import { ChartNoAxesCombined, Tags, ThermometerSun } from 'lucide-react';
 
 // ============================================
 // TYPES
@@ -52,10 +52,10 @@ export async function IssuesAnalytics({
     }
 
     return (
-        <Card className="bg-card dark:border-teal-900/60">
+        <Card className="bg-card dark:border-teal-900/60 overflow-hidden">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-teal-600 dark:text-amber-300/80">
-                    <MessageSquareText className="h-6 w-6 text-teal-500" />
+                    <ChartNoAxesCombined  className="h-6 w-6 text-teal-500" />
                     Issues Analytics
                 </CardTitle>
             </CardHeader>
@@ -76,20 +76,21 @@ export async function IssuesAnalytics({
                 {/* TIMELINE CHART - График динамики */}
                 {/* Client Component для интерактивности */}
                 {/* ============================================ */}
-                <div>
+                <div className="overflow-hidden">
                     <h3 className="mb-3 text-sm font-medium text-muted-foreground">
-                        Issues Over Time (Last 6 months)
+                        Issues Over Time (Last <span className='text-teal-500'>6 months</span>)
                     </h3>
                     <IssuesTimelineChart timeline={analytics.timeline} />
                 </div>
 
                 {/* ============================================ */}
                 {/* GRID: Labels + Top Issues */}
+                {/* На мобильных - 1 колонка, на desktop - 2 */}
                 {/* ============================================ */}
                 <div className="grid gap-6 md:grid-cols-2">
                     {/* Labels Distribution */}
                     {analytics.topLabels.length > 0 && (
-                        <div>
+                        <div className="min-w-0 overflow-hidden">
                             <h3 className="mb-3 text-sm font-medium flex items-center text-teal-600 dark:text-amber-300/80">
                                 <Tags className='mr-2 h-4 w-4 text-teal-500' />
                                 Top Labels
@@ -100,7 +101,7 @@ export async function IssuesAnalytics({
 
                     {/* Top Issues */}
                     {analytics.hottestIssues.length > 0 && (
-                        <div>
+                        <div className="min-w-0 overflow-hidden">
                             <h3 className="mb-3 text-sm font-medium flex items-center text-teal-600 dark:text-amber-300/80">
                                 <ThermometerSun className='mr-2 h-4 w-4 text-teal-500' />
                                 Hottest Issues

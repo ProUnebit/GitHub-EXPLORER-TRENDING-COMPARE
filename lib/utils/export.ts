@@ -109,8 +109,31 @@ export function exportRepoStatsToPDF(data: {
     license: string;
     created: string;
     updated: string;
+    healthScore: { // ✅ Добавил
+        score: number;
+        grade: string;
+        factors: {
+            activity: number;
+            community: number;
+            maintenance: number;
+            documentation: number;
+        };
+    };
     contributors: Array<{ login: string; contributions: number }>;
     languages: Array<{ name: string; percentage: number }>;
+    recentCommits: Array<{ message: string; author: string; date: string }>; // ✅ Добавил
+    issuesAnalytics: { // ✅ Добавил
+        total: number;
+        open: number;
+        closed: number;
+        avgCloseTime: number;
+        topLabels: Array<{ name: string; count: number; percentage: number }>;
+    };
+    dependencies: { // ✅ Добавил
+        total: number;
+        prod: number;
+        dev: number;
+    } | null;
 }) {
     const doc = new jsPDF();
 
@@ -196,6 +219,140 @@ export function exportRepoStatsToPDF(data: {
         doc.text(`  - ${lang.name}: ${lang.percentage.toFixed(1)}%`, 25, yPos);
         yPos += 6;
     });
+
+    yPos += 10;
+
+    // ============================================
+    // ✅ HEALTH SCORE SECTION
+    // ============================================
+    if (yPos > 230) {
+        doc.addPage();
+        yPos = 20;
+    }
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 184, 166); // teal
+    doc.text('Health Score', 20, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0);
+
+    doc.text(`  Overall Score: ${data.healthScore.score}/100 (${data.healthScore.grade})`, 25, yPos);
+    yPos += 7;
+    doc.text(`  Activity: ${data.healthScore.factors.activity}/100`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Community: ${data.healthScore.factors.community}/100`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Maintenance: ${data.healthScore.factors.maintenance}/100`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Documentation: ${data.healthScore.factors.documentation}/100`, 25, yPos);
+    yPos += 10;
+
+    // ============================================
+    // ✅ DEPENDENCIES SECTION
+    // ============================================
+    if (data.dependencies) {
+        if (yPos > 250) {
+            doc.addPage();
+            yPos = 20;
+        }
+
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(20, 184, 166);
+        doc.text('Dependencies', 20, yPos);
+        yPos += 10;
+
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0);
+
+        doc.text(`  Total Dependencies: ${data.dependencies.total}`, 25, yPos);
+        yPos += 6;
+        doc.text(`  Production: ${data.dependencies.prod}`, 25, yPos);
+        yPos += 6;
+        doc.text(`  Development: ${data.dependencies.dev}`, 25, yPos);
+        yPos += 10;
+    }
+
+    // ============================================
+    // ✅ ISSUES ANALYTICS SECTION
+    // ============================================
+    if (yPos > 220) {
+        doc.addPage();
+        yPos = 20;
+    }
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 184, 166);
+    doc.text('Issues Analytics', 20, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0);
+
+    doc.text(`  Total Issues: ${data.issuesAnalytics.total}`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Open: ${data.issuesAnalytics.open} (${((data.issuesAnalytics.open / data.issuesAnalytics.total) * 100).toFixed(1)}%)`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Closed: ${data.issuesAnalytics.closed} (${((data.issuesAnalytics.closed / data.issuesAnalytics.total) * 100).toFixed(1)}%)`, 25, yPos);
+    yPos += 6;
+    doc.text(`  Avg Close Time: ${data.issuesAnalytics.avgCloseTime.toFixed(1)} days`, 25, yPos);
+    yPos += 8;
+
+    // Top Labels
+    if (data.issuesAnalytics.topLabels.length > 0) {
+        doc.setFont('helvetica', 'bold');
+        doc.text('  Top Labels:', 25, yPos);
+        yPos += 6;
+        doc.setFont('helvetica', 'normal');
+        
+        data.issuesAnalytics.topLabels.forEach((label) => {
+            doc.text(`    - ${label.name}: ${label.count} (${label.percentage.toFixed(1)}%)`, 25, yPos);
+            yPos += 6;
+        });
+    }
+
+    yPos += 10;
+
+    // ============================================
+    // ✅ RECENT COMMITS SECTION
+    // ============================================
+    if (yPos > 220) {
+        doc.addPage();
+        yPos = 20;
+    }
+
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 184, 166);
+    doc.text('Recent Commits', 20, yPos);
+    yPos += 10;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(0);
+
+    data.recentCommits.forEach((commit, index) => {
+        // Обрезаем длинные сообщения
+        const message = commit.message.length > 60 
+            ? commit.message.substring(0, 60) + '...' 
+            : commit.message;
+        
+        doc.text(`  ${index + 1}. ${message}`, 25, yPos);
+        yPos += 5;
+        doc.setTextColor(100);
+        doc.text(`     By ${commit.author} on ${commit.date}`, 25, yPos);
+        doc.setTextColor(0);
+        yPos += 7;
+    });
+
+    yPos += 5;
 
     // Footer
     doc.setFontSize(8);

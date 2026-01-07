@@ -104,7 +104,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                                 rel="noopener noreferrer"
                                 className="group/link flex items-start gap-1 text-sm font-medium leading-tight transition-colors hover:text-teal-600 dark:hover:text-amber-300"
                             >
-                                <span className="line-clamp-2">
+                                <span className="line-clamp-2 wrap-break-word">
                                     #{issue.number} {issue.title}
                                 </span>
                                 <ExternalLink className="mt-0.5 h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover/link:opacity-100" />
@@ -121,7 +121,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                                 <Badge
                                     key={label.id}
                                     variant="outline"
-                                    className="text-xs px-2 py-0"
+                                    className="text-xs px-2 py-0 max-w-full truncate"
                                     style={{
                                         backgroundColor: `#${label.color}`,
                                         color: getLabelTextColor(label.color),
@@ -132,7 +132,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                                 </Badge>
                             ))}
                             {issue.labels.length > 3 && (
-                                <Badge variant="secondary" className="text-xs px-2 py-0">
+                                <Badge variant="secondary" className="text-xs px-2 py-0 shrink-0">
                                     +{issue.labels.length - 3}
                                 </Badge>
                             )}
@@ -142,23 +142,23 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                     {/* ============================================ */}
                     {/* STATS - Comments + Reactions */}
                     {/* ============================================ */}
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
                         {/* Comments */}
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1 shrink-0">
                             <MessageSquare className="h-3.5 w-3.5" />
                             <span>{issue.comments}</span>
                         </div>
 
                         {/* Reactions */}
                         {issue.reactions.total_count > 0 && (
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 shrink-0">
                                 <Heart className="h-3.5 w-3.5" />
                                 <span>{issue.reactions.total_count}</span>
                             </div>
                         )}
 
                         {/* State badge */}
-                        <div className="ml-auto">
+                        <div className="ml-auto shrink-0">
                             <Badge
                                 variant={issue.state === 'open' ? 'default' : 'secondary'}
                                 className={`text-xs ${

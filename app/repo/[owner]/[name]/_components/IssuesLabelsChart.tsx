@@ -128,7 +128,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                 ticks: {
                     color: isDark ? '#9ca3af' : '#6b7280',
                     font: {
-                        size: 11,
+                        size: 12,
                     },
                 },
             },
@@ -139,7 +139,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                 ticks: {
                     color: isDark ? '#e5e7eb' : '#374151',
                     font: {
-                        size: 11,
+                        size: 12,
                         weight: 500, // ✅ Изменил с '500' на 500 (число)
                     },
                 },
@@ -148,7 +148,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
     };
 
     return (
-        <div className="h-64 w-full">
+        <div className="h-110 w-full overflow-hidden">
             <Bar data={data} options={options} />
         </div>
     );

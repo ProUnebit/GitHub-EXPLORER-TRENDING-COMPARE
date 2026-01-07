@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Link } from 'next-view-transitions';
 import { ArrowLeft } from 'lucide-react';
-import { getRepository, getContributors, getLanguages } from '@/lib/github/api';
+import { getRepository, getContributors, getLanguages, getCommits, getIssuesAnalytics, getPackageJson } from '@/lib/github/api';
 import { RepoHeader } from './_components/RepoHeader';
 import { RepoStats } from './_components/RepoStats';
 import { HealthScoreCard } from './_components/HealthScoreCard';
@@ -10,7 +10,7 @@ import { ContributorsList } from './_components/ContributorsList';
 import { RecentCommits } from './_components/RecentCommits';
 import { RepoSkeleton } from './_components/RepoSkeleton';
 import { RepoExportButton } from './_components/RepoExportButton';
-import { IssuesAnalytics } from './_components/IssuesAnalytics'; // ✅ Добавили
+import { IssuesAnalytics } from './_components/IssuesAnalytics';
 import { Metadata } from 'next/types';
 import { DependencyAnalysis } from './_components/DependencyAnalysis';
 
@@ -88,10 +88,14 @@ export async function generateMetadata({
 export default async function RepoPage({ params }: PageProps) {
     const { owner, name } = await params;
 
-    const [repo, contributors, languages] = await Promise.all([
+    // Получаем все данные параллельно для экспорта
+    const [repo, contributors, languages, commits, issuesAnalytics, packageJson] = await Promise.all([
         getRepository(owner, name),
         getContributors(owner, name, 100),
         getLanguages(owner, name),
+        getCommits(owner, name, 10), // ✅ Добавил commits
+        getIssuesAnalytics(owner, name), // ✅ Добавил issues analytics
+        getPackageJson(owner, name), // ✅ Добавил для dependencies
     ]);
 
     const structuredData = {
@@ -152,9 +156,13 @@ export default async function RepoPage({ params }: PageProps) {
                     repo={repo}
                     contributors={contributors}
                     languages={languages}
+                    commits={commits}
+                    issuesAnalytics={issuesAnalytics}
+                    packageJson={packageJson}
                 />
                 <RepoStats repo={repo} />
 
+                {/* ROW 1: Health Score | Languages | Dependencies */}
                 <div className="grid gap-8 lg:grid-cols-3">
                     <HealthScoreCard repo={repo} />
                     <Suspense fallback={<RepoSkeleton.Chart />}>
@@ -165,19 +173,28 @@ export default async function RepoPage({ params }: PageProps) {
                     </Suspense>
                 </div>
 
+                {/* Issues Analytics */}
                 <Suspense fallback={<RepoSkeleton.IssuesAnalytics />}>
                     <IssuesAnalytics owner={owner} name={name} />
                 </Suspense>
 
-                <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
-                    <Suspense fallback={<RepoSkeleton.Commits />}>
-                        <RecentCommits owner={owner} name={name} />
-                    </Suspense>
+                {/* ============================================ */}
+                {/* COMMUNITY & ACTIVITY */}
+                {/* Recent Commits: 2/3 ширины, Contributors: 1/3 */}
+                {/* ============================================ */}
+                <div className="grid gap-8 lg:grid-cols-3 lg:items-start">
+                    {/* Recent Commits - занимает 2 колонки */}
+                    <div className="lg:col-span-2">
+                        <Suspense fallback={<RepoSkeleton.Commits />}>
+                            <RecentCommits owner={owner} name={name} />
+                        </Suspense>
+                    </div>
+                    
+                    {/* Contributors - занимает 1 колонку */}
                     <Suspense fallback={<RepoSkeleton.Contributors />}>
                         <ContributorsList owner={owner} name={name} />
                     </Suspense>
                 </div>
-                
             </div>
         </>
     );

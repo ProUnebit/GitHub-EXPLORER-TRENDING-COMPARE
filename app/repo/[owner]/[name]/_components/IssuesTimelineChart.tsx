@@ -6,7 +6,7 @@
  * ============================================
  * ISSUES TIMELINE CHART
  * ============================================
- * 
+ *
  * График динамики issues за последние 6 месяцев
  */
 
@@ -102,7 +102,7 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
                 labels: {
                     color: isDark ? '#e5e7eb' : '#374151',
                     font: {
-                        size: 12,
+                        size: 13,
                         weight: 500, // ✅ Изменил с '500' на 500 (число)
                     },
                     usePointStyle: true,
@@ -135,7 +135,7 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
                 ticks: {
                     color: isDark ? '#9ca3af' : '#6b7280',
                     font: {
-                        size: 11,
+                        size: 12,
                     },
                 },
             },
@@ -148,7 +148,7 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
                 ticks: {
                     color: isDark ? '#9ca3af' : '#6b7280',
                     font: {
-                        size: 11,
+                        size: 12,
                     },
                 },
             },
