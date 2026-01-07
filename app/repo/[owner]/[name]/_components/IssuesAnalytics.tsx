@@ -78,7 +78,7 @@ export async function IssuesAnalytics({
                 {/* ============================================ */}
                 <div className="overflow-hidden">
                     <h3 className="mb-3 text-sm font-medium text-muted-foreground">
-                        Issues Activity (Last <span className='text-teal-500'>6 months</span>)
+                        Issues Activity: <span className='text-teal-500'>Last 6 months</span>
                     </h3>
                     <IssuesTimelineChart timeline={analytics.timeline} />
                 </div>

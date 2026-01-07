@@ -73,14 +73,14 @@ export function IssuesOverviewCards({
 
     const cards = [
         {
-            icon: <BarChart3 className="h-5 w-5 text-purple-600" />,
+            icon: <BarChart3 className="h-6 w-6 text-purple-600" />,
             label: 'Total Issues',
             value: total,
             subtext: 'All time',
             color: 'text-purple-600',
         },
         {
-            icon: <Circle className="h-5 w-5 text-orange-600" />,
+            icon: <Circle className="h-6 w-6 text-orange-600" />,
             label: 'Open',
             value: open,
             subtext: `${openPercentage}% of total`,
@@ -88,14 +88,14 @@ export function IssuesOverviewCards({
             highlight: healthStatus === 'needs-attention',
         },
         {
-            icon: <CheckCircle2 className="h-5 w-5 text-green-600" />,
+            icon: <CheckCircle2 className="h-6 w-6 text-green-600" />,
             label: 'Closed',
             value: closed,
             subtext: `${closedPercentage}% of total`,
             color: 'text-green-600',
         },
         {
-            icon: <Clock className="h-5 w-5 text-blue-600" />,
+            icon: <Clock className="h-6 w-6 text-blue-600" />,
             label: 'Avg Close Time',
             value: formatCloseTime(avgCloseTime),
             subtext: avgCloseTime < 7 ? 'Fast response ✅' : 'Avg response',
@@ -110,26 +110,25 @@ export function IssuesOverviewCards({
                     key={index}
                     className={`
                         bg-linear-to-br from-background to-muted/20
-                        transition-all duration-200 hover:shadow-md
                         ${card.highlight ? 'ring-2 ring-orange-500/50' : ''}
                     `}
                 >
-                    <CardContent className="p-4 sm:p-6">
+                    <CardContent className="px-4 sm:px-6">
                         {/* Icon */}
                         <div className="mb-2">{card.icon}</div>
 
                         {/* Value */}
-                        <div className={`mb-1 text-2xl font-bold ${card.color}`}>
+                        <div className={`mb-1 text-4xl font-bold ${card.color}`}>
                             {card.value}
                         </div>
 
                         {/* Label */}
-                        <div className="mb-1 text-sm font-medium text-foreground">
+                        <div className="mb-1 text-md font-medium text-foreground">
                             {card.label}
                         </div>
 
                         {/* Subtext */}
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-sm text-muted-foreground">
                             {card.subtext}
                         </div>
                     </CardContent>

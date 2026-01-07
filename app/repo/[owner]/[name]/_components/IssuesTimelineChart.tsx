@@ -1,5 +1,3 @@
-// app/repo/[owner]/[name]/_components/IssuesTimelineChart.tsx
-
 'use client';
 
 /**
@@ -102,8 +100,8 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
                 labels: {
                     color: isDark ? '#e5e7eb' : '#374151',
                     font: {
-                        size: 13,
-                        weight: 500, // ✅ Изменил с '500' на 500 (число)
+                        size: 14,
+                        weight: 500,
                     },
                     usePointStyle: true,
                     pointStyle: 'circle',
