@@ -13,6 +13,8 @@
 # drizzle migrations
 /drizzle/migrations
 
+/.claude/
+
 # testing
 /coverage
 
