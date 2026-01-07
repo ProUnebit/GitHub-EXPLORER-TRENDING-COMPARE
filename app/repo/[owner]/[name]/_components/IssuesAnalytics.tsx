@@ -25,7 +25,7 @@ import { IssuesTimelineChart } from './IssuesTimelineChart';
 import { IssuesLabelsChart } from './IssuesLabelsChart';
 import { TopIssuesList } from './TopIssuesList';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartNoAxesCombined, Tags, ThermometerSun } from 'lucide-react';
+import { MessageSquareText, Tags, ThermometerSun } from 'lucide-react';
 
 // ============================================
 // TYPES
@@ -55,7 +55,7 @@ export async function IssuesAnalytics({
         <Card className="bg-card dark:border-teal-900/60 overflow-hidden">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-teal-600 dark:text-amber-300/80">
-                    <ChartNoAxesCombined  className="h-6 w-6 text-teal-500" />
+                    <MessageSquareText className="h-6 w-6 text-teal-500" />
                     Issues Analytics
                 </CardTitle>
             </CardHeader>
@@ -78,7 +78,7 @@ export async function IssuesAnalytics({
                 {/* ============================================ */}
                 <div className="overflow-hidden">
                     <h3 className="mb-3 text-sm font-medium text-muted-foreground">
-                        Issues Over Time (Last <span className='text-teal-500'>6 months</span>)
+                        Issues Activity (Last <span className='text-teal-500'>6 months</span>)
                     </h3>
                     <IssuesTimelineChart timeline={analytics.timeline} />
                 </div>

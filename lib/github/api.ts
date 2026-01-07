@@ -467,9 +467,9 @@ export async function getIssuesAnalytics(
  * Генерация timeline данных (последние 6 месяцев)
  * 
  * ЛОГИКА:
- * - Группируем issues по месяцам
- * - Считаем сколько issues было создано в каждом месяце
- * - Разделяем на open и closed
+ * - Показываем АКТИВНОСТЬ в каждом месяце
+ * - Активность = issues созданные ИЛИ закрытые в этом месяце
+ * - Это дает более полную картину и заполняет график
  */
 function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
     const timeline: IssueTimelineData[] = [];
@@ -481,14 +481,21 @@ function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
         const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 
-        // Issues созданные в этом месяце
-        const monthIssues = issues.filter((issue) => {
+        // Issues которые были АКТИВНЫ в этом месяце (созданы ИЛИ закрыты)
+        const activeIssues = issues.filter((issue) => {
             const created = new Date(issue.created_at);
-            return created >= date && created < nextMonth;
+            const closed = issue.closed_at ? new Date(issue.closed_at) : null;
+
+            // Issue активен если:
+            const createdInMonth = created >= date && created < nextMonth;
+            const closedInMonth = closed && closed >= date && closed < nextMonth;
+
+            return createdInMonth || closedInMonth;
         });
 
-        const open = monthIssues.filter((i) => i.state === 'open').length;
-        const closed = monthIssues.filter((i) => i.state === 'closed').length;
+        // Из активных - считаем сколько open и closed
+        const open = activeIssues.filter((i) => i.state === 'open').length;
+        const closed = activeIssues.filter((i) => i.state === 'closed').length;
 
         timeline.push({ date: dateStr, open, closed });
     }
