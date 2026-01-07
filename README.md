@@ -3,4 +3,5 @@
 ###### Next.js v16 • TypeScript • Chart.js • Framer Motion • Drizzle ORM • GitHub API
 ### [App Link](https://git-hub-etc.vercel.app/) 👈
 ---
-![Demo](https://github.com/user-attachments/assets/95a33b01-9bdf-4fdf-b1d7-0dabab617cc4)
+![Demo](https://github.com/user-attachments/assets/c6a77cae-28b8-435b-88de-2ec2db885f41)
+)
