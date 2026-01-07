@@ -180,8 +180,8 @@ export default function RootLayout({
 
                             <footer className="border-t px-4 py-6 sm:px-6 lg:px-8 md:py-0">
                                 <div className="container mx-auto flex h-auto md:h-10 items-center justify-center md:justify-end">
-                                    <span className="text-xs text-stone-500 italic">
-                                        by Alexey Ratnikov
+                                    <span className="text-xs text-stone-500/80">
+                                        Copyright (c) 2026 Alexey Ratnikov
                                     </span>
                                 </div>
                             </footer>
