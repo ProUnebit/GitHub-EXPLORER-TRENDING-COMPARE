@@ -8,17 +8,6 @@
  * ============================================
  * 
  * Горизонтальный bar chart с топ-5 labels
- * 
- * Показывает:
- * - Название label
- * - Количество issues с этим label
- * - Процент от общего количества
- * - Цвет label (как на GitHub)
- * 
- * ПОЧЕМУ HORIZONTAL BAR:
- * - Лучше помещаются длинные названия labels
- * - Легко сравнить количества
- * - Компактнее на мобильных
  */
 
 import { Bar } from 'react-chartjs-2';
@@ -30,6 +19,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    ChartOptions,
 } from 'chart.js';
 import type { LabelStats } from '@/lib/github/types';
 import { useTheme } from 'next-themes';
@@ -49,17 +39,11 @@ type IssuesLabelsChartProps = {
 // ============================================
 // HELPER: Convert hex to RGB
 // ============================================
-// ПОЧЕМУ НУЖЕН: GitHub API дает цвет в hex (e.g. "d73a4a")
-// Нам нужен rgba для прозрачности
 function hexToRgba(hex: string, alpha: number = 1): string {
-    // Удаляем # если есть
     hex = hex.replace('#', '');
-    
-    // Парсим RGB
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
-    
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
@@ -70,10 +54,6 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    // ============================================
-    // PREPARE DATA
-    // ============================================
-    
     // Названия labels (обрезаем если длинные)
     const labelNames = labels.map((label) => {
         return label.name.length > 20 
@@ -81,7 +61,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
             : label.name;
     });
 
-    // Цвета баров (используем цвета GitHub labels)
+    // Цвета баров
     const backgroundColors = labels.map((label) => 
         hexToRgba(label.color, 0.8)
     );
@@ -106,15 +86,15 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
     };
 
     // ============================================
-    // CHART OPTIONS
+    // CHART OPTIONS - ПРАВИЛЬНАЯ ТИПИЗАЦИЯ
     // ============================================
-    const options = {
-        indexAxis: 'y' as const, // Horizontal bars
+    const options: ChartOptions<'bar'> = {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                display: false, // Не нужна legend для одного dataset
+                display: false,
             },
             tooltip: {
                 backgroundColor: isDark ? '#1f2937' : '#ffffff',
@@ -125,11 +105,11 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                 padding: 12,
                 displayColors: false,
                 callbacks: {
-                    title: function (context: any) {
+                    title: (context) => {
                         const index = context[0].dataIndex;
-                        return labels[index].name; // Полное название
+                        return labels[index].name;
                     },
-                    label: function (context: any) {
+                    label: (context) => {
                         const index = context.dataIndex;
                         const count = labels[index].count;
                         const percentage = labels[index].percentage.toFixed(1);
@@ -143,14 +123,13 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                 beginAtZero: true,
                 grid: {
                     color: isDark ? '#374151' : '#e5e7eb',
-                    drawBorder: false,
+                    drawOnChartArea: true,
                 },
                 ticks: {
                     color: isDark ? '#9ca3af' : '#6b7280',
                     font: {
                         size: 11,
                     },
-                    precision: 0, // Целые числа
                 },
             },
             y: {
@@ -161,7 +140,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                     color: isDark ? '#e5e7eb' : '#374151',
                     font: {
                         size: 11,
-                        weight: '500' as const,
+                        weight: 500, // ✅ Изменил с '500' на 500 (число)
                     },
                 },
             },

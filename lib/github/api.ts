@@ -7,6 +7,7 @@ import type {
     GitHubCommit,
     SearchParams,
     GitHubIssue,
+    GitHubUser, // ✅ Добавил
     IssuesAnalytics,
     LabelStats,
     IssueContributor,
@@ -360,6 +361,7 @@ export async function getIssuesAnalytics(
     // Фильтруем Pull Requests (GitHub API возвращает и issues и PRs в /issues endpoint)
     // PR определяется наличием поля 'pull_request'
     const issues = allIssues.filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (issue) => !(issue as any).pull_request
     );
 
