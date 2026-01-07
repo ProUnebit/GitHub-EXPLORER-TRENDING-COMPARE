@@ -10,6 +10,7 @@ import { ContributorsList } from './_components/ContributorsList';
 import { RecentCommits } from './_components/RecentCommits';
 import { RepoSkeleton } from './_components/RepoSkeleton';
 import { RepoExportButton } from './_components/RepoExportButton';
+import { IssuesAnalytics } from './_components/IssuesAnalytics'; // ✅ Добавили
 import { Metadata } from 'next/types';
 import { DependencyAnalysis } from './_components/DependencyAnalysis';
 
@@ -154,7 +155,6 @@ export default async function RepoPage({ params }: PageProps) {
                 />
                 <RepoStats repo={repo} />
 
-                {/* ROW 1: Health Score | Languages | Dependencies */}
                 <div className="grid gap-8 lg:grid-cols-3">
                     <HealthScoreCard repo={repo} />
                     <Suspense fallback={<RepoSkeleton.Chart />}>
@@ -165,7 +165,10 @@ export default async function RepoPage({ params }: PageProps) {
                     </Suspense>
                 </div>
 
-                {/* ROW 2: Commits | Contributors */}
+                <Suspense fallback={<RepoSkeleton.IssuesAnalytics />}>
+                    <IssuesAnalytics owner={owner} name={name} />
+                </Suspense>
+
                 <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
                     <Suspense fallback={<RepoSkeleton.Commits />}>
                         <RecentCommits owner={owner} name={name} />
@@ -174,11 +177,7 @@ export default async function RepoPage({ params }: PageProps) {
                         <ContributorsList owner={owner} name={name} />
                     </Suspense>
                 </div>
-
-                {/* ROW 3: */}
-                {/* <Suspense fallback={<RepoSkeleton.Commits />}>
-                    <RecentCommits owner={owner} name={name} />
-                </Suspense> */}
+                
             </div>
         </>
     );

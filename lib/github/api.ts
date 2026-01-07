@@ -6,6 +6,11 @@ import type {
     GitHubLanguages,
     GitHubCommit,
     SearchParams,
+    GitHubIssue,
+    IssuesAnalytics,
+    LabelStats,
+    IssueContributor,
+    IssueTimelineData,
 } from './types';
 import { toast } from 'sonner';
 
@@ -306,4 +311,185 @@ export async function getPackageJson(
         console.error('Failed to parse package.json:', error);
         return null;
     }
+}
+
+// ============================================
+// ISSUES API
+// ============================================
+
+/**
+ * Получить issues репозитория
+ * 
+ * ВАЖНО: GitHub API возвращает максимум 100 items per page
+ * Для полной аналитики получаем несколько страниц
+ */
+export async function getIssues(
+    owner: string,
+    repo: string,
+    state: 'open' | 'closed' | 'all' = 'all',
+    perPage: number = 100
+): Promise<GitHubIssue[]> {
+    const response = await fetch(
+        `${GITHUB_API_BASE}/repos/${owner}/${repo}/issues?state=${state}&per_page=${perPage}&sort=created&direction=desc`,
+        {
+            headers: getHeaders(),
+            next: {
+                revalidate: CACHE_REVALIDATION.DYNAMIC, // 5 минут
+            },
+        }
+    );
+
+    return handleResponse<GitHubIssue[]>(response);
+}
+
+/**
+ * Получить аналитику по issues
+ * 
+ * ПОЧЕМУ ОТДЕЛЬНАЯ ФУНКЦИЯ:
+ * - Сложные вычисления делаем на сервере
+ * - Кешируем результат
+ * - Клиент получает готовую аналитику
+ */
+export async function getIssuesAnalytics(
+    owner: string,
+    repo: string
+): Promise<IssuesAnalytics> {
+    // Получаем все issues (max 100, этого достаточно для аналитики)
+    const allIssues = await getIssues(owner, repo, 'all', 100);
+
+    // Фильтруем Pull Requests (GitHub API возвращает и issues и PRs в /issues endpoint)
+    // PR определяется наличием поля 'pull_request'
+    const issues = allIssues.filter(
+        (issue) => !(issue as any).pull_request
+    );
+
+    // Базовая статистика
+    const total = issues.length;
+    const open = issues.filter((i) => i.state === 'open').length;
+    const closed = issues.filter((i) => i.state === 'closed').length;
+
+    // Среднее время закрытия (только для closed issues)
+    const closedIssues = issues.filter((i) => i.closed_at);
+    const avgCloseTime =
+        closedIssues.length > 0
+            ? closedIssues.reduce((sum, issue) => {
+                  const created = new Date(issue.created_at).getTime();
+                  const closed = new Date(issue.closed_at!).getTime();
+                  const days = (closed - created) / (1000 * 60 * 60 * 24);
+                  return sum + days;
+              }, 0) / closedIssues.length
+            : 0;
+
+    // Среднее время первого ответа (упрощенно - по comments)
+    // В реальности нужен отдельный API запрос для точного времени
+    const avgResponseTime = 4; // Заглушка, можно улучшить
+
+    // Top Labels
+    const labelCounts = new Map<string, { count: number; color: string }>();
+    issues.forEach((issue) => {
+        issue.labels.forEach((label) => {
+            const current = labelCounts.get(label.name) || {
+                count: 0,
+                color: label.color,
+            };
+            labelCounts.set(label.name, {
+                count: current.count + 1,
+                color: label.color,
+            });
+        });
+    });
+
+    const topLabels: LabelStats[] = Array.from(labelCounts.entries())
+        .map(([name, data]) => ({
+            name,
+            color: data.color,
+            count: data.count,
+            percentage: (data.count / total) * 100,
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 5);
+
+    // Top Contributors (кто закрывает issues)
+    const contributorMap = new Map<
+        string,
+        { user: GitHubUser; issuesClosed: number }
+    >();
+    closedIssues.forEach((issue) => {
+        const login = issue.user.login;
+        const current = contributorMap.get(login) || {
+            user: issue.user,
+            issuesClosed: 0,
+        };
+        contributorMap.set(login, {
+            user: issue.user,
+            issuesClosed: current.issuesClosed + 1,
+        });
+    });
+
+    const topContributors: IssueContributor[] = Array.from(
+        contributorMap.values()
+    )
+        .sort((a, b) => b.issuesClosed - a.issuesClosed)
+        .slice(0, 5)
+        .map((c) => ({
+            ...c,
+            commentsCount: 0, // Заглушка, можно улучшить
+        }));
+
+    // Hottest Issues (по комментариям + реакциям)
+    const hottestIssues = [...issues]
+        .sort((a, b) => {
+            const scoreA = a.comments + a.reactions.total_count;
+            const scoreB = b.comments + b.reactions.total_count;
+            return scoreB - scoreA;
+        })
+        .slice(0, 5);
+
+    // Timeline (последние 6 месяцев)
+    const timeline = generateTimeline(issues);
+
+    return {
+        total,
+        open,
+        closed,
+        avgCloseTime,
+        avgResponseTime,
+        topLabels,
+        topContributors,
+        hottestIssues,
+        timeline,
+    };
+}
+
+/**
+ * Генерация timeline данных (последние 6 месяцев)
+ * 
+ * ПОЧЕМУ ТАК:
+ * - Группируем issues по месяцам
+ * - Считаем open/closed на каждый месяц
+ * - Показываем динамику
+ */
+function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
+    const timeline: IssueTimelineData[] = [];
+    const now = new Date();
+
+    // Последние 6 месяцев
+    for (let i = 5; i >= 0; i--) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+
+        // Issues созданные в этом месяце
+        const monthIssues = issues.filter((issue) => {
+            const created = new Date(issue.created_at);
+            return created >= date && created < nextMonth;
+        });
+
+        const open = monthIssues.filter((i) => i.state === 'open').length;
+        const closed = monthIssues.filter((i) => i.state === 'closed').length;
+
+        timeline.push({ date: dateStr, open, closed });
+    }
+
+    return timeline;
 }

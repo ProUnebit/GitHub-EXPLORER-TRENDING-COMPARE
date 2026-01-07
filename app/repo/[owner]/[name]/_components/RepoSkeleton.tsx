@@ -136,4 +136,73 @@ export const RepoSkeleton = {
             </Card>
         );
     },
+
+    // ============================================
+    // ISSUES ANALYTICS SKELETON
+    // ============================================
+    IssuesAnalytics: function IssuesAnalyticsSkeleton() {
+        return (
+            <Card>
+                <CardHeader>
+                    <Skeleton className="h-6 w-40" />
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    {/* Overview Cards */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Card key={i} className="bg-gradient-to-br from-background to-muted/20">
+                                <CardContent className="p-4 sm:p-6">
+                                    <Skeleton className="mb-2 h-5 w-5" />
+                                    <Skeleton className="mb-1 h-8 w-16" />
+                                    <Skeleton className="mb-1 h-4 w-20" />
+                                    <Skeleton className="h-3 w-24" />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+
+                    {/* Timeline Chart */}
+                    <div>
+                        <Skeleton className="mb-3 h-4 w-48" />
+                        <Skeleton className="h-64 w-full" />
+                    </div>
+
+                    {/* Grid: Labels + Top Issues */}
+                    <div className="grid gap-6 md:grid-cols-2">
+                        {/* Labels */}
+                        <div>
+                            <Skeleton className="mb-3 h-4 w-24" />
+                            <Skeleton className="h-64 w-full" />
+                        </div>
+
+                        {/* Top Issues */}
+                        <div>
+                            <Skeleton className="mb-3 h-4 w-28" />
+                            <div className="space-y-3">
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <div
+                                        key={i}
+                                        className="rounded-lg border bg-card p-3"
+                                    >
+                                        <div className="mb-2 flex items-start gap-2">
+                                            <Skeleton className="h-6 w-6 rounded-full" />
+                                            <Skeleton className="h-4 flex-1" />
+                                        </div>
+                                        <div className="mb-2 flex gap-1">
+                                            <Skeleton className="h-5 w-16" />
+                                            <Skeleton className="h-5 w-20" />
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <Skeleton className="h-3 w-12" />
+                                            <Skeleton className="h-3 w-12" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        );
+    },
 };

@@ -99,3 +99,71 @@ export type DependencyInfo = {
     version: string;
     type: 'production' | 'development' | 'peer' | 'optional';
 };
+
+// ============================================
+// ISSUES TYPES
+// ============================================
+export interface GitHubIssue {
+    id: number;
+    number: number;
+    title: string;
+    state: 'open' | 'closed';
+    created_at: string;
+    updated_at: string;
+    closed_at: string | null;
+    comments: number;
+    html_url: string;
+    user: GitHubUser;
+    labels: GitHubLabel[];
+    reactions: {
+        total_count: number;
+        '+1': number;
+        '-1': number;
+        laugh: number;
+        hooray: number;
+        confused: number;
+        heart: number;
+        rocket: number;
+        eyes: number;
+    };
+    body: string | null;
+}
+
+export interface GitHubLabel {
+    id: number;
+    name: string;
+    color: string;
+    description: string | null;
+}
+
+// Аналитика по Issues
+export interface IssuesAnalytics {
+    total: number;
+    open: number;
+    closed: number;
+    avgCloseTime: number; // в днях
+    avgResponseTime: number; // в часах
+    topLabels: LabelStats[];
+    topContributors: IssueContributor[];
+    hottestIssues: GitHubIssue[];
+    timeline: IssueTimelineData[];
+}
+
+export interface LabelStats {
+    name: string;
+    color: string;
+    count: number;
+    percentage: number;
+}
+
+export interface IssueContributor {
+    user: GitHubUser;
+    issuesClosed: number;
+    commentsCount: number;
+}
+
+export interface IssueTimelineData {
+    date: string; // YYYY-MM format
+    open: number;
+    closed: number;
+}
