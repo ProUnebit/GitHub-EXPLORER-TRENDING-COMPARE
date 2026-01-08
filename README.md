@@ -58,6 +58,7 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
         <li><b>React Testing Library</b> — Component testing</li>
         <li><b>MSW</b> — API mocking</li>
       </ul>
+      <p></p>
     </td>
     <td width="50%" valign="top">
       <h3>✨ Key Features</h3>
@@ -76,31 +77,36 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
         <li><b>Language Statistics</b> - Distribution visualization</li>
         <li><b>Dependency Analysis</b> - Production/dev dependencies</li>
       </ul>
+      <p><b>Trending Repositories:</b></p>
+      <ul>
+        <li><b>Daily, weekly, monthly, yearly trends</b></li>
+        <li><b>Language-specific filtering</b></li>
+        <li><b>Contributor Insights</b> - Top contributors, commit history</li>
+        <li><b>Real-time GitHub data</b></li>
+      </ul>
+      <p><b>Repository Comparison:</b></p>
+      <ul>
+        <li><b>Side-by-side metrics comparison</b></li>
+        <li><b>Visual diff of key statistics</b></li>
+        <li><b>Export comparison results</b></li>
+      </ul>
+      <p><b>Export Capabilities:</b></p>
+      <ul>
+        <li><b>PDF Export</b> - Comprehensive repository reports</li>
+        <li><b>CSV Export</b> - Trending data for analysis</li>
+      </ul>
+      <p><b>UX Enhancements:</b></p>
+      <ul>
+        <li><b>View Transitions API</b> - Smooth, native-like navigation between pages</li>
+        <li><b>Seamless animations during route changes</b></li>
+        <li><b>Enhanced perceived performance</b></li>
+        <li><b>Modern browser API integration</b></li>
+        <li><b>Responsive Design</b></li>
+      </ul>
+      <p></p>
     </td>
   </tr>
 </table>
-
-### 📈 Trending Repositories
-- **Daily, weekly, monthly, yearly trends**
-- **Language-specific filtering**
-- **Real-time GitHub data**
-
-### ⚖️ Repository Comparison
-- **Side-by-side metrics comparison**
-- **Visual diff of key statistics**
-- **Export comparison results**
-
-### 📥 Export Capabilities
-- **PDF Export** - Comprehensive repository reports
-- **CSV Export** - Trending data for analysis
-- Formatted statistics with charts
-
-### ✨ UX Enhancements
-- **View Transitions API** - Smooth, native-like navigation between pages
-- Seamless animations during route changes
-- Enhanced perceived performance
-- Modern browser API integration
-- Responsive Design
 
 ### Performance Metrics
 
