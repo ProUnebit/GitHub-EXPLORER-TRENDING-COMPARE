@@ -1,4 +1,4 @@
-import { CACHE_REVALIDATION } from '@/config/constants';
+import { CACHE, PAGINATION } from '@/config/api';
 import type {
     GitHubRepo,
     GitHubSearchResponse,
@@ -7,13 +7,20 @@ import type {
     GitHubCommit,
     SearchParams,
     GitHubIssue,
-    GitHubUser, // ✅ Добавил
+    GitHubUser,
     IssuesAnalytics,
     LabelStats,
     IssueContributor,
     IssueTimelineData,
 } from './types';
-import { toast } from 'sonner';
+import { 
+    GitHubAPIError, 
+    RateLimitError, 
+    NotFoundError,
+    parseGitHubError,
+    NetworkError 
+} from '@/lib/errors';
+import { fetchWithRetry } from '@/lib/utils/fetch-with-retry';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
@@ -31,16 +38,24 @@ function getHeaders(): HeadersInit {
     return headers;
 }
 
-// Helper для обработки ошибок
-async function handleResponse<T>(response: Response): Promise<T> {
+// ============================================
+// HELPER: ОБРАБОТКА ОШИБОК
+// ============================================
+/**
+ * Обрабатывает ответ от GitHub API и бросает типизированные ошибки
+ * 
+ * @throws {RateLimitError} - При превышении лимита (403)
+ * @throws {RepositoryNotFoundError} - Когда репозиторий не найден (404)
+ * @throws {GitHubAPIError} - Для всех остальных ошибок API
+ */
+async function handleResponse<T>(
+    response: Response,
+    endpoint: string = 'unknown'
+): Promise<T> {
     if (!response.ok) {
-        const error = await response.json().catch(() => ({}));
-        const message =
-            error.message || `GitHub API error: ${response.statusText}`;
-
-        // toast.error('API Error', { description: message });
-
-        throw new Error(message);
+        // ✅ ИСПОЛЬЗУЕМ НОВЫЙ ПАРСЕР ОШИБОК
+        const error = await parseGitHubError(response, endpoint);
+        throw error;
     }
 
     return response.json();
@@ -57,7 +72,7 @@ export async function searchRepositories(
         q,
         sort = 'stars',
         order = 'desc',
-        per_page = 30,
+        per_page = PAGINATION.SEARCH_PER_PAGE,
         page = 1,
     } = params;
 
@@ -69,13 +84,15 @@ export async function searchRepositories(
         page: page.toString(),
     });
 
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry вместо обычного fetch
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/search/repositories?${searchParams}`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE_REVALIDATION.DYNAMIC, // 5 минут
+                revalidate: CACHE.DYNAMIC, // 5 минут
             },
+            retries: 3, // 3 попытки
         }
     );
 
@@ -89,14 +106,18 @@ export async function getRepository(
     owner: string,
     repo: string
 ): Promise<GitHubRepo> {
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${owner}/${repo}`, {
+    const endpoint = `${GITHUB_API_BASE}/repos/${owner}/${repo}`;
+    
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+    const response = await fetchWithRetry(endpoint, {
         headers: getHeaders(),
         next: {
-            revalidate: CACHE_REVALIDATION.STATIC, // 1 час
+            revalidate: CACHE.STATIC, // 1 час
         },
+        retries: 3,
     });
 
-    return handleResponse<GitHubRepo>(response);
+    return handleResponse<GitHubRepo>(response, endpoint);
 }
 
 /**
@@ -105,15 +126,17 @@ export async function getRepository(
 export async function getContributors(
     owner: string,
     repo: string,
-    perPage: number = 10
+    perPage: number = PAGINATION.CONTRIBUTORS_DISPLAY
 ): Promise<GitHubContributor[]> {
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/contributors?per_page=${perPage}`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE_REVALIDATION.STATIC,
+                revalidate: CACHE.STATIC,
             },
+            retries: 3,
         }
     );
 
@@ -127,13 +150,15 @@ export async function getLanguages(
     owner: string,
     repo: string
 ): Promise<GitHubLanguages> {
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/languages`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE_REVALIDATION.STATIC,
+                revalidate: CACHE.STATIC,
             },
+            retries: 3,
         }
     );
 
@@ -146,15 +171,17 @@ export async function getLanguages(
 export async function getCommits(
     owner: string,
     repo: string,
-    perPage: number = 10
+    perPage: number = PAGINATION.COMMITS_LIMIT
 ): Promise<GitHubCommit[]> {
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/commits?per_page=${perPage}`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE_REVALIDATION.DYNAMIC,
+                revalidate: CACHE.DYNAMIC,
             },
+            retries: 3,
         }
     );
 
@@ -171,8 +198,6 @@ export async function getTrendingRepositories(
     const date = new Date();
 
     // Вычисляем дату для фильтра
-    // Описываем мапу трансформаций даты
-    // Record<typeof since, ...> гарантирует, что мы не забудем обработать все типы периода
     const dateAdjusters: Record<typeof since, (d: Date) => void> = {
         daily: (d) => d.setDate(d.getDate() - 1),
         weekly: (d) => d.setDate(d.getDate() - 7),
@@ -180,7 +205,6 @@ export async function getTrendingRepositories(
         year: (d) => d.setFullYear(d.getFullYear() - 1),
     };
 
-    // Вызываем нужный метод из мапы
     dateAdjusters[since](date);
 
     const dateStr = date.toISOString().split('T')[0];
@@ -195,7 +219,7 @@ export async function getTrendingRepositories(
         q: query,
         sort: 'stars',
         order: 'desc',
-        per_page: 30,
+        per_page: PAGINATION.SEARCH_PER_PAGE,
     });
 }
 
@@ -231,12 +255,13 @@ export async function searchRepositoriesClient(
         Accept: 'application/vnd.github.v3+json',
     };
 
-    // На клиенте используем обычный fetch без Next.js кеширования
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry на клиенте
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/search/repositories?${searchParams}`,
         {
             headers,
             cache: 'no-store', // Всегда свежие данные
+            retries: 2, // Меньше попыток на клиенте
         }
     );
 
@@ -244,8 +269,6 @@ export async function searchRepositoriesClient(
         const error = await response.json().catch(() => ({}));
         const message =
             error.message || `GitHub API error: ${response.statusText}`;
-
-        // Toast будет показан в компоненте, здесь только throw
         throw new Error(message);
     }
 
@@ -261,13 +284,15 @@ export async function getRepoFile(
     path: string
 ): Promise<string | null> {
     try {
-        const response = await fetch(
+        // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+        const response = await fetchWithRetry(
             `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${path}`,
             {
                 headers: getHeaders(),
                 next: {
-                    revalidate: CACHE_REVALIDATION.STATIC, // 1 час
+                    revalidate: CACHE.STATIC, // 1 час
                 },
+                retries: 2, // Меньше попыток для file fetch
             }
         );
 
@@ -328,15 +353,17 @@ export async function getIssues(
     owner: string,
     repo: string,
     state: 'open' | 'closed' | 'all' = 'all',
-    perPage: number = 100
+    perPage: number = PAGINATION.ISSUES_DEFAULT
 ): Promise<GitHubIssue[]> {
-    const response = await fetch(
+    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+    const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/issues?state=${state}&per_page=${perPage}&sort=created&direction=desc`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE_REVALIDATION.DYNAMIC, // 5 минут
+                revalidate: CACHE.DYNAMIC, // 5 минут
             },
+            retries: 3,
         }
     );
 
@@ -383,8 +410,7 @@ export async function getIssuesAnalytics(
             : 0;
 
     // Среднее время первого ответа (упрощенно - по comments)
-    // В реальности нужен отдельный API запрос для точного времени
-    const avgResponseTime = 4; // Заглушка, можно улучшить
+    const avgResponseTime = 4; // Заглушка
 
     // Top Labels
     const labelCounts = new Map<string, { count: number; color: string }>();
@@ -409,7 +435,7 @@ export async function getIssuesAnalytics(
             percentage: (data.count / total) * 100,
         }))
         .sort((a, b) => b.count - a.count)
-        .slice(0, 10); // ✅ Увеличил с 5 до 10
+        .slice(0, 10);
 
     // Top Contributors (кто закрывает issues)
     const contributorMap = new Map<
@@ -435,7 +461,7 @@ export async function getIssuesAnalytics(
         .slice(0, 5)
         .map((c) => ({
             ...c,
-            commentsCount: 0, // Заглушка, можно улучшить
+            commentsCount: 0,
         }));
 
     // Hottest Issues (по комментариям + реакциям)
@@ -469,7 +495,6 @@ export async function getIssuesAnalytics(
  * ЛОГИКА:
  * - Показываем АКТИВНОСТЬ в каждом месяце
  * - Активность = issues созданные ИЛИ закрытые в этом месяце
- * - Это дает более полную картину и заполняет график
  */
 function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
     const timeline: IssueTimelineData[] = [];
@@ -481,19 +506,17 @@ function generateTimeline(issues: GitHubIssue[]): IssueTimelineData[] {
         const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 
-        // Issues которые были АКТИВНЫ в этом месяце (созданы ИЛИ закрыты)
+        // Issues которые были АКТИВНЫ в этом месяце
         const activeIssues = issues.filter((issue) => {
             const created = new Date(issue.created_at);
             const closed = issue.closed_at ? new Date(issue.closed_at) : null;
 
-            // Issue активен если:
             const createdInMonth = created >= date && created < nextMonth;
             const closedInMonth = closed && closed >= date && closed < nextMonth;
 
             return createdInMonth || closedInMonth;
         });
 
-        // Из активных - считаем сколько open и closed
         const open = activeIssues.filter((i) => i.state === 'open').length;
         const closed = activeIssues.filter((i) => i.state === 'closed').length;
 

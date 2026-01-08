@@ -1,15 +1,20 @@
 import type { GitHubRepo } from '@/lib/github/types';
+import {
+    WEIGHTS,
+    ACTIVITY,
+    COMMUNITY,
+    DOCUMENTATION,
+    MAINTENANCE,
+    GRADES,
+} from '@/config';
 
 // ============================================
 // HEALTH SCORE CALCULATOR
 // ============================================
 // Вычисляет "здоровье" репозитория (0-100)
 //
-// Категории:
-// - Activity (30 points): Как давно обновлялся
-// - Community (30 points): Stars + Forks
-// - Documentation (20 points): Description + Wiki + License
-// - Maintenance (20 points): Issue ratio
+// ТЕПЕРЬ ИСПОЛЬЗУЕТ КОНФИГУРАЦИЮ ИЗ @/config
+// Все константы можно менять в одном месте!
 
 export type HealthScoreBreakdown = {
     activity: number;
@@ -37,62 +42,68 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
     let maintenanceScore = 0;
 
     // ============================================
-    // 1. ACTIVITY SCORE (30 points)
+    // 1. ACTIVITY SCORE (используем ACTIVITY config)
     // ============================================
     const daysSinceUpdate = Math.floor(
         (Date.now() - new Date(repo.updated_at).getTime()) /
             (1000 * 60 * 60 * 24)
     );
 
-    if (daysSinceUpdate < 7) {
-        activityScore = 30; // Активно развивается
-    } else if (daysSinceUpdate < 30) {
-        activityScore = 20; // Обновлялся в течение месяца
-    } else if (daysSinceUpdate < 90) {
-        activityScore = 10; // Обновлялся в течение 3 месяцев
+    if (daysSinceUpdate < ACTIVITY.EXCELLENT_DAYS) {
+        activityScore = WEIGHTS.ACTIVITY; // Активно развивается
+    } else if (daysSinceUpdate < ACTIVITY.GOOD_DAYS) {
+        activityScore = Math.round(WEIGHTS.ACTIVITY * 0.67); // ~20 points
+    } else if (daysSinceUpdate < ACTIVITY.FAIR_DAYS) {
+        activityScore = Math.round(WEIGHTS.ACTIVITY * 0.33); // ~10 points
     } else {
         activityScore = 0; // Заброшен
     }
 
     // ============================================
-    // 2. COMMUNITY SCORE (30 points)
+    // 2. COMMUNITY SCORE (используем COMMUNITY config)
     // ============================================
     // Stars weight (0-15 points)
-    const starsWeight = Math.min(repo.stargazers_count / 1000, 15);
+    const starsWeight = Math.min(
+        repo.stargazers_count / COMMUNITY.STARS_DIVISOR,
+        COMMUNITY.STARS_MAX_POINTS
+    );
 
     // Forks weight (0-15 points)
-    const forksWeight = Math.min(repo.forks_count / 100, 15);
+    const forksWeight = Math.min(
+        repo.forks_count / COMMUNITY.FORKS_DIVISOR,
+        COMMUNITY.FORKS_MAX_POINTS
+    );
 
     communityScore = Math.round(starsWeight + forksWeight);
 
     // ============================================
-    // 3. DOCUMENTATION SCORE (20 points)
+    // 3. DOCUMENTATION SCORE (используем DOCUMENTATION config)
     // ============================================
     if (repo.description) {
-        documentationScore += 10;
+        documentationScore += DOCUMENTATION.DESCRIPTION_POINTS;
     }
 
     if (repo.has_wiki) {
-        documentationScore += 5;
+        documentationScore += DOCUMENTATION.WIKI_POINTS;
     }
 
     if (repo.license) {
-        documentationScore += 5;
+        documentationScore += DOCUMENTATION.LICENSE_POINTS;
     }
 
     // ============================================
-    // 4. MAINTENANCE SCORE (20 points)
+    // 4. MAINTENANCE SCORE (используем MAINTENANCE config)
     // ============================================
     const issueRatio = repo.open_issues_count / (repo.stargazers_count || 1);
 
-    if (issueRatio < 0.05) {
-        maintenanceScore = 20; // Отлично
-    } else if (issueRatio < 0.1) {
-        maintenanceScore = 15; // Хорошо
-    } else if (issueRatio < 0.2) {
-        maintenanceScore = 10; // Средне
+    if (issueRatio < MAINTENANCE.EXCELLENT_RATIO) {
+        maintenanceScore = MAINTENANCE.EXCELLENT_POINTS; // Отлично
+    } else if (issueRatio < MAINTENANCE.GOOD_RATIO) {
+        maintenanceScore = MAINTENANCE.GOOD_POINTS; // Хорошо
+    } else if (issueRatio < MAINTENANCE.FAIR_RATIO) {
+        maintenanceScore = MAINTENANCE.FAIR_POINTS; // Средне
     } else {
-        maintenanceScore = 5; // Плохо
+        maintenanceScore = MAINTENANCE.POOR_POINTS; // Плохо
     }
 
     // ============================================
@@ -114,40 +125,42 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
 // GET HEALTH BADGE
 // ============================================
 export function getHealthBadge(score: number): HealthBadge {
-    if (score >= 90) {
+    // Ищем подходящий grade в порядке убывания
+    if (score >= GRADES.EXCELLENT.MIN_SCORE) {
         return {
-            emoji: '💚',
-            label: 'Excellent',
-            color: 'green',
+            emoji: GRADES.EXCELLENT.EMOJI,
+            label: GRADES.EXCELLENT.LABEL,
+            color: GRADES.EXCELLENT.COLOR,
             textColor: 'text-green-600 dark:text-green-400',
             bgColor: 'bg-green-500/20 border-green-500/50',
         };
     }
 
-    if (score >= 70) {
+    if (score >= GRADES.GOOD.MIN_SCORE) {
         return {
-            emoji: '💛',
-            label: 'Good',
-            color: 'yellow',
+            emoji: GRADES.GOOD.EMOJI,
+            label: GRADES.GOOD.LABEL,
+            color: GRADES.GOOD.COLOR,
             textColor: 'text-yellow-600 dark:text-yellow-400',
             bgColor: 'bg-yellow-500/20 border-yellow-500/50',
         };
     }
 
-    if (score >= 50) {
+    if (score >= GRADES.FAIR.MIN_SCORE) {
         return {
-            emoji: '🧡',
-            label: 'Fair',
-            color: 'orange',
+            emoji: GRADES.FAIR.EMOJI,
+            label: GRADES.FAIR.LABEL,
+            color: GRADES.FAIR.COLOR,
             textColor: 'text-orange-600 dark:text-orange-400',
             bgColor: 'bg-orange-500/20 border-orange-500/50',
         };
     }
 
+    // POOR (все что меньше FAIR.MIN_SCORE)
     return {
-        emoji: '❤️',
-        label: 'Poor',
-        color: 'red',
+        emoji: GRADES.POOR.EMOJI,
+        label: GRADES.POOR.LABEL,
+        color: GRADES.POOR.COLOR,
         textColor: 'text-red-600 dark:text-red-400',
         bgColor: 'bg-red-500/20 border-red-500/50',
     };

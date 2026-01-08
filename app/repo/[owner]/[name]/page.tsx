@@ -13,6 +13,8 @@ import { RepoExportButton } from './_components/RepoExportButton';
 import { IssuesAnalytics } from './_components/IssuesAnalytics';
 import { Metadata } from 'next/types';
 import { DependencyAnalysis } from './_components/DependencyAnalysis';
+import { isRateLimitError, isNotFoundError, isGitHubAPIError } from '@/lib/errors';
+import { RateLimitError, RepositoryNotFound, GenericError } from '@/components/errors';
 
 type PageProps = {
     params: Promise<{ owner: string; name: string }>;
@@ -88,15 +90,92 @@ export async function generateMetadata({
 export default async function RepoPage({ params }: PageProps) {
     const { owner, name } = await params;
 
-    // Получаем все данные параллельно для экспорта
-    const [repo, contributors, languages, commits, issuesAnalytics, packageJson] = await Promise.all([
-        getRepository(owner, name),
-        getContributors(owner, name, 100),
-        getLanguages(owner, name),
-        getCommits(owner, name, 10), // ✅ Добавил commits
-        getIssuesAnalytics(owner, name), // ✅ Добавил issues analytics
-        getPackageJson(owner, name), // ✅ Добавил для dependencies
-    ]);
+    // ============================================
+    // ✅ ERROR HANDLING
+    // ============================================
+    try {
+        // Получаем все данные параллельно для экспорта
+        const [repo, contributors, languages, commits, issuesAnalytics, packageJson] = await Promise.all([
+            getRepository(owner, name),
+            getContributors(owner, name, 100),
+            getLanguages(owner, name),
+            getCommits(owner, name, 10),
+            getIssuesAnalytics(owner, name),
+            getPackageJson(owner, name),
+        ]);
+
+        // ============================================
+        // SUCCESS PATH - RENDER REPO PAGE
+        // ============================================
+        return renderRepoPage({ owner, name, repo, contributors, languages, commits, issuesAnalytics, packageJson });
+        
+    } catch (error) {
+        // ============================================
+        // ERROR PATH - RENDER ERROR UI
+        // ============================================
+        console.error('Repository page error:', error);
+
+        // Rate Limit Error
+        if (isRateLimitError(error)) {
+            return <RateLimitError resetAt={error.resetAt} />;
+        }
+
+        // Not Found Error
+        if (isNotFoundError(error)) {
+            return <RepositoryNotFound owner={owner} repo={name} />;
+        }
+
+        // GitHub API Error
+        if (isGitHubAPIError(error)) {
+            return (
+                <GenericError
+                    title="GitHub API Error"
+                    message={error.getUserMessage()}
+                    statusCode={error.statusCode}
+                    technical={error.message}
+                />
+            );
+        }
+
+        // Unknown Error
+        return (
+            <GenericError
+                title="Unexpected Error"
+                message="An unexpected error occurred while loading the repository."
+                technical={error instanceof Error ? error.message : String(error)}
+            />
+        );
+    }
+}
+
+// ============================================
+// HELPER: RENDER SUCCESS PAGE
+// ============================================
+function renderRepoPage({
+    owner,
+    name,
+    repo,
+    contributors,
+    languages,
+    commits,
+    issuesAnalytics,
+    packageJson,
+}: {
+    owner: string;
+    name: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    repo: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    contributors: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    languages: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    commits: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    issuesAnalytics: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    packageJson: any;
+}) {
 
     const structuredData = {
         '@context': 'https://schema.org',

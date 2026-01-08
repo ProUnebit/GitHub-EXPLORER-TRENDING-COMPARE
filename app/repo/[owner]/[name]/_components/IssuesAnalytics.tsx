@@ -25,6 +25,7 @@ import { IssuesTimelineChart } from './IssuesTimelineChart';
 import { IssuesLabelsChart } from './IssuesLabelsChart';
 import { TopIssuesList } from './TopIssuesList';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { SectionHeader } from '@/components/ui/section-header';
 import { MessageSquareText, Tags, ThermometerSun } from 'lucide-react';
 
 // ============================================
@@ -91,10 +92,7 @@ export async function IssuesAnalytics({
                     {/* Labels Distribution */}
                     {analytics.topLabels.length > 0 && (
                         <div className="min-w-0 overflow-hidden">
-                            <h3 className="mb-3 text-sm font-medium flex items-center text-teal-600 dark:text-amber-300/80">
-                                <Tags className='mr-2 h-4 w-4 text-teal-500' />
-                                Top Labels
-                            </h3>
+                            <SectionHeader icon={Tags} title="Top Labels" />
                             <IssuesLabelsChart labels={analytics.topLabels} />
                         </div>
                     )}
@@ -102,10 +100,7 @@ export async function IssuesAnalytics({
                     {/* Top Issues */}
                     {analytics.hottestIssues.length > 0 && (
                         <div className="min-w-0 overflow-hidden">
-                            <h3 className="mb-3 text-sm font-medium flex items-center text-teal-600 dark:text-amber-300/80">
-                                <ThermometerSun className='mr-2 h-4 w-4 text-teal-500' />
-                                Hottest Issues
-                            </h3>
+                            <SectionHeader icon={ThermometerSun} title="Hottest Issues" />
                             <TopIssuesList issues={analytics.hottestIssues} />
                         </div>
                     )}

@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import Papa from 'papaparse';
+import { TRUNCATE } from '@/config';
 
 // ============================================
 // PDF EXPORT UTILITIES
@@ -340,8 +341,8 @@ export function exportRepoStatsToPDF(data: {
 
     data.recentCommits.forEach((commit, index) => {
         // Обрезаем длинные сообщения
-        const message = commit.message.length > 60 
-            ? commit.message.substring(0, 60) + '...' 
+        const message = commit.message.length > TRUNCATE.COMMIT_MESSAGE_LENGTH 
+            ? commit.message.substring(0, TRUNCATE.COMMIT_MESSAGE_LENGTH) + '...' 
             : commit.message;
         
         doc.text(`  ${index + 1}. ${message}`, 25, yPos);
