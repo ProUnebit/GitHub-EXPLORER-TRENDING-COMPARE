@@ -54,10 +54,10 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 ## Key Features
 
 ### 🔍 Advanced Search
-- Advanced filtering
-- Real-time suggestions
-- Infinite scroll pagination
-- Server-side rendering for SEO
+- **Advanced filtering**
+- **Real-time suggestions**
+- **Infinite scroll pagination**
+- **Server-side rendering for SEO**
 
 ### 📊 Repository Analytics
 - **Health Score** - Custom algorithm evaluating activity, community, maintenance, documentation
@@ -67,14 +67,14 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 - **Dependency Analysis** - Production/dev dependencies from package.json
 
 ### 📈 Trending Repositories
-- Daily, weekly, monthly, yearly trends
-- Language-specific filtering
-- Real-time GitHub data
+- **Daily, weekly, monthly, yearly trends**
+- **Language-specific filtering**
+- **Real-time GitHub data**
 
 ### ⚖️ Repository Comparison
-- Side-by-side metrics comparison
-- Visual diff of key statistics
-- Export comparison results
+- **Side-by-side metrics comparison**
+- **Visual diff of key statistics**
+- **Export comparison results**
 
 ### 📥 Export Capabilities
 - **PDF Export** - Comprehensive repository reports
@@ -82,7 +82,7 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 - Formatted statistics with charts
 
 ### ✨ UX Enhancements
-- View Transitions API - Smooth, native-like navigation between pages
+- **View Transitions API** - Smooth, native-like navigation between pages
 - Seamless animations during route changes
 - Enhanced perceived performance
 - Modern browser API integration
