@@ -11,7 +11,81 @@
 
 ---
 
-Desc
+### Overview
+
+GitHub Explorer is a comprehensive analytics dashboard for exploring GitHub repositories with advanced search, real-time data visualization, and export capabilities. Built with modern React patterns (RSC, Suspense, Streaming), performance optimization, cutting-edge browser APIs, and clean architecture.
+
+### Tech Stack
+
+**Core:**
+- **Next.js 16** - App Router, React Server Components, Server Actions
+- **React 19** - Latest features including Server Components
+- **TypeScript 5** - Strict type safety
+
+**UI & Styling:**
+- **Tailwind CSS 4** - Utility-first styling
+- **Radix UI** - Accessible primitives
+- **Framer Motion** - Smooth animations
+- **Chart.js** - Data visualization
+- **View Transitions API** - Native-like page transitions (next-view-transitions)
+
+**Data & State:**
+- **Drizzle ORM** - Type-safe SQL queries
+- **PostgreSQL** - Relational database
+- **GitHub REST API** - Repository data
+- **Server-side caching** - Next.js revalidation strategies
+
+**Testing: <br/>
+(~75% coverage: 19 test files, 100+ assertions)**
+- **Vitest** - Unit & integration tests
+- **React Testing Library** - Component testing
+- **MSW** - API mocking
+
+### Key Features
+
+### 🔍 Advanced Search
+- Advanced filtering
+- Real-time suggestions
+- Infinite scroll pagination
+- Server-side rendering for SEO
+
+### 📊 Repository Analytics
+- **Health Score** - Custom algorithm evaluating activity, community, maintenance, documentation
+- **Issues Analytics** - Timeline charts, label distribution, hottest issues
+- **Contributor Insights** - Top contributors, commit history
+- **Language Statistics** - Distribution visualization
+- **Dependency Analysis** - Production/dev dependencies from package.json
+
+### 📈 Trending Repositories
+- Daily, weekly, monthly, yearly trends
+- Language-specific filtering
+- Real-time GitHub data
+
+### ⚖️ Repository Comparison
+- Side-by-side metrics comparison
+- Visual diff of key statistics
+- Export comparison results
+
+### 📥 Export Capabilities
+- **PDF Export** - Comprehensive repository reports
+- **CSV Export** - Trending data for analysis
+- Formatted statistics with charts
+
+### ✨ UX Enhancements
+- View Transitions API - Smooth, native-like navigation between pages
+- Seamless animations during route changes
+- Enhanced perceived performance
+- Modern browser API integration
+
+### Performance Metrics
+
+| Metric | Score |
+|--------|-------|
+| Lighthouse | 95+ |
+| First Contentful Paint | < 1.5s |
+| Time to Interactive | < 2.5s |
+| Test Coverage | ~75% |
+| Type Safety | 100% |
 
 ---
 
