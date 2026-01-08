@@ -9,8 +9,6 @@
 ![React](https://img.shields.io/badge/Motion-12.23.26-darkgreen?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAC9ElEQVR4nGL5/02LYTABpoF2ADoYdRAhMOogQmDUQYTAqIMIgVEHEQKjDiIERh1ECIw6iBAg1kF//jDMWvDDzuu9oNwrHqmXPFIvzRzfPX/5X1LtNYQLQWLKrx49+Wft9g5ZkEfqZVbxZwYGhu27f5s4vBNSeOXg/eH0uT9YLWIkpgn76fP/0LiPR0/+RBZcs0hw9/5fM+d/RRYsyeNRUWTJKPyALMjFyXj1pOjjp38dfd7+/QsV5OVh2rdZWFMdPUSICqH0gs9ornF15FBSYJ6zCMU1IsLM2Slc9e2f0bQX5/KIijCu3/wT7hoGBobPX/5NmP4V0y7CDtp78Pfm7d+RRVhZGFtqeGpaviJbwMDA0FjJM2fR95evUEQlxZlz0jgZGBj+/Uc3+T8DI8kO+vOHoa4V3cdt9Xxv3//btgvFlRpqrG7O7P1Tv6Aprq/g5eYCWRwVwsHMjBDn5WEqy+Mi2UEr1v68eOU3soi7E0dyHEdNM7rFLTU8TR1fvn1HCQdDPdaIYHYIW1uTecU8IQ01VlYWRgM9tk0rBFWUsNiOL1F//fZfz+otchQwMzOc2COyZNXPidNRgs3ZnqOpmtvO8y1aJG5dJWRvw4rfz2gAXwhNmYWeIKLDuF69/ofmGmZmhqZq7oZ29CTl4cJBqmsYGBhYcEm8fvO/dzJKvHBxMtaW8YQnfEBTGRHM9fzFv937fyALsrIwttXxkOoafA6qb0dPEMW5PPsP/Tp38ReaK+vLefwi3yMLMjMzzJggoKbCTDUHXb3+d+mqb8gikuLMSTGcVq5v0VQWZvPs3v/zxi1EwmdlYZzczRcexEaGa3A6aNLMb2gJIjuVe9vun89fooiysjBmJnNaub6Di4iJMi+YLmBnhTPgCQLsuWzHnl/fvv9DFnG0Zb9158/T5ygOEhZkMjFi3bkXWoiLCjObGLFycpDtGNwOGkAwZJsfdAOjDiIERh1ECIw6iBAYdRAhMOogQmDUQYTAqIMIAUAAAAD//xDwCFkDSW6KAAAAAElFTkSuQmCC)
 ![React](https://img.shields.io/badge/Drizzle-0.45.1-darkgreen?logo=drizzle)
 
-
-
 <details>
   <summary>📸 UI Screenshots</summary>
   <br>
@@ -29,37 +27,6 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 
 <table width="100%">
   <tr>
-    <td width="50%" valign="top">
-      <h3>🚀 Tech Stack</h3>
-      <p><b>Core:</b></p>
-      <ul>
-        <li><b>Next.js 16</b> — App Router & RSC</li>
-        <li><b>React 19</b> — Server Components</li>
-        <li><b>TypeScript 5</b> — Strict type safety</li>
-      </ul>
-      <p><b>UI & Styling:</b></p>
-      <ul>
-        <li><b>Tailwind CSS 4</b> — Utility-first styling</li>
-        <li><b>Radix UI</b> — Accessible primitives</li>
-        <li><b>Framer Motion</b> — Smooth animations</li>
-        <li><b>View Transitions API</b> — Native-like page transitions</li>
-        <li><b>Lucide React</b> — Icons set</li>
-      </ul>
-      <p><b>Data & State:</b></p>
-      <ul>
-        <li><b>Drizzle ORM</b> — Type-safe SQL queries</li>
-        <li><b>PostgreSQL</b> — Relational database</li>
-        <li><b>GitHub REST API</b> — Repository data</li>
-        <li><b>Server-side caching</b> — Next.js revalidation strategies</li>
-      </ul>
-      <p><b>Testing (~75% coverage: 19 test files, 100+ assertions):</b></p>
-      <ul>
-        <li><b>Vitest</b> — Unit & integration tests</li>
-        <li><b>React Testing Library</b> — Component testing</li>
-        <li><b>MSW</b> — API mocking</li>
-      </ul>
-      <p></p>
-    </td>
     <td width="50%" valign="top">
       <h3>✨ Key Features</h3>
       <p><b>Advanced Search:</b></p>
@@ -105,18 +72,40 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       </ul>
       <p></p>
     </td>
+      <td width="50%" valign="top">
+      <h3>🚀 Tech Stack</h3>
+      <p><b>Core:</b></p>
+      <ul>
+        <li><b>Next.js 16</b> — App Router & RSC</li>
+        <li><b>React 19</b> — Server Components</li>
+        <li><b>TypeScript 5</b> — Strict type safety</li>
+      </ul>
+      <p><b>UI & Styling:</b></p>
+      <ul>
+        <li><b>Tailwind CSS 4</b> — Utility-first styling</li>
+        <li><b>Radix UI</b> — Accessible primitives</li>
+        <li><b>Framer Motion</b> — Smooth animations</li>
+        <li><b>View Transitions API</b> — Native-like page transitions</li>
+        <li><b>Lucide React</b> — Icons set</li>
+      </ul>
+      <p><b>Data & State:</b></p>
+      <ul>
+        <li><b>Drizzle ORM</b> — Type-safe SQL queries</li>
+        <li><b>PostgreSQL</b> — Relational database</li>
+        <li><b>GitHub REST API</b> — Repository data</li>
+        <li><b>Server-side caching</b> — Next.js revalidation strategies</li>
+      </ul>
+      <p><b>Testing (~75% coverage: 19 test files, 100+ assertions):</b></p>
+      <ul>
+        <li><b>Vitest</b> — Unit & integration tests</li>
+        <li><b>React Testing Library</b> — Component testing</li>
+        <li><b>MSW</b> — API mocking</li>
+      </ul>
+      <p></p>
+    </td>
   </tr>
 </table>
 
-### Performance Metrics
-
-| Metric | Score |
-|--------|-------|
-| Lighthouse | 95+ |
-| First Contentful Paint | < 1.5s |
-| Time to Interactive | < 2.5s |
-| Test Coverage | ~75% |
-| Type Safety | 100% |
 
 
 
