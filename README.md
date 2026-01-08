@@ -27,46 +27,58 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 
 ---
 
-### Tech Stack
-
-**Core:**
-- **Next.js 16** - App Router, React Server Components, Server Actions
-- **React 19** - Latest features including Server Components
-- **TypeScript 5** - Strict type safety
-
-**UI & Styling:**
-- **Tailwind CSS 4** - Utility-first styling
-- **Radix UI** - Accessible primitives
-- **Framer Motion** - Smooth animations
-- **Chart.js** - Data visualization
-- **View Transitions API** - Native-like page transitions (next-view-transitions)
-
-**Data & State:**
-- **Drizzle ORM** - Type-safe SQL queries
-- **PostgreSQL** - Relational database
-- **GitHub REST API** - Repository data
-- **Server-side caching** - Next.js revalidation strategies
-
-**Testing: <br/>
-(~75% coverage: 19 test files, 100+ assertions)**
-- **Vitest** - Unit & integration tests
-- **React Testing Library** - Component testing
-- **MSW** - API mocking
-
-### Key Features
-
-### 🔍 Advanced Search
-- **Advanced filtering**
-- **Real-time suggestions**
-- **Infinite scroll pagination**
-- **Server-side rendering for SEO**
-
-### 📊 Repository Analytics
-- **Health Score** - Custom algorithm evaluating activity, community, maintenance, documentation
-- **Issues Analytics** - Timeline charts, label distribution, hottest issues
-- **Contributor Insights** - Top contributors, commit history
-- **Language Statistics** - Distribution visualization
-- **Dependency Analysis** - Production/dev dependencies from package.json
+<table width="100%">
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🚀 Tech Stack</h3>
+      <p><b>Core:</b></p>
+      <ul>
+        <li><b>Next.js 16</b> — App Router & RSC</li>
+        <li><b>React 19</b> — Server Components</li>
+        <li><b>TypeScript 5</b> — Strict type safety</li>
+      </ul>
+      <p><b>UI & Styling:</b></p>
+      <ul>
+        <li><b>Tailwind CSS 4</b> — Utility-first styling</li>
+        <li><b>Radix UI</b> — Accessible primitives</li>
+        <li><b>Framer Motion</b> — Smooth animations</li>
+        <li><b>View Transitions API</b> — Native-like page transitions</li>
+        <li><b>Lucide React</b> — Icons set</li>
+      </ul>
+      <p><b>Data & State:</b></p>
+      <ul>
+        <li><b>Drizzle ORM</b> — Type-safe SQL queries</li>
+        <li><b>PostgreSQL</b> — Relational database</li>
+        <li><b>GitHub REST API</b> — Repository data</li>
+        <li><b>Server-side caching</b> — Next.js revalidation strategies</li>
+      </ul>
+      <p><b>Testing (~75% coverage: 19 test files, 100+ assertions):</b></p>
+      <ul>
+        <li><b>Vitest</b> — Unit & integration tests</li>
+        <li><b>React Testing Library</b> — Component testing</li>
+        <li><b>MSW</b> — API mocking</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <h3>✨ Key Features</h3>
+      <p><b>Advanced Search:</b></p>
+      <ul>
+        <li><b>Advanced filtering</b></li>
+        <li><b>Real-time suggestions</b></li>
+        <li><b>Infinite scroll pagination</b></li>
+        <li><b>Server-side rendering for SEO</b></li>
+      </ul>
+      <p><b>Repository Analytics:</b></p>
+      <ul>
+        <li><b>Health Score</b> - Custom algorithm evaluating activity, community, maintenance, documentation</li>
+        <li><b>Issues Analytics</b> - Timeline charts, label distribution, hottest issues</li>
+        <li><b>Contributor Insights</b> - Top contributors, commit history</li>
+        <li><b>Language Statistics</b> - Distribution visualization</li>
+        <li><b>Dependency Analysis</b> - Production/dev dependencies</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ### 📈 Trending Repositories
 - **Daily, weekly, monthly, yearly trends**
@@ -88,6 +100,7 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 - Seamless animations during route changes
 - Enhanced perceived performance
 - Modern browser API integration
+- Responsive Design
 
 ### Performance Metrics
 
@@ -98,9 +111,6 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
 | Time to Interactive | < 2.5s |
 | Test Coverage | ~75% |
 | Type Safety | 100% |
-
----
-
 
 
 
