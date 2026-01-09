@@ -1,6 +1,6 @@
 ---
 ### [App Link](https://git-hub-etc.vercel.app/)  👈
-### GitHub EXPLORER 🔎 | TRENDING 📊 | COMPARE ⚖️
+### GitHub EXPLORER 🔎 | TRENDING 📈 | COMPARE ⚖️
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.0-darkgreen?logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-darkgreen?logo=react)
