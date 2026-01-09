@@ -79,13 +79,13 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       <h3>🚀 Tech Stack</h3>
       <p><b>Core:</b></p>
       <ul>
-        <li><b>Next.js 16</b></li>
-        <li><b>React 19</b></li>
-        <li><b>TypeScript 5</b></li>
+        <li><b>Next.js v16.1.0</b></li>
+        <li><b>React v19.2.3</b></li>
+        <li><b>TypeScript v5.9.3</b></li>
       </ul>
       <p><b>UI & Styling:</b></p>
       <ul>
-        <li><b>Tailwind CSS 4</b> — Utility-first styling</li>
+        <li><b>Tailwind CSS v4</b> — Utility-first styling</li>
         <li><b>Radix UI</b> — Accessible primitives</li>
         <li><b>Framer Motion</b> — Smooth animations</li>
         <li><b>View Transitions API</b> — Native-like page transitions</li>
