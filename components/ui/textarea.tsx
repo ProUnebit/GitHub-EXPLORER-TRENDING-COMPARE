@@ -1,22 +1,5 @@
-// components/ui/textarea.tsx
-
 import * as React from 'react';
 import { cn } from '@/lib/utils/cn';
-
-/**
- * ============================================
- * TEXTAREA COMPONENT
- * ============================================
- *
- * Стилизованный textarea компонент в стиле shadcn/ui
- *
- * Особенности:
- * - Автоматический resize (можно контролировать через resize-* classes)
- * - Focus states
- * - Error states (aria-invalid)
- * - Disabled states
- * - Dark mode support
- */
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 

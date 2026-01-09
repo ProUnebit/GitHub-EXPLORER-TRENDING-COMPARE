@@ -4,7 +4,6 @@ import { FeatureCardList } from './FeatureCardList';
 import { QuickStats } from './QuickStats'; // ← Добавить
 import { QuickStatsLoading } from './QuickStatsLoading'; // ← Добавить
 import { Telescope } from 'lucide-react';
-// import { Logo } from '@/components/Logo';
 
 export function LandingPage() {
     return (

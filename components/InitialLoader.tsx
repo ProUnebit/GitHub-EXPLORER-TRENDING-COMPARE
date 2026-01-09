@@ -15,7 +15,7 @@ export function InitialLoader() {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsLoading(false);
         } else {
-            // Имитируем загрузку (например, 2 секунды)
+            // Имитируем загрузку
             const timer = setTimeout(() => {
                 setIsLoading(false);
                 sessionStorage.setItem('hasVisited', 'true');

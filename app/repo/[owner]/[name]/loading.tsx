@@ -3,32 +3,14 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 
-// ============================================
-// LOADING STATE - Repo Page
-// ============================================
-// Полный loading state для страницы репозитория
-// Соответствует структуре page.tsx:
-// 1. Back Button
-// 2. RepoHeader
-// 3. RepoExportButton  
-// 4. RepoStats (4 карточки)
-// 5. ROW 1: Health Score | Languages | Dependencies (3 колонки)
-// 6. ROW 2: Commits | Contributors (2 колонки, items-start)
-
 export default function Loading() {
     return (
         <div className="container mx-auto space-y-8 py-8">
-            {/* ============================================ */}
-            {/* BACK BUTTON */}
-            {/* ============================================ */}
             <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 <ArrowLeft className="h-4 w-4" />
                 <span>Back to search</span>
             </div>
 
-            {/* ============================================ */}
-            {/* REPO HEADER */}
-            {/* ============================================ */}
             <div className="space-y-4">
                 {/* Title + Star Button */}
                 <div className="flex items-start justify-between gap-4">
@@ -64,16 +46,10 @@ export default function Loading() {
                 </div>
             </div>
 
-            {/* ============================================ */}
-            {/* EXPORT BUTTON */}
-            {/* ============================================ */}
             <div className="flex justify-end">
                 <Skeleton className="h-10 w-40" />
             </div>
 
-            {/* ============================================ */}
-            {/* REPO STATS - 4 Cards */}
-            {/* ============================================ */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {Array.from({ length: 4 }).map((_, i) => (
                     <Card key={i}>
@@ -90,10 +66,6 @@ export default function Loading() {
                 ))}
             </div>
 
-            {/* ============================================ */}
-            {/* ROW 1: Health Score | Languages | Dependencies */}
-            {/* 3 колонки на desktop */}
-            {/* ============================================ */}
             <div className="grid gap-8 lg:grid-cols-3">
                 {/* Health Score Card */}
                 <Card>
@@ -185,10 +157,6 @@ export default function Loading() {
                 </Card>
             </div>
 
-            {/* ============================================ */}
-            {/* ROW 2: Commits | Contributors */}
-            {/* 2 колонки на desktop, items-start для независимой высоты */}
-            {/* ============================================ */}
             <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
                 {/* Recent Commits */}
                 <Card>

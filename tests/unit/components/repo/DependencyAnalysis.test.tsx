@@ -1,4 +1,3 @@
-// tests/unit/components/repo/DependencyAnalysis.test.tsx
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { DependencyAnalysis } from '@/app/repo/[owner]/[name]/_components/DependencyAnalysis';

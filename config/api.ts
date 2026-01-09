@@ -1,20 +1,6 @@
-/**
- * ============================================
- * API CONFIGURATION
- * ============================================
- * 
- * Централизованная конфигурация для GitHub API
- * 
- * ПОЧЕМУ ЗДЕСЬ:
- * - Легко менять лимиты (одно место)
- * - Понятно что означает каждое значение
- * - Нет дублирования magic numbers
- * - Проще тестировать с разными значениями
- */
 
-// ============================================
 // PAGINATION LIMITS
-// ============================================
+
 export const PAGINATION = {
     /** Количество репозиториев на странице поиска */
     SEARCH_PER_PAGE: 30,
@@ -38,9 +24,9 @@ export const PAGINATION = {
     CONTRIBUTORS_DISPLAY: 10,
 } as const;
 
-// ============================================
+
 // CACHE REVALIDATION (seconds)
-// ============================================
+
 export const CACHE = {
     /** Статические данные (repository details, contributors) - 1 час */
     STATIC: 3600,
@@ -52,9 +38,9 @@ export const CACHE = {
     REALTIME: 60,
 } as const;
 
-// ============================================
+
 // API RETRY CONFIGURATION
-// ============================================
+
 export const RETRY = {
     /** Максимальное количество повторных попыток */
     MAX_ATTEMPTS: 3,
@@ -69,9 +55,9 @@ export const RETRY = {
     RETRY_CODES: [408, 429, 500, 502, 503, 504] as const,
 } as const;
 
-// ============================================
+
 // RATE LIMITING
-// ============================================
+
 export const RATE_LIMIT = {
     /** Предупреждение когда осталось меньше запросов */
     WARNING_THRESHOLD: 100,
@@ -80,9 +66,9 @@ export const RATE_LIMIT = {
     CRITICAL_THRESHOLD: 10,
 } as const;
 
-// ============================================
+
 // SEARCH FILTERS
-// ============================================
+
 export const SEARCH_FILTERS = {
     /** Минимальное количество звезд по умолчанию */
     MIN_STARS_DEFAULT: 0,
@@ -91,9 +77,9 @@ export const SEARCH_FILTERS = {
     STARS_OPTIONS: [0, 100, 1000, 5000, 10000] as const,
 } as const;
 
-// ============================================
+
 // EXPORT TYPES
-// ============================================
+
 export type PaginationConfig = typeof PAGINATION;
 export type CacheConfig = typeof CACHE;
 export type RetryConfig = typeof RETRY;

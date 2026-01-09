@@ -11,12 +11,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-// ============================================
-// THEME TOGGLE - Client Component
-// ============================================
-// Кнопка переключения темы
-// Показывает текущую тему и позволяет выбрать light/dark/system
-
 
 export function ThemeToggle() {
     const { setTheme, theme } = useTheme();

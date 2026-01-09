@@ -1,9 +1,7 @@
-// app/feedback/_components/FeedbackStats.tsx
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Star, MessageSquareHeart } from 'lucide-react';
 import * as feedbackQueries from '@/db/queries/feedback';
-import { RatingStars } from './RatingStars'; // ✅ Импортируем наш компонент
+import { RatingStars } from './RatingStars';
 
 export async function FeedbackStats() {
   const [averageRating, totalCount, distribution] = await Promise.all([
@@ -59,7 +57,6 @@ export async function FeedbackStats() {
             </div>
           </div>
           
-          {/* Stars - ✅ ИСПОЛЬЗУЕМ RatingStars компонент */}
           <div className="flex flex-col items-center gap-2">
             <RatingStars
               value={averageRating}

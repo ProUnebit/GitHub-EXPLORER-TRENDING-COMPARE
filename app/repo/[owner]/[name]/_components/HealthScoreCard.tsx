@@ -7,12 +7,6 @@ import {
     type HealthScoreBreakdown,
 } from '@/lib/utils/health-score';
 
-// ============================================
-// HEALTH SCORE CARD - Detailed Version
-// ============================================
-// Полная версия Health Score для детальной страницы
-// Показывает breakdown по категориям
-
 type HealthScoreCardProps = {
     repo: GitHubRepo;
 };
@@ -83,7 +77,6 @@ export function HealthScoreCard({ repo }: HealthScoreCardProps) {
     const breakdown = calculateHealthScore(repo);
     const badge = getHealthBadge(breakdown.total);
 
-    // Определяем статусы для каждой метрики
     const getStatus = (
         score: number,
         max: number
@@ -95,7 +88,6 @@ export function HealthScoreCard({ repo }: HealthScoreCardProps) {
         return 'poor';
     };
 
-    // Descriptions для каждой метрики
     const getActivityDescription = (score: number): string => {
         if (score === 30) return 'Active development - updated this week';
         if (score === 20) return 'Regular updates - updated this month';
@@ -135,9 +127,6 @@ export function HealthScoreCard({ repo }: HealthScoreCardProps) {
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                {/* ============================================
-                    BIG SCORE DISPLAY
-                    ============================================ */}
                 <div className="text-center">
                     {/* Score */}
                     <div className="mb-2 flex items-center justify-center gap-3">
@@ -170,9 +159,6 @@ export function HealthScoreCard({ repo }: HealthScoreCardProps) {
                     </p>
                 </div>
 
-                {/* ============================================
-                    BREAKDOWN BY CATEGORY
-                    ============================================ */}
                 <div className="space-y-4">
                     <h4 className="text-muted-foreground text-sm font-semibold">
                         Score Breakdown
@@ -223,9 +209,6 @@ export function HealthScoreCard({ repo }: HealthScoreCardProps) {
                     />
                 </div>
 
-                {/* ============================================
-                    INFO FOOTER
-                    ============================================ */}
                 <div className="text-muted-foreground border-t pt-4 text-center text-xs">
                     Health score is calculated based on activity, community
                     engagement, documentation quality, and maintenance practices

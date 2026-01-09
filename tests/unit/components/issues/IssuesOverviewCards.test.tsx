@@ -1,4 +1,3 @@
-// tests/unit/components/issues/IssuesOverviewCards.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { IssuesOverviewCards } from '@/app/repo/[owner]/[name]/_components/IssuesOverviewCards';

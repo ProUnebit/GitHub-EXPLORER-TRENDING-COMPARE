@@ -44,7 +44,6 @@ export function TrendingCard({ repo, rank }: TrendingCardProps) {
                 {/* Repository Name & Health Badge */}
                 <div className="flex items-start justify-between gap-2 pr-14">
                     {' '}
-                    {/* pr-14 для места под rank badge */}
                     <div className="min-w-0 flex-1">
                         <Link
                             href={repoUrl}

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import Link from 'next/link';
 import { Link } from 'next-view-transitions';
 import {
     Star,
@@ -19,21 +18,6 @@ import {
     formatRelativeTime,
 } from '@/lib/utils/formatters';
 
-// ============================================
-// COMPARISON TABLE - Server Component
-// ============================================
-// Side-by-side таблица сравнения метрик
-//
-// Функционал:
-// - Определение "победителя" по каждой метрике
-// - Цветовая индикация (winner = зеленый)
-// - Responsive layout (grid на desktop, stack на mobile)
-//
-// Метрики:
-// - Stars, Forks, Watchers, Issues
-// - Contributors, Languages
-// - Dates, License
-
 type RepoData = {
     fullName: string;
     owner: string;
@@ -47,19 +31,15 @@ type ComparisonTableProps = {
     repos: RepoData[];
 };
 
-// Helper для определения победителя
 function getWinnerIndex(values: number[]): number {
     return values.indexOf(Math.max(...values));
 }
 
 export function ComparisonTable({ repos }: ComparisonTableProps) {
-    // ============================================
-    // PREPARE DATA FOR COMPARISON
-    // ============================================
+
     const stars = repos.map((r) => r.repo.stargazers_count);
     const forks = repos.map((r) => r.repo.forks_count);
     const watchers = repos.map((r) => r.repo.watchers_count);
-    // const issues = repos.map((r) => r.repo.open_issues_count);
     const contributorsCount = repos.map((r) => r.contributors.length);
     const languagesCount = repos.map((r) => Object.keys(r.languages).length);
     const createdDates = repos.map((r) =>
@@ -165,7 +145,7 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
                                     value: formatNumber(
                                         r.repo.open_issues_count
                                     ),
-                                    isWinner: false, // Меньше = лучше, но не показываем winner
+                                    isWinner: false,
                                 }))}
                             />
 
@@ -244,10 +224,6 @@ export function ComparisonTable({ repos }: ComparisonTableProps) {
     );
 }
 
-// ============================================
-// METRIC ROW COMPONENT
-// ============================================
-// Переиспользуемая строка таблицы
 function MetricRow({
     icon,
     label,

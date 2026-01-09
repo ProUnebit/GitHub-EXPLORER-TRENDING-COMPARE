@@ -4,21 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCommits } from '@/lib/github/api';
 import { formatRelativeTime } from '@/lib/utils/formatters';
 
-// ============================================
-// RECENT COMMITS - Server Component
-// ============================================
-// Показывает последние коммиты
-//
-// Паттерн: Timeline UI
-// - Хронологический список
-// - Внешние ссылки на GitHub
-// - Относительное время ("2 hours ago")
-//
-// UX решение:
-// - Ограничиваем 10 коммитами (не перегружаем UI)
-// - Truncate длинных commit messages
-// - Цветовое кодирование (автор vs коммитер)
-
 type RecentCommitsProps = {
     owner: string;
     name: string;
@@ -60,7 +45,7 @@ export async function RecentCommits({ owner, name }: RecentCommitsProps) {
                             {/* Icon */}
                             <div className="mt-1 shrink-0">
                                 <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-full">
-                                    <GitCommit className="text-muted-foreground h-10 w-10 text-teal-500" />
+                                    <GitCommit className="text-muted-foreground h-10 w-10" />
                                 </div>
                             </div>
 

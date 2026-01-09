@@ -4,21 +4,10 @@ import { TrendingList } from './_components/TrendingList';
 import { TrendingListSkeleton } from './_components/TrendingListSkeleton';
 import { Flame } from 'lucide-react'
 
-// ============================================
-// METADATA
-// ============================================
 export const metadata = {
     title: 'Trending Repositories - GitHub Explorer',
     description: 'Discover trending repositories on GitHub',
 };
-
-// ============================================
-// TRENDING PAGE
-// ============================================
-// Паттерн: URL-driven state
-// - Фильтры изменяют URL
-// - Server читает URL и фетчит данные
-// - key prop для сброса Suspense при изменении фильтров
 
 type TrendingPageProps = {
     searchParams: Promise<{
@@ -34,7 +23,7 @@ export default async function TrendingPage({
     const since = params.since || 'weekly';
     const language = params.language;
 
-    // Генерируем уникальный key для Suspense
+    // Уникальный key для Suspense
     // При изменении фильтров → key меняется → skeleton показывается
     const suspenseKey = `${since}-${language || 'all'}`;
 

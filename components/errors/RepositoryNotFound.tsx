@@ -1,18 +1,3 @@
-// components/errors/RepositoryNotFound.tsx
-
-/**
- * ============================================
- * REPOSITORY NOT FOUND ERROR UI
- * ============================================
- * 
- * Показывается когда репозиторий не найден (404)
- * 
- * Features:
- * - Понятное сообщение пользователю
- * - Возможные причины
- * - Back to search button
- */
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { SearchX, AlertCircle, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -35,7 +20,7 @@ export function RepositoryNotFound({ owner, repo }: RepositoryNotFoundProps) {
                         <div>
                             <CardTitle className="text-2xl">Repository Not Found</CardTitle>
                             <CardDescription>
-                                We couldn't find {repoName}
+                                We couldn&apos;t find {repoName}
                             </CardDescription>
                         </div>
                     </div>
@@ -58,7 +43,7 @@ export function RepositoryNotFound({ owner, repo }: RepositoryNotFoundProps) {
                             Possible reasons:
                         </p>
                         <ul className="text-sm text-muted-foreground space-y-2 ml-6 list-disc">
-                            <li>The repository doesn't exist</li>
+                            <li>The repository doesn&apos;t exist</li>
                             <li>The repository name or owner is misspelled</li>
                             <li>
                                 <Lock className="inline h-3 w-3 mr-1" />

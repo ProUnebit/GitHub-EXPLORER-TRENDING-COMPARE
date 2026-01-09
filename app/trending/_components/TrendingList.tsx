@@ -27,13 +27,6 @@ export async function TrendingList({ since, language }: TrendingListProps) {
     return (
         <div className="space-y-6">
             {' '}
-            {/* ← Было space-y-4, теперь 6 */}
-            {/* ============================================
-                LANGUAGES OVERVIEW - НОВОЕ!
-                ============================================ */}
-            {/* Показываем только если НЕ выбран конкретный язык */}
-  
-            {/* Header с кнопкой экспорта */}
             <div className="flex items-center justify-between">
                 <p className="text-muted-foreground text-sm font-semibold">
                     <span className="font-bold text-teal-600">

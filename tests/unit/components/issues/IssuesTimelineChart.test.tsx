@@ -1,4 +1,3 @@
-// tests/unit/components/issues/IssuesTimelineChart.test.tsx
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import { IssuesTimelineChart } from '@/app/repo/[owner]/[name]/_components/IssuesTimelineChart';

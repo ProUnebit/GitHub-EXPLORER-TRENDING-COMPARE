@@ -1,23 +1,3 @@
-// app/feedback/page.tsx
-
-/**
- * ============================================
- * FEEDBACK PAGE
- * ============================================
- *
- * Главная страница для системы отзывов
- *
- * Структура:
- * 1. Header + описание
- * 2. FeedbackStats (средний рейтинг)
- * 3. FeedbackForm (если у пользователя нет отзыва) или сообщение
- * 4. FeedbackList (все отзывы)
- *
- * SEO:
- * - Server Component для статических данных
- * - Metadata для поисковиков
- */
-
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getUserId } from '@/lib/utils/user-session';
@@ -30,18 +10,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MessagesSquare, MessageSquareMore, Star } from 'lucide-react';
 import { ScrollToFeedbackButton } from './_components/ScrollToFeedbackButton';
 
-// ============================================
-// METADATA
-// ============================================
 export const metadata: Metadata = {
     title: 'Feedback',
     description:
         'Share your feedback and help us improve GitHub Explorer Dashboard',
 };
 
-// ============================================
-// LOADING COMPONENTS
-// ============================================
 function StatsLoading() {
     return (
         <Card>
@@ -87,10 +61,6 @@ function ListLoading() {
     );
 }
 
-// ============================================
-// CHECK USER FEEDBACK COMPONENT
-// ============================================
-// Проверяем есть ли у пользователя отзыв
 async function UserFeedbackSection() {
     const userId = await getUserId();
     const userFeedback = await feedbackQueries.getUserFeedback(userId);
@@ -105,7 +75,6 @@ async function UserFeedbackSection() {
             </CardHeader>
             <CardContent>
                 {userFeedback ? (
-                    // У пользователя уже есть отзыв
                     <div className="bg-secondary/50 flex items-center gap-3 rounded-lg p-4">
                         <Star className="h-5 w-5 text-yellow-500" />
                         <div className="flex-1">
@@ -121,7 +90,6 @@ async function UserFeedbackSection() {
                         </div>
                     </div>
                 ) : (
-                    // У пользователя нет отзыва - показываем форму
                     <FeedbackForm mode="create" />
                 )}
             </CardContent>
@@ -129,16 +97,11 @@ async function UserFeedbackSection() {
     );
 }
 
-// ============================================
-// PAGE COMPONENT
-// ============================================
 export default function FeedbackPage() {
     return (
         <div className="container mx-auto py-6 sm:py-10">
             <div className="mx-auto max-w-4xl space-y-6 sm:space-y-8 px-4 sm:px-0">
-                {/* ============================================ */}
                 {/* HEADER */}
-                {/* ============================================ */}
                 <div className="space-y-3 sm:space-y-4 text-center">
                     <h1 className="text-3xl sm:text-4xl font-bold tracking-tight flex flex-col sm:flex-row items-center justify-center gap-2">
                         <MessagesSquare className="mr-1 w-10 h-10 sm:w-12 sm:h-12 text-emerald-600" />
@@ -152,24 +115,16 @@ export default function FeedbackPage() {
                     </p>
                 </div>
 
-                {/* ============================================ */}
-                {/* STATS - Средний рейтинг и статистика */}
-                {/* ============================================ */}
+                {/* STATS */}
                 <Suspense fallback={<StatsLoading />}>
                     <FeedbackStats />
                 </Suspense>
 
-                {/* ============================================ */}
                 {/* USER FEEDBACK SECTION */}
-                {/* Форма или сообщение "уже есть отзыв" */}
-                {/* ============================================ */}
                 <Suspense fallback={<Skeleton className="h-96 w-full" />}>
                     <UserFeedbackSection />
                 </Suspense>
 
-                {/* ============================================ */}
-                {/* DIVIDER */}
-                {/* ============================================ */}
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                         <span className="w-full border-t border-stone-400" />
@@ -181,9 +136,7 @@ export default function FeedbackPage() {
                     </div>
                 </div>
 
-                {/* ============================================ */}
                 {/* FEEDBACK LIST - Все отзывы */}
-                {/* ============================================ */}
                 <Suspense fallback={<ListLoading />}>
                     <FeedbackList />
                 </Suspense>

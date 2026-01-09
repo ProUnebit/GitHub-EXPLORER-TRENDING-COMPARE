@@ -1,14 +1,4 @@
-// app/repo/[owner]/[name]/_components/IssuesLabelsChart.tsx
-
 'use client';
-
-/**
- * ============================================
- * ISSUES LABELS CHART
- * ============================================
- * 
- * Горизонтальный bar chart с топ-5 labels
- */
 
 import { Bar } from 'react-chartjs-2';
 import {
@@ -24,21 +14,13 @@ import {
 import type { LabelStats } from '@/lib/github/types';
 import { useTheme } from 'next-themes';
 
-// ============================================
-// REGISTER CHART.JS COMPONENTS
-// ============================================
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// ============================================
-// TYPES
-// ============================================
 type IssuesLabelsChartProps = {
     labels: LabelStats[];
 };
 
-// ============================================
-// HELPER: Convert hex to RGB
-// ============================================
+// Convert hex to RGB
 function hexToRgba(hex: string, alpha: number = 1): string {
     hex = hex.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
@@ -47,21 +29,16 @@ function hexToRgba(hex: string, alpha: number = 1): string {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-// ============================================
-// COMPONENT
-// ============================================
 export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    // Названия labels (обрезаем если длинные)
     const labelNames = labels.map((label) => {
         return label.name.length > 20 
             ? label.name.substring(0, 20) + '...' 
             : label.name;
     });
 
-    // Цвета баров
     const backgroundColors = labels.map((label) => 
         hexToRgba(label.color, 0.8)
     );
@@ -85,9 +62,6 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
         ],
     };
 
-    // ============================================
-    // CHART OPTIONS - ПРАВИЛЬНАЯ ТИПИЗАЦИЯ
-    // ============================================
     const options: ChartOptions<'bar'> = {
         indexAxis: 'y',
         responsive: true,
@@ -140,7 +114,7 @@ export function IssuesLabelsChart({ labels }: IssuesLabelsChartProps) {
                     color: isDark ? '#e5e7eb' : '#374151',
                     font: {
                         size: 12,
-                        weight: 500, // ✅ Изменил с '500' на 500 (число)
+                        weight: 500,
                     },
                 },
             },

@@ -1,14 +1,3 @@
-/**
- * ============================================
- * CONFIGURATION INDEX
- * ============================================
- * 
- * Централизованный экспорт всех конфигураций
- * 
- * ИСПОЛЬЗОВАНИЕ:
- * import { PAGINATION, WEIGHTS, CHARTS } from '@/config';
- */
-
 // API Configuration
 export {
     PAGINATION,

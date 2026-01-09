@@ -4,17 +4,6 @@ import { Package, AlertCircle } from 'lucide-react';
 import { getPackageJson } from '@/lib/github/api';
 import type { DependencyInfo } from '@/lib/github/types';
 
-// ============================================
-// DEPENDENCY ANALYSIS - Server Component
-// ============================================
-// Анализ зависимостей проекта из package.json
-//
-// Показывает:
-// - Production dependencies
-// - Dev dependencies
-// - Общее количество
-// - Версии пакетов
-
 type DependencyAnalysisProps = {
     owner: string;
     name: string;
@@ -24,12 +13,9 @@ export async function DependencyAnalysis({
     owner,
     name,
 }: DependencyAnalysisProps) {
-    // ============================================
-    // FETCH PACKAGE.JSON
-    // ============================================
+
     const packageJson = await getPackageJson(owner, name);
 
-    // Если package.json не найден (не npm проект)
     if (!packageJson) {
         return (
             <Card className="bg-card dark:border-teal-900/60">
@@ -54,9 +40,6 @@ export async function DependencyAnalysis({
         );
     }
 
-    // ============================================
-    // PARSE DEPENDENCIES
-    // ============================================
     const dependencies: DependencyInfo[] = [];
 
     // Production dependencies
@@ -109,9 +92,6 @@ export async function DependencyAnalysis({
         );
     }
 
-    // ============================================
-    // STATISTICS
-    // ============================================
     const prodCount = dependencies.filter(
         (d) => d.type === 'production'
     ).length;
@@ -120,7 +100,6 @@ export async function DependencyAnalysis({
     ).length;
     const totalCount = dependencies.length;
 
-    // Группируем по типу
     const byType = {
         production: dependencies.filter((d) => d.type === 'production'),
         development: dependencies.filter((d) => d.type === 'development'),
@@ -140,9 +119,6 @@ export async function DependencyAnalysis({
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                {/* ============================================
-                    STATISTICS OVERVIEW
-                    ============================================ */}
                 <div className="grid grid-cols-2 gap-4">
                     <div className="rounded-lg border bg-green-500/10 p-4 text-center">
                         <div className="text-2xl font-bold text-green-600 dark:text-green-400">
@@ -162,9 +138,6 @@ export async function DependencyAnalysis({
                     </div>
                 </div>
 
-                {/* ============================================
-                    DEPENDENCIES LIST
-                    ============================================ */}
                 {/* Production Dependencies */}
                 {byType.production.length > 0 && (
                     <div>

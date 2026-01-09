@@ -1,26 +1,5 @@
 'use client';
 
-// ============================================
-// ERROR BOUNDARY
-// ============================================
-// Next.js автоматически оборачивает routes в Error Boundary
-// Этот файл показывается когда:
-// - Ошибка в Server Component fetch
-// - Ошибка в рендере любого компонента
-// - throw new Error() где угодно в этом route
-//
-// Почему 'use client':
-// - Error boundaries должны быть Client Components
-// - Нужны event handlers (reset button)
-// - Могут использовать useEffect для логирования
-//
-// Архитектурный паттерн:
-// app/
-//   page.tsx         ← Может throw error
-//   error.tsx        ← Ловит все ошибки из page.tsx и ниже
-//   _components/
-//     SearchResults  ← Может throw error → error.tsx ловит
-
 type ErrorProps = {
     error: Error & { digest?: string };
     reset: () => void;

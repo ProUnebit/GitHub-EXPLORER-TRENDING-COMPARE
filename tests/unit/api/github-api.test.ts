@@ -7,14 +7,10 @@ import {
     getCommits,
 } from '@/lib/github/api';
 
-// ============================================
-// GITHUB API CLIENT TESTS
-// ============================================
 
 describe('GitHub API Client', () => {
-    // ============================================
+
     // searchRepositoriesClient TESTS
-    // ============================================
 
     describe('searchRepositoriesClient', () => {
         it('fetches repositories successfully', async () => {
@@ -79,9 +75,7 @@ describe('GitHub API Client', () => {
         });
     });
 
-    // ============================================
     // getRepository TESTS
-    // ============================================
 
     describe('getRepository', () => {
         it('fetches single repository', async () => {
@@ -116,9 +110,7 @@ describe('GitHub API Client', () => {
         });
     });
 
-    // ============================================
     // getContributors TESTS
-    // ============================================
 
     describe('getContributors', () => {
         it('fetches contributors list', async () => {
@@ -149,9 +141,7 @@ describe('GitHub API Client', () => {
         });
     });
 
-    // ============================================
     // getLanguages TESTS
-    // ============================================
 
     describe('getLanguages', () => {
         it('fetches languages breakdown', async () => {
@@ -175,9 +165,7 @@ describe('GitHub API Client', () => {
         });
     });
 
-    // ============================================
     // getCommits TESTS
-    // ============================================
 
     describe('getCommits', () => {
         it('fetches commits list', async () => {

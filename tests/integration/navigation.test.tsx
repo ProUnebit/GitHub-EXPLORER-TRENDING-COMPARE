@@ -3,14 +3,14 @@ import { render, screen } from '@testing-library/react';
 import { RepoCard } from '@/app/_components/RepoCard';
 import { mockRepo, mockRepo2 } from '@/tests/mocks/fixtures';
 
-// ============================================
+
 // NAVIGATION INTEGRATION TESTS
-// ============================================
+
 
 describe('Navigation Integration', () => {
-    // ============================================
+
     // REPOSITORY CARD NAVIGATION
-    // ============================================
+
 
     describe('repository card navigation', () => {
         it('repo card links to correct detail page', () => {
@@ -38,9 +38,9 @@ describe('Navigation Integration', () => {
         });
     });
 
-    // ============================================
+
     // MULTIPLE CARDS
-    // ============================================
+
 
     describe('multiple cards', () => {
         it('renders multiple cards with correct links', () => {
@@ -59,9 +59,9 @@ describe('Navigation Integration', () => {
         });
     });
 
-    // ============================================
+
     // URL STRUCTURE
-    // ============================================
+
 
     describe('URL structure', () => {
         it('uses correct URL format: /repo/owner/name', () => {

@@ -6,9 +6,7 @@ import type {
     GitHubCommit,
 } from '@/lib/github/types';
 
-// ============================================
 // MOCK REPOSITORIES
-// ============================================
 
 export const mockRepo: GitHubRepo = {
     id: 10270250,
@@ -121,9 +119,7 @@ export const mockRepoMediumActivity: GitHubRepo = {
     updated_at: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(), // 45 days ago
 };
 
-// ============================================
 // MOCK SEARCH RESPONSES
-// ============================================
 
 export const mockSearchResponse: GitHubSearchResponse = {
     total_count: 100,
@@ -166,9 +162,7 @@ export function createPaginatedResponse(page: number, perPage: number = 30): Git
     };
 }
 
-// ============================================
 // MOCK CONTRIBUTORS
-// ============================================
 
 export const mockContributors: GitHubContributor[] = [
     {
@@ -197,9 +191,7 @@ export const mockContributors: GitHubContributor[] = [
     },
 ];
 
-// ============================================
 // MOCK LANGUAGES
-// ============================================
 
 export const mockLanguages: GitHubLanguages = {
     JavaScript: 5000000,
@@ -208,9 +200,7 @@ export const mockLanguages: GitHubLanguages = {
     CSS: 300000,
 };
 
-// ============================================
 // MOCK COMMITS
-// ============================================
 
 export const mockCommits: GitHubCommit[] = [
     {
@@ -253,9 +243,7 @@ export const mockCommits: GitHubCommit[] = [
     },
 ];
 
-// ============================================
 // MOCK PACKAGE.JSON
-// ============================================
 
 export const mockPackageJson = {
     name: 'react',

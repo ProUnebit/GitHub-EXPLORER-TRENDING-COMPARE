@@ -6,14 +6,6 @@ import { ComparisonCharts } from './ComparisonCharts';
 import { exportComparisonToPDF } from '@/lib/utils/export';
 import { formatDate } from '@/lib/utils/formatters';
 
-// ============================================
-// COMPARISON EXPORT WRAPPER - Client Component
-// ============================================
-// Оборачивает таблицу и графики
-// Предоставляет функционал экспорта
-//
-// Паттерн: Data passed from Server → Client wrapper → Export
-
 type RepoData = {
     fullName: string;
     owner: string;
@@ -34,7 +26,6 @@ export function ComparisonExportWrapper({
     repos,
 }: ComparisonExportWrapperProps) {
     const handleExportPDF = () => {
-        // Подготовка данных для PDF
         const exportData = {
             repos: repos.map((r) => ({
                 name: r.name,
@@ -55,7 +46,6 @@ export function ComparisonExportWrapper({
 
     return (
         <div className="space-y-8">
-            {/* Export Button */}
             <div className="flex justify-start">
                 <ExportButton
                     onExportPDF={handleExportPDF}
@@ -63,8 +53,6 @@ export function ComparisonExportWrapper({
                     label="Export Comparison"
                 />
             </div>
-
-            {/* Content */}
             <ComparisonTable repos={repos} />
             <ComparisonCharts repos={repos} />
         </div>

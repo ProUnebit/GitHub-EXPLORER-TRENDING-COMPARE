@@ -12,17 +12,6 @@ import {
 import { toast } from 'sonner';
 import { delay } from '@/lib/utils/async';
 
-// ============================================
-// EXPORT BUTTON - Client Component
-// ============================================
-// Переиспользуемая кнопка экспорта с выбором формата
-//
-// Props:
-// - onExportPDF: callback для PDF экспорта
-// - onExportCSV: callback для CSV экспорта
-// - formats: доступные форматы ['pdf', 'csv']
-// - disabled: отключить кнопку
-
 type ExportButtonProps = {
     onExportPDF?: () => void | Promise<void>;
     onExportCSV?: () => void | Promise<void>;

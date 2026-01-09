@@ -16,16 +16,12 @@ type SearchResultsClientProps = {
     totalCount: number;
 };
 
-// ============================================
-// ANIMATION VARIANTS
-// ============================================
-// Для initial render (stagger effect)
 const containerVariants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.05, // 50ms между карточками
+            staggerChildren: 0.05,
         },
     },
 };
@@ -42,7 +38,6 @@ const itemVariants = {
     },
 };
 
-// Для новых карточек (infinite scroll) - простой fade-in
 const newItemVariants = {
     hidden: { opacity: 0, y: 15 },
     visible: {
@@ -78,20 +73,15 @@ export function SearchResultsClient({
         initialPerPage: 30,
     });
 
-    // ============================================
-    // TRACK INITIAL COUNT
-    // ============================================
-    // Отслеживаем количество initial repos
     const initialCountRef = useRef(initialRepos.length);
 
-    // Обновляем при смене query или perPage (новый поиск = новый initial)
     useEffect(() => {
         initialCountRef.current = repos.length;
-    }, [query, perPage ]); // ← Важно: сбрасываем при изменении
+    }, [query, perPage ]);
 
     return (
         <div className="space-y-4">
-            {/* HEADER */}
+
             <div className="flex flex-wrap items-center justify-between gap-4">
                 <p className="text-muted-foreground text-sm font-semibold">
                     Found{' '}
@@ -117,17 +107,13 @@ export function SearchResultsClient({
                 />
             </div>
 
-            {/* ============================================
-                REPOSITORY GRID
-                ============================================ */}
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {/* INITIAL REPOS - STAGGER ANIMATION */}
                 <motion.div
-                    className="contents" // ← contents = дети вставляются напрямую в grid
+                    className="contents"
                     variants={containerVariants}
                     initial="hidden"
                     animate="show"
-                    key={`${query}-${perPage}`} // ← Перезапуск при query/perPage
+                    key={`${query}-${perPage}`}
                 >
                     {/* eslint-disable-next-line react-hooks/refs */}
                     {repos.slice(0, initialCountRef.current).map((repo) => (

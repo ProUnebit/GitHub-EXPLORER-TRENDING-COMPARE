@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { deduplicateById } from '@/lib/utils/array';
 
-// ============================================
 // deduplicateById TESTS
-// ============================================
 
 describe('deduplicateById', () => {
     describe('basic functionality', () => {

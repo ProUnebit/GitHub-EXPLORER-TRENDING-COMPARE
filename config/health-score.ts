@@ -1,20 +1,6 @@
-/**
- * ============================================
- * HEALTH SCORE CONFIGURATION
- * ============================================
- * 
- * Конфигурация алгоритма Health Score
- * 
- * ПОЧЕМУ ОТДЕЛЬНЫЙ ФАЙЛ:
- * - Легко настраивать веса категорий
- * - Понятны все пороговые значения
- * - Можно A/B тестировать разные алгоритмы
- * - Все в одном месте для документации
- */
 
-// ============================================
 // CATEGORY WEIGHTS (должны суммироваться в 100)
-// ============================================
+
 export const WEIGHTS = {
     /** Вес категории "Activity" (как недавно обновлялся) */
     ACTIVITY: 30,
@@ -29,9 +15,9 @@ export const WEIGHTS = {
     MAINTENANCE: 20,
 } as const;
 
-// ============================================
+
 // ACTIVITY THRESHOLDS (days)
-// ============================================
+
 export const ACTIVITY = {
     /** Отлично: обновлялся на прошлой неделе */
     EXCELLENT_DAYS: 7,
@@ -46,9 +32,9 @@ export const ACTIVITY = {
     // (неявно - все что больше FAIR_DAYS)
 } as const;
 
-// ============================================
+
 // COMMUNITY METRICS
-// ============================================
+
 export const COMMUNITY = {
     /** Делитель для stars (1 star = X баллов) */
     STARS_DIVISOR: 1000,
@@ -63,9 +49,9 @@ export const COMMUNITY = {
     FORKS_MAX_POINTS: 15,
 } as const;
 
-// ============================================
+
 // DOCUMENTATION POINTS
-// ============================================
+
 export const DOCUMENTATION = {
     /** Баллы за наличие description */
     DESCRIPTION_POINTS: 10,
@@ -77,9 +63,9 @@ export const DOCUMENTATION = {
     LICENSE_POINTS: 5,
 } as const;
 
-// ============================================
+
 // MAINTENANCE THRESHOLDS (issue ratio)
-// ============================================
+
 export const MAINTENANCE = {
     /** Отлично: меньше 5% открытых issues от stars */
     EXCELLENT_RATIO: 0.05,
@@ -97,9 +83,9 @@ export const MAINTENANCE = {
     POOR_POINTS: 5,
 } as const;
 
-// ============================================
+
 // SCORE GRADES
-// ============================================
+
 export const GRADES = {
     /** Отличный репозиторий */
     EXCELLENT: {
@@ -134,16 +120,16 @@ export const GRADES = {
     },
 } as const;
 
-// ============================================
+
 // HELPER: Validate configuration
-// ============================================
+
 const totalWeight = WEIGHTS.ACTIVITY + WEIGHTS.COMMUNITY + WEIGHTS.DOCUMENTATION + WEIGHTS.MAINTENANCE;
 if (totalWeight !== 100) {
     console.warn(`⚠️ Health Score weights sum to ${totalWeight}, not 100!`);
 }
 
-// ============================================
+
 // EXPORTS
-// ============================================
+
 export type GradeConfig = typeof GRADES;
 export type WeightsConfig = typeof WEIGHTS;

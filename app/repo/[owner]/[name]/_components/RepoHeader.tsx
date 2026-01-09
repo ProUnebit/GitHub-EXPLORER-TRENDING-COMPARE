@@ -1,19 +1,9 @@
 import Link from 'next/link';
-import { ExternalLink, GitFork, Star, Eye, Scale } from 'lucide-react';
+import { ExternalLink, Scale } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { GitHubRepo } from '@/lib/github/types';
-import { formatNumber, formatDate } from '@/lib/utils/formatters';
-
-// ============================================
-// REPO HEADER - Server Component
-// ============================================
-// Отображает основную информацию о репозитории
-//
-// Почему Server Component:
-// - Нет интерактивности
-// - Просто рендер данных
-// - Можно статически сгенерировать
+import { formatDate } from '@/lib/utils/formatters';
 
 type RepoHeaderProps = {
     repo: GitHubRepo;

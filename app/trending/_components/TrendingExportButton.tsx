@@ -4,11 +4,6 @@ import { ExportButton } from '@/components/ExportButton';
 import { exportTrendingToCSV } from '@/lib/utils/export';
 import type { GitHubRepo } from '@/lib/github/types';
 
-// ============================================
-// TRENDING EXPORT BUTTON - Client Component
-// ============================================
-// Обертка для экспорта trending списка
-
 type TrendingExportButtonProps = {
     repos: GitHubRepo[];
     since: 'daily' | 'weekly' | 'monthly';

@@ -22,9 +22,6 @@ export function SearchInput() {
 
     const [isPending, startTransition] = useTransition();
 
-    // ============================================
-    // CLEAR FILTERS HANDLER
-    // ============================================
     const handleClearFilters = () => {
         setLanguage('');
         setMinStars('');

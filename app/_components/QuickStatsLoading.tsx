@@ -1,11 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// ============================================
-// QUICK STATS LOADING SKELETON
-// ============================================
-// Показывается во время загрузки статистики
-
 export function QuickStatsLoading() {
     return (
         <div className="grid w-full max-w-5xl grid-cols-2 gap-4 md:grid-cols-4">

@@ -13,14 +13,12 @@ import {
 
 const GITHUB_API = 'https://api.github.com';
 
-// ============================================
 // MSW HANDLERS
-// ============================================
 
 export const handlers = [
-    // ============================================
+
     // SEARCH REPOSITORIES
-    // ============================================
+
     http.get(`${GITHUB_API}/search/repositories`, ({ request }) => {
         const url = new URL(request.url);
         const query = url.searchParams.get('q') || '';
@@ -47,9 +45,9 @@ export const handlers = [
         return HttpResponse.json(mockSearchResponse);
     }),
 
-    // ============================================
+
     // GET SINGLE REPOSITORY
-    // ============================================
+
     http.get(`${GITHUB_API}/repos/:owner/:repo`, ({ params }) => {
         const { owner, repo } = params;
 
@@ -87,9 +85,9 @@ export const handlers = [
         });
     }),
 
-    // ============================================
+
     // GET CONTRIBUTORS
-    // ============================================
+
     http.get(`${GITHUB_API}/repos/:owner/:repo/contributors`, ({ params, request }) => {
         const { owner } = params;
         const url = new URL(request.url);
@@ -105,9 +103,9 @@ export const handlers = [
         return HttpResponse.json(mockContributors.slice(0, perPage));
     }),
 
-    // ============================================
+
     // GET LANGUAGES
-    // ============================================
+
     http.get(`${GITHUB_API}/repos/:owner/:repo/languages`, ({ params }) => {
         const { owner } = params;
 
@@ -121,9 +119,9 @@ export const handlers = [
         return HttpResponse.json(mockLanguages);
     }),
 
-    // ============================================
+
     // GET COMMITS
-    // ============================================
+
     http.get(`${GITHUB_API}/repos/:owner/:repo/commits`, ({ params, request }) => {
         const { owner } = params;
         const url = new URL(request.url);
@@ -139,9 +137,9 @@ export const handlers = [
         return HttpResponse.json(mockCommits.slice(0, perPage));
     }),
 
-    // ============================================
+
     // GET FILE CONTENTS (for package.json)
-    // ============================================
+
     http.get(`${GITHUB_API}/repos/:owner/:repo/contents/:path`, ({ params }) => {
         const { owner, path } = params;
 
@@ -169,9 +167,9 @@ export const handlers = [
     }),
 ];
 
-// ============================================
+
 // ERROR HANDLERS (for specific test cases)
-// ============================================
+
 
 export const errorHandlers = {
     searchRateLimit: http.get(`${GITHUB_API}/search/repositories`, () => {

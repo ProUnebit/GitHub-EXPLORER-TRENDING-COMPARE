@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { buildSearchQuery } from '@/lib/utils/query-builder';
 
-// ============================================
 // buildSearchQuery TESTS
-// ============================================
 
 describe('buildSearchQuery', () => {
     describe('basic query', () => {

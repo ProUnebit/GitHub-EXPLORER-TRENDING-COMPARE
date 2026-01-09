@@ -3,9 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SearchFilters } from '@/app/_components/SearchFilters';
 
-// ============================================
 // SearchFilters COMPONENT TESTS
-// ============================================
 
 describe('SearchFilters', () => {
     const mockOnLanguageChange = vi.fn();
@@ -24,9 +22,7 @@ describe('SearchFilters', () => {
         vi.clearAllMocks();
     });
 
-    // ============================================
     // BASIC RENDERING
-    // ============================================
 
     describe('rendering', () => {
         it('renders language filter label', () => {
@@ -52,9 +48,7 @@ describe('SearchFilters', () => {
         });
     });
 
-    // ============================================
     // LANGUAGE FILTER
-    // ============================================
 
     describe('language filter', () => {
         it('shows selected language value in select', () => {
@@ -83,9 +77,7 @@ describe('SearchFilters', () => {
         });
     });
 
-    // ============================================
     // STARS FILTER
-    // ============================================
 
     describe('stars filter', () => {
         it('shows selected stars value', () => {
@@ -112,9 +104,7 @@ describe('SearchFilters', () => {
         });
     });
 
-    // ============================================
     // ACTIVE FILTERS
-    // ============================================
 
     describe('active filters', () => {
         it('shows active filters text when filters applied', () => {
@@ -178,9 +168,7 @@ describe('SearchFilters', () => {
         });
     });
 
-    // ============================================
     // DISABLED STATE
-    // ============================================
 
     describe('disabled state', () => {
         it('disables language select when disabled', () => {
@@ -208,9 +196,7 @@ describe('SearchFilters', () => {
         });
     });
 
-    // ============================================
     // BOTH FILTERS
-    // ============================================
 
     describe('both filters active', () => {
         it('shows both filter badges', () => {

@@ -1,14 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { LANGUAGE_COLORS, getLanguageColor } from '@/lib/constants/language-colors';
 
-// ============================================
 // LANGUAGE COLORS TESTS
-// ============================================
 
 describe('LANGUAGE_COLORS', () => {
-    // ============================================
+
     // POPULAR LANGUAGES
-    // ============================================
 
     describe('popular languages', () => {
         it('has JavaScript color', () => {
@@ -36,9 +33,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // C FAMILY LANGUAGES
-    // ============================================
 
     describe('C family languages', () => {
         it('has C color', () => {
@@ -54,9 +49,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // FUNCTIONAL LANGUAGES
-    // ============================================
 
     describe('functional languages', () => {
         it('has F# color', () => {
@@ -84,9 +77,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // MOBILE LANGUAGES
-    // ============================================
 
     describe('mobile languages', () => {
         it('has Swift color', () => {
@@ -106,9 +97,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // WEB LANGUAGES
-    // ============================================
 
     describe('web languages', () => {
         it('has Ruby color', () => {
@@ -132,9 +121,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // FALLBACK
-    // ============================================
 
     describe('fallback', () => {
         it('has Unknown fallback color', () => {
@@ -142,9 +129,7 @@ describe('LANGUAGE_COLORS', () => {
         });
     });
 
-    // ============================================
     // ALL COLORS ARE VALID HEX
-    // ============================================
 
     describe('color format validation', () => {
         it('all colors are valid hex codes', () => {
@@ -157,14 +142,11 @@ describe('LANGUAGE_COLORS', () => {
     });
 });
 
-// ============================================
 // getLanguageColor FUNCTION TESTS
-// ============================================
 
 describe('getLanguageColor', () => {
-    // ============================================
+
     // KNOWN LANGUAGES
-    // ============================================
 
     describe('known languages', () => {
         it('returns correct color for JavaScript', () => {
@@ -188,9 +170,7 @@ describe('getLanguageColor', () => {
         });
     });
 
-    // ============================================
     // UNKNOWN LANGUAGES
-    // ============================================
 
     describe('unknown languages', () => {
         it('returns fallback color for unknown language', () => {
@@ -210,9 +190,7 @@ describe('getLanguageColor', () => {
         });
     });
 
-    // ============================================
     // CASE SENSITIVITY
-    // ============================================
 
     describe('case sensitivity', () => {
         it('is case sensitive - lowercase does not match', () => {

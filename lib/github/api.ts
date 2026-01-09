@@ -13,13 +13,7 @@ import type {
     IssueContributor,
     IssueTimelineData,
 } from './types';
-import { 
-    GitHubAPIError, 
-    RateLimitError, 
-    NotFoundError,
-    parseGitHubError,
-    NetworkError 
-} from '@/lib/errors';
+import { parseGitHubError } from '@/lib/errors';
 import { fetchWithRetry } from '@/lib/utils/fetch-with-retry';
 
 const GITHUB_API_BASE = 'https://api.github.com';
@@ -38,9 +32,9 @@ function getHeaders(): HeadersInit {
     return headers;
 }
 
-// ============================================
+
 // HELPER: ОБРАБОТКА ОШИБОК
-// ============================================
+
 /**
  * Обрабатывает ответ от GitHub API и бросает типизированные ошибки
  * 
@@ -53,7 +47,6 @@ async function handleResponse<T>(
     endpoint: string = 'unknown'
 ): Promise<T> {
     if (!response.ok) {
-        // ✅ ИСПОЛЬЗУЕМ НОВЫЙ ПАРСЕР ОШИБОК
         const error = await parseGitHubError(response, endpoint);
         throw error;
     }
@@ -84,7 +77,6 @@ export async function searchRepositories(
         page: page.toString(),
     });
 
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry вместо обычного fetch
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/search/repositories?${searchParams}`,
         {
@@ -108,11 +100,10 @@ export async function getRepository(
 ): Promise<GitHubRepo> {
     const endpoint = `${GITHUB_API_BASE}/repos/${owner}/${repo}`;
     
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
     const response = await fetchWithRetry(endpoint, {
         headers: getHeaders(),
         next: {
-            revalidate: CACHE.STATIC, // 1 час
+            revalidate: CACHE.STATIC,
         },
         retries: 3,
     });
@@ -128,7 +119,7 @@ export async function getContributors(
     repo: string,
     perPage: number = PAGINATION.CONTRIBUTORS_DISPLAY
 ): Promise<GitHubContributor[]> {
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/contributors?per_page=${perPage}`,
         {
@@ -150,7 +141,7 @@ export async function getLanguages(
     owner: string,
     repo: string
 ): Promise<GitHubLanguages> {
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/languages`,
         {
@@ -173,7 +164,7 @@ export async function getCommits(
     repo: string,
     perPage: number = PAGINATION.COMMITS_LIMIT
 ): Promise<GitHubCommit[]> {
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/commits?per_page=${perPage}`,
         {
@@ -255,7 +246,6 @@ export async function searchRepositoriesClient(
         Accept: 'application/vnd.github.v3+json',
     };
 
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry на клиенте
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/search/repositories?${searchParams}`,
         {
@@ -284,20 +274,20 @@ export async function getRepoFile(
     path: string
 ): Promise<string | null> {
     try {
-        // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+
         const response = await fetchWithRetry(
             `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${path}`,
             {
                 headers: getHeaders(),
                 next: {
-                    revalidate: CACHE.STATIC, // 1 час
+                    revalidate: CACHE.STATIC, 
                 },
                 retries: 2, // Меньше попыток для file fetch
             }
         );
 
         if (!response.ok) {
-            return null; // Файл не найден
+            return null; 
         }
 
         const data = await response.json();
@@ -339,9 +329,8 @@ export async function getPackageJson(
     }
 }
 
-// ============================================
+
 // ISSUES API
-// ============================================
 
 /**
  * Получить issues репозитория
@@ -355,13 +344,13 @@ export async function getIssues(
     state: 'open' | 'closed' | 'all' = 'all',
     perPage: number = PAGINATION.ISSUES_DEFAULT
 ): Promise<GitHubIssue[]> {
-    // ✅ ИСПОЛЬЗУЕМ fetchWithRetry
+
     const response = await fetchWithRetry(
         `${GITHUB_API_BASE}/repos/${owner}/${repo}/issues?state=${state}&per_page=${perPage}&sort=created&direction=desc`,
         {
             headers: getHeaders(),
             next: {
-                revalidate: CACHE.DYNAMIC, // 5 минут
+                revalidate: CACHE.DYNAMIC,
             },
             retries: 3,
         }

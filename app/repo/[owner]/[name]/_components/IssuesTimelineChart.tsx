@@ -1,13 +1,5 @@
 'use client';
 
-/**
- * ============================================
- * ISSUES TIMELINE CHART
- * ============================================
- *
- * График динамики issues за последние 6 месяцев
- */
-
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -24,9 +16,6 @@ import {
 import type { IssueTimelineData } from '@/lib/github/types';
 import { useTheme } from 'next-themes';
 
-// ============================================
-// REGISTER CHART.JS COMPONENTS
-// ============================================
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -38,16 +27,10 @@ ChartJS.register(
     Filler
 );
 
-// ============================================
-// TYPES
-// ============================================
 type IssuesTimelineChartProps = {
     timeline: IssueTimelineData[];
 };
 
-// ============================================
-// COMPONENT
-// ============================================
 export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
@@ -59,7 +42,6 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
         return date.toLocaleDateString('en-US', { month: 'short' });
     });
 
-    // Data для графика
     const data = {
         labels,
         datasets: [
@@ -88,9 +70,6 @@ export function IssuesTimelineChart({ timeline }: IssuesTimelineChartProps) {
         ],
     };
 
-    // ============================================
-    // CHART OPTIONS - ПРАВИЛЬНАЯ ТИПИЗАЦИЯ
-    // ============================================
     const options: ChartOptions<'line'> = {
         responsive: true,
         maintainAspectRatio: false,

@@ -1,19 +1,6 @@
-/**
- * ============================================
- * UI CONFIGURATION
- * ============================================
- * 
- * Конфигурация UI элементов и визуализаций
- * 
- * ПОЧЕМУ ЗДЕСЬ:
- * - Легко менять UI константы
- * - Консистентность дизайна
- * - Один источник правды для UI значений
- */
 
-// ============================================
 // CHARTS & VISUALIZATIONS
-// ============================================
+
 export const CHARTS = {
     /** Количество месяцев для Issues Timeline */
     TIMELINE_MONTHS: 6,
@@ -28,9 +15,9 @@ export const CHARTS = {
     TOP_CONTRIBUTORS_COUNT: 5,
 } as const;
 
-// ============================================
+
 // TABLES & LISTS
-// ============================================
+
 export const TABLES = {
     /** Количество строк в таблице по умолчанию */
     DEFAULT_PAGE_SIZE: 10,
@@ -39,9 +26,9 @@ export const TABLES = {
     PAGE_SIZE_OPTIONS: [10, 25, 50, 100] as const,
 } as const;
 
-// ============================================
+
 // THRESHOLDS
-// ============================================
+
 export const THRESHOLDS = {
     /** Порог для предупреждения (open issues %) */
     ISSUES_WARNING_PERCENT: 25,
@@ -50,9 +37,9 @@ export const THRESHOLDS = {
     ISSUES_CRITICAL_PERCENT: 50,
 } as const;
 
-// ============================================
+
 // TRUNCATION
-// ============================================
+
 export const TRUNCATE = {
     /** Максимальная длина commit message в таблице */
     COMMIT_MESSAGE_LENGTH: 60,
@@ -64,9 +51,9 @@ export const TRUNCATE = {
     ISSUE_TITLE_LENGTH: 80,
 } as const;
 
-// ============================================
+
 // EXPORT TYPES
-// ============================================
+
 export type ChartsConfig = typeof CHARTS;
 export type TablesConfig = typeof TABLES;
 export type ThresholdsConfig = typeof THRESHOLDS;

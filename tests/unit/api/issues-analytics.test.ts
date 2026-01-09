@@ -1,5 +1,3 @@
-// tests/unit/api/issues-analytics.test.ts
-
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { GitHubIssue } from '@/lib/github/types';
 

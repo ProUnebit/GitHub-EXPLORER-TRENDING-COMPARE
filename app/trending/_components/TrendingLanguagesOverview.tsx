@@ -11,9 +11,6 @@ type TrendingLanguagesOverviewProps = {
     repos: GitHubRepo[];
 };
 
-// ============================================
-// ANIMATION VARIANTS
-// ============================================
 const cardVariants: Variants = {
     hidden: {
         opacity: 0,
@@ -35,7 +32,7 @@ const badgeVariants = {
         opacity: 1,
         scale: 1,
         transition: {
-            delay: 0.3 + index * 0.05, // Начинаем после появления card
+            delay: 0.3 + index * 0.05,
             duration: 0.3,
         },
     }),
@@ -44,12 +41,9 @@ const badgeVariants = {
 export function TrendingLanguagesOverview({
     repos,
 }: TrendingLanguagesOverviewProps) {
-    // ============================================
-    // AGGREGATE LANGUAGES (улучшенная версия)
-    // ============================================
+
     const languageCounts = repos.reduce(
         (acc, repo) => {
-            // ВАРИАНТ A: Игнорируем репозитории без языка
             if (!repo.language) return acc;
 
             const lang = repo.language;
@@ -59,9 +53,6 @@ export function TrendingLanguagesOverview({
         {} as Record<string, number>
     );
 
-    // ============================================
-    // CALCULATE STATS
-    // ============================================
     // Считаем total только от репозиториев С языком (для точных процентов)
     const totalWithLanguage = Object.values(languageCounts).reduce(
         (sum, count) => sum + count,
@@ -79,7 +70,6 @@ export function TrendingLanguagesOverview({
     // Берем топ-10
     languageStats = languageStats.slice(0, 15);
 
-    // Edge case: нет языков
     if (languageStats.length === 0) {
         return null;
     }

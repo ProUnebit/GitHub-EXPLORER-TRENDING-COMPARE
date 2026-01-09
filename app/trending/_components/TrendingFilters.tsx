@@ -7,16 +7,6 @@ import { Button } from '@/components/ui/button';
 import { LoaderPinwheel, X, Check } from 'lucide-react';
 import { getLanguageColor } from '@/lib/constants/language-colors';
 
-// ============================================
-// TRENDING FILTERS - Client Component
-// ============================================
-// Управляет URL через router.push
-// Использует useTransition для loading state
-//
-// Улучшения:
-// - Локальный state для отслеживания кликнутой кнопки
-// - Лоудер показывается на НОВОЙ кнопке (не старой)
-// - Более очевидная визуализация активного состояния
 
 type Since = 'daily' | 'weekly' | 'monthly' | 'year';
 
@@ -61,10 +51,6 @@ export function TrendingFilters({
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
 
-    // ============================================
-    // LOCAL STATE - отслеживаем какую кнопку кликнули
-    // ============================================
-    // Это решает проблему с лоудером на старой кнопке
     const [pendingLanguage, setPendingLanguage] = useState<string | null>(null);
 
     const updateFilters = (updates: {
@@ -93,9 +79,6 @@ export function TrendingFilters({
 
     return (
         <div className="space-y-6">
-            {/* ============================================
-          TIME RANGE SELECTOR
-          ============================================ */}
             <div className="space-y-2">
                 <label className="text-sm font-medium">Time Range</label>
                 <Tabs
@@ -139,9 +122,6 @@ export function TrendingFilters({
                 </Tabs>
             </div>
 
-            {/* ============================================
-          LANGUAGE FILTER
-          ============================================ */}
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <label className="text-sm font-medium">Language</label>
@@ -168,7 +148,6 @@ export function TrendingFilters({
                             isPending &&
                             pendingLanguage?.toLowerCase() ===
                                 language.toLowerCase();
-                        // const colorLanguage = getLanguageColor(language);
                         const backgroundColorLanguage = `rgb(from ${getLanguageColor(language)} r g b / 0.25)`;
 
                         return (
@@ -185,7 +164,6 @@ export function TrendingFilters({
                                 }
                                 style={{ backgroundColor: backgroundColorLanguage }}
                             >
-                                {/* Icon слева */}
                                 {isLoading ? (
                                     <LoaderPinwheel className="mr-2 h-3 w-3 animate-spin text-teal-600 dark:text-amber-300/80" />
                                 ) : isActive ? (

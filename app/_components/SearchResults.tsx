@@ -6,8 +6,8 @@ import { buildSearchQuery } from '@/lib/utils/query-builder';
 type SearchResultsProps = {
     query: string;
     sort?: string;
-    language?: string; // ← Новый параметр
-    minStars?: string; // ← Новый параметр
+    language?: string;
+    minStars?: string;
 };
 
 export async function SearchResults({
@@ -16,9 +16,6 @@ export async function SearchResults({
     language,
     minStars,
 }: SearchResultsProps) {
-    // ============================================
-    // BUILD QUERY WITH FILTERS
-    // ============================================
     const searchQuery = buildSearchQuery({ query, language, minStars });
 
     const searchParams: SearchParams = {
@@ -31,7 +28,6 @@ export async function SearchResults({
 
     const data = await searchRepositories(searchParams);
 
-    // Edge case: нет результатов
     if (data.total_count === 0) {
         return (
             <div className="py-12 text-center">
@@ -47,11 +43,10 @@ export async function SearchResults({
         );
     }
 
-    // Передаём в Client Component (фильтры нужны для infinite scroll)
     return (
         <SearchResultsClient
             initialRepos={data.items}
-            query={searchQuery} // ← Полный query с фильтрами
+            query={searchQuery}
             sort={sort}
             totalCount={data.total_count}
         />

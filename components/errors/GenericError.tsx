@@ -1,18 +1,3 @@
-// components/errors/GenericError.tsx
-
-/**
- * ============================================
- * GENERIC ERROR UI
- * ============================================
- * 
- * Показывается для других типов ошибок
- * 
- * Features:
- * - Generic error message
- * - Technical details (collapsed by default)
- * - Retry and back buttons
- */
-
 'use client';
 
 import { useState } from 'react';

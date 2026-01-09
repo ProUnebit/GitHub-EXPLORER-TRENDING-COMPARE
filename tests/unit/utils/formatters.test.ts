@@ -7,9 +7,7 @@ import {
     calculateLanguagePercentages,
 } from '@/lib/utils/formatters';
 
-// ============================================
 // formatNumber TESTS
-// ============================================
 
 describe('formatNumber', () => {
     describe('small numbers (< 1000)', () => {
@@ -55,9 +53,7 @@ describe('formatNumber', () => {
     });
 });
 
-// ============================================
 // formatRelativeTime TESTS
-// ============================================
 
 describe('formatRelativeTime', () => {
     it('returns "just now" for current time', () => {
@@ -148,9 +144,7 @@ describe('formatRelativeTime', () => {
     });
 });
 
-// ============================================
 // formatDate TESTS
-// ============================================
 
 describe('formatDate', () => {
     it('formats ISO date string to readable format', () => {
@@ -173,9 +167,7 @@ describe('formatDate', () => {
     });
 });
 
-// ============================================
 // parseRepoFullName TESTS
-// ============================================
 
 describe('parseRepoFullName', () => {
     it('parses owner/repo format correctly', () => {
@@ -193,9 +185,7 @@ describe('parseRepoFullName', () => {
     });
 });
 
-// ============================================
 // calculateLanguagePercentages TESTS
-// ============================================
 
 describe('calculateLanguagePercentages', () => {
     it('calculates percentages correctly', () => {

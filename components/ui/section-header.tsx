@@ -8,16 +8,6 @@ type SectionHeaderProps = {
     className?: string;
 };
 
-/**
- * Переиспользуемый компонент для заголовков секций
- * 
- * Использование:
- * <SectionHeader 
- *   icon={MessageSquareText} 
- *   title="Issues Analytics"
- *   subtitle="Last 6 months" 
- * />
- */
 export function SectionHeader({ 
     icon: Icon, 
     title, 

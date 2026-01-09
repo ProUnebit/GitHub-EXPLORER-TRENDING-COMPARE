@@ -1,14 +1,6 @@
-// ============================================
-// LANGUAGE COLORS PALETTE
-// ============================================
+
 // Официальные цвета языков программирования от GitHub
 // Source: https://github.com/ozh/github-colors
-//
-// Используется в:
-// - TrendingCard (Circle icon)
-// - LanguageChartClient (Doughnut chart)
-// - RepoCard (Language indicator)
-// - ComparisonTable (Language badges)
 
 export const LANGUAGE_COLORS: Record<string, string> = {
     // Popular languages

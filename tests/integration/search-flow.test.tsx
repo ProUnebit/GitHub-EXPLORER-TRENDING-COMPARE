@@ -3,9 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SearchInput } from '@/components/SearchInput';
 
-// ============================================
+
 // SEARCH FLOW INTEGRATION TESTS
-// ============================================
 
 // Override the default mock for these tests
 const mockPush = vi.fn();
@@ -25,9 +24,8 @@ describe('Search Flow Integration', () => {
         vi.clearAllMocks();
     });
 
-    // ============================================
+
     // BASIC SEARCH
-    // ============================================
 
     describe('basic search', () => {
         it('renders search input', () => {
@@ -71,9 +69,7 @@ describe('Search Flow Integration', () => {
         });
     });
 
-    // ============================================
     // SEARCH SUBMISSION
-    // ============================================
 
     describe('search submission', () => {
         it('calls router.push on form submit', async () => {
@@ -121,9 +117,7 @@ describe('Search Flow Integration', () => {
         });
     });
 
-    // ============================================
     // FILTERS IN URL
-    // ============================================
 
     describe('filters in URL', () => {
         it('includes language filter when selected', async () => {
@@ -210,9 +204,7 @@ describe('Search Flow Integration', () => {
         });
     });
 
-    // ============================================
     // CLEAR FILTERS
-    // ============================================
 
     describe('clear filters', () => {
         it('shows Clear Filters button when filters active', async () => {

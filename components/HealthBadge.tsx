@@ -1,15 +1,9 @@
 import type { GitHubRepo } from '@/lib/github/types';
 import { calculateHealthScore, getHealthBadge } from '@/lib/utils/health-score';
 
-// ============================================
-// HEALTH BADGE - Compact version для карточек
-// ============================================
-// Маленький badge с emoji и оценкой
-// Используется в RepoCard и TrendingCard
-
 type HealthBadgeProps = {
     repo: GitHubRepo;
-    showLabel?: boolean; // Показывать ли текстовый label
+    showLabel?: boolean;
 };
 
 export function HealthBadge({ repo, showLabel = false }: HealthBadgeProps) {

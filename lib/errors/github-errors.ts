@@ -1,22 +1,5 @@
-// lib/errors/github-errors.ts
-
-/**
- * ============================================
- * CUSTOM ERROR CLASSES
- * ============================================
- * 
- * Типизированные ошибки для GitHub API
- * 
- * Зачем нужно:
- * - Различать типы ошибок (404, 403, 5xx)
- * - Показывать правильные UI messages
- * - Логировать structured errors
- * - Retry logic для определенных ошибок
- */
-
-// ============================================
 // BASE GITHUB API ERROR
-// ============================================
+
 export class GitHubAPIError extends Error {
     constructor(
         message: string,
@@ -67,9 +50,9 @@ export class GitHubAPIError extends Error {
     }
 }
 
-// ============================================
+
 // RATE LIMIT ERROR (403)
-// ============================================
+
 export class RateLimitError extends GitHubAPIError {
     constructor(
         public resetAt: Date,
@@ -93,9 +76,9 @@ export class RateLimitError extends GitHubAPIError {
     }
 }
 
-// ============================================
+
 // NOT FOUND ERROR (404)
-// ============================================
+
 export class NotFoundError extends GitHubAPIError {
     constructor(
         public resourceType: 'repository' | 'user' | 'file',
@@ -113,9 +96,9 @@ export class NotFoundError extends GitHubAPIError {
     }
 }
 
-// ============================================
+
 // VALIDATION ERROR (422)
-// ============================================
+
 export class ValidationError extends GitHubAPIError {
     constructor(
         public validationErrors: string[],
@@ -131,9 +114,9 @@ export class ValidationError extends GitHubAPIError {
     }
 }
 
-// ============================================
+
 // NETWORK ERROR (connection issues)
-// ============================================
+
 export class NetworkError extends Error {
     constructor(
         message: string,
@@ -152,9 +135,9 @@ export class NetworkError extends Error {
     }
 }
 
-// ============================================
+
 // TYPE GUARDS
-// ============================================
+
 export function isGitHubAPIError(error: unknown): error is GitHubAPIError {
     return error instanceof GitHubAPIError;
 }
@@ -171,9 +154,9 @@ export function isNetworkError(error: unknown): error is NetworkError {
     return error instanceof NetworkError;
 }
 
-// ============================================
+
 // ERROR PARSER
-// ============================================
+
 /**
  * Парсит Response в typed error
  */
@@ -184,6 +167,7 @@ export async function parseGitHubError(
     const statusCode = response.status;
 
     // Try to parse error body
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let errorBody: any = {};
     try {
         errorBody = await response.json();
@@ -210,6 +194,7 @@ export async function parseGitHubError(
 
     // Validation Error (422)
     if (statusCode === 422 && errorBody.errors) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const errors = errorBody.errors.map((e: any) => e.message || e.code);
         return new ValidationError(errors, endpoint);
     }

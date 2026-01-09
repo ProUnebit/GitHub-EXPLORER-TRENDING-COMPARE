@@ -4,29 +4,12 @@ import Link from 'next/link';
 import { AlertCircle, Home, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// ============================================
-// ERROR BOUNDARY - для repo route
-// ============================================
-// Ловит все ошибки в этом route и ниже
-//
-// Типичные ошибки которые ловим:
-// - Repository not found (404)
-// - Rate limit exceeded (403)
-// - Network errors
-// - Ошибки в компонентах
-//
-// UX решение:
-// - Понятное сообщение об ошибке
-// - Кнопки для восстановления (Try again, Go home)
-// - Dev mode: показываем stack trace
-
 type ErrorProps = {
     error: Error & { digest?: string };
     reset: () => void;
 };
 
 export default function Error({ error, reset }: ErrorProps) {
-    // Проверяем тип ошибки
     const is404 =
         error.message.includes('404') || error.message.includes('Not Found');
     const isRateLimit =

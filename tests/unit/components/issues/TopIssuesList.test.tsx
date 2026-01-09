@@ -1,4 +1,3 @@
-// tests/unit/components/issues/TopIssuesList.test.tsx
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { TopIssuesList } from '@/app/repo/[owner]/[name]/_components/TopIssuesList';

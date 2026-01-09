@@ -1,24 +1,3 @@
-// app/repo/[owner]/[name]/_components/IssuesAnalytics.tsx
-
-/**
- * ============================================
- * ISSUES ANALYTICS
- * ============================================
- * 
- * Комплексная аналитика issues репозитория
- * 
- * Server Component:
- * - Получает данные на сервере
- * - Кешируется Next.js
- * - Передает данные в client components для интерактивности
- * 
- * Структура:
- * 1. Overview Cards - базовая статистика
- * 2. Timeline Chart - динамика open/closed issues
- * 3. Labels Distribution - популярные метки
- * 4. Top Issues - самые обсуждаемые
- */
-
 import { getIssuesAnalytics } from '@/lib/github/api';
 import { IssuesOverviewCards } from './IssuesOverviewCards';
 import { IssuesTimelineChart } from './IssuesTimelineChart';
@@ -28,29 +7,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SectionHeader } from '@/components/ui/section-header';
 import { MessageSquareText, Tags, ThermometerSun } from 'lucide-react';
 
-// ============================================
-// TYPES
-// ============================================
 type IssuesAnalyticsProps = {
     owner: string;
     name: string;
 };
 
-// ============================================
-// COMPONENT
-// ============================================
 export async function IssuesAnalytics({
     owner,
     name,
 }: IssuesAnalyticsProps) {
-    // Получаем аналитику на сервере
-    // ПОЧЕМУ ТАК: Server Component = SEO, кеширование, быстрая загрузка
     const analytics = await getIssuesAnalytics(owner, name);
 
-    // Если нет issues - не показываем секцию
-    if (analytics.total === 0) {
-        return null;
-    }
+    if (analytics.total === 0) return null;
 
     return (
         <Card className="bg-card dark:border-teal-900/60 overflow-hidden">
@@ -62,9 +30,6 @@ export async function IssuesAnalytics({
             </CardHeader>
 
             <CardContent className="space-y-6">
-                {/* ============================================ */}
-                {/* OVERVIEW CARDS - Базовая статистика */}
-                {/* ============================================ */}
                 <IssuesOverviewCards
                     total={analytics.total}
                     open={analytics.open}
@@ -73,10 +38,6 @@ export async function IssuesAnalytics({
                     avgResponseTime={analytics.avgResponseTime}
                 />
 
-                {/* ============================================ */}
-                {/* TIMELINE CHART - График динамики */}
-                {/* Client Component для интерактивности */}
-                {/* ============================================ */}
                 <div className="overflow-hidden">
                     <h3 className="mb-3 text-sm font-medium text-muted-foreground">
                         Issues Activity: <span className='text-teal-500'>Last 6 months</span>
@@ -84,10 +45,6 @@ export async function IssuesAnalytics({
                     <IssuesTimelineChart timeline={analytics.timeline} />
                 </div>
 
-                {/* ============================================ */}
-                {/* GRID: Labels + Top Issues */}
-                {/* На мобильных - 1 колонка, на desktop - 2 */}
-                {/* ============================================ */}
                 <div className="grid gap-6 md:grid-cols-2">
                     {/* Labels Distribution */}
                     {analytics.topLabels.length > 0 && (

@@ -76,6 +76,5 @@ export async function ComparisonView({ repos }: ComparisonViewProps) {
         );
     }
 
-    // Все репо загружены успешно - используем wrapper
     return <ComparisonExportWrapper repos={validRepos} />;
 }

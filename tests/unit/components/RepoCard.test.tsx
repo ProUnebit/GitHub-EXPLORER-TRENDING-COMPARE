@@ -3,14 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { RepoCard } from '@/app/_components/RepoCard';
 import { mockRepo, mockRepoNoDescription, mockRepoManyTopics } from '@/tests/mocks/fixtures';
 
-// ============================================
 // RepoCard COMPONENT TESTS
-// ============================================
 
 describe('RepoCard', () => {
-    // ============================================
+
     // BASIC RENDERING
-    // ============================================
 
     describe('basic rendering', () => {
         it('renders repository name in heading', () => {
@@ -36,9 +33,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // STATISTICS
-    // ============================================
 
     describe('statistics', () => {
         it('renders formatted star count', () => {
@@ -64,9 +59,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // LANGUAGE
-    // ============================================
 
     describe('language', () => {
         it('renders language when present', () => {
@@ -80,9 +73,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // TOPICS
-    // ============================================
 
     describe('topics', () => {
         it('renders topic badges', () => {
@@ -114,9 +105,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // NAVIGATION
-    // ============================================
 
     describe('navigation', () => {
         it('renders link to repository detail page', () => {
@@ -132,9 +121,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // RELATIVE TIME
-    // ============================================
 
     describe('relative time', () => {
         it('renders updated time', () => {
@@ -143,9 +130,7 @@ describe('RepoCard', () => {
         });
     });
 
-    // ============================================
     // HEALTH BADGE
-    // ============================================
 
     describe('health badge', () => {
         it('renders health badge component', () => {

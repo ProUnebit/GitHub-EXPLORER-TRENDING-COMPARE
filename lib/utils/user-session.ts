@@ -1,16 +1,13 @@
-// lib/utils/user-session.ts
-
 import { cookies } from 'next/headers';
 
-// ============================================
 // CONSTANTS
-// ============================================
+
 const USER_ID_COOKIE_NAME = 'github-explorer-user-id';
 const COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 год в секундах
 
-// ============================================
+
 // GET USER ID (READ ONLY)
-// ============================================
+
 /**
  * Получает userId из cookie (только чтение, без создания нового)
  *
@@ -34,17 +31,17 @@ export async function getUserId(): Promise<string> {
     return generateTempUserId();
 }
 
-// ============================================
+
 // GET OR CREATE USER ID (READ + WRITE)
-// ============================================
+
 /**
  * Получает или создает userId в cookie
  *
- * ⚠️ МОЖНО ИСПОЛЬЗОВАТЬ ТОЛЬКО В:
+ * МОЖНО ИСПОЛЬЗОВАТЬ ТОЛЬКО В:
  * - Server Actions ('use server' функции)
  * - Route Handlers (API routes)
  *
- * ❌ НЕЛЬЗЯ использовать в Server Components при рендеринге!
+ * НЕЛЬЗЯ использовать в Server Components при рендеринге!
  *
  * @returns Promise<string> - userId
  */
@@ -73,9 +70,9 @@ export async function getOrCreateUserId(): Promise<string> {
     return newUserId;
 }
 
-// ============================================
+
 // GENERATE UNIQUE USER ID
-// ============================================
+
 /**
  * Генерирует уникальный ID пользователя (постоянный)
  * Используется при создании cookie
@@ -87,9 +84,9 @@ function generateUserId(): string {
     return `user_${timestamp}_${random}`;
 }
 
-// ============================================
+
 // GENERATE TEMPORARY USER ID
-// ============================================
+
 /**
  * Генерирует временный ID для пользователей без cookie
  * Этот ID не сохраняется и меняется при каждой загрузке страницы
@@ -102,9 +99,9 @@ function generateTempUserId(): string {
     return `temp_${Date.now()}`;
 }
 
-// ============================================
+
 // CHECK IF USER EXISTS
-// ============================================
+
 /**
  * Проверяет есть ли у пользователя уже userId cookie
  */

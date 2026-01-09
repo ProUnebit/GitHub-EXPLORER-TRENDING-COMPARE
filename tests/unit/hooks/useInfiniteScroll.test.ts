@@ -3,9 +3,7 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
 import { mockRepo, mockRepo2 } from '@/tests/mocks/fixtures';
 
-// ============================================
 // useInfiniteScroll HOOK TESTS
-// ============================================
 
 describe('useInfiniteScroll', () => {
     const initialRepos = [mockRepo, mockRepo2];
@@ -21,9 +19,7 @@ describe('useInfiniteScroll', () => {
         vi.clearAllMocks();
     });
 
-    // ============================================
     // INITIALIZATION TESTS
-    // ============================================
 
     describe('initialization', () => {
         it('initializes with correct state', () => {
@@ -78,9 +74,7 @@ describe('useInfiniteScroll', () => {
         });
     });
 
-    // ============================================
     // LOAD MORE TESTS
-    // ============================================
 
     describe('loadMore', () => {
         it('loads next page successfully', async () => {
@@ -184,9 +178,7 @@ describe('useInfiniteScroll', () => {
         });
     });
 
-    // ============================================
     // CHANGE PER PAGE TESTS
-    // ============================================
 
     describe('changePerPage', () => {
         it('resets to first page', async () => {
@@ -268,9 +260,7 @@ describe('useInfiniteScroll', () => {
         });
     });
 
-    // ============================================
     // RETURNED VALUES TESTS
-    // ============================================
 
     describe('returned values', () => {
         it('returns all expected properties', () => {

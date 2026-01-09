@@ -1,18 +1,4 @@
-// components/MobileNav.tsx
-
 'use client';
-
-/**
- * ============================================
- * MOBILE NAVIGATION
- * ============================================
- *
- * Адаптивное мобильное меню с бургером
- *
- * Responsive breakpoints:
- * - Mobile: < 768px (показываем бургер)
- * - Desktop: >= 768px (показываем полное меню)
- */
 
 import { useState } from 'react';
 import {

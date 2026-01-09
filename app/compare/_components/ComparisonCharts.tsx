@@ -15,9 +15,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, ChartColumnIncreasing, CodeXml } from 'lucide-react';
 import { getLanguageColor } from '@/lib/constants/language-colors';
 
-// ============================================
-// CHART.JS SETUP
-// ============================================
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -26,20 +23,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-// ============================================
-// COMPARISON CHARTS - Client Component
-// ============================================
-// Визуальное сравнение метрик через графики
-//
-// Паттерн: Server passes data → Client renders visualization
-// - ComparisonView фетчит данные (Server)
-// - ComparisonCharts рендерит графики (Client)
-//
-// Графики:
-// - Основные метрики (Stars, Forks, Watchers)
-// - Топ языки программирования
-// - Активность (Contributors)
 
 type RepoData = {
     fullName: string;
@@ -54,7 +37,6 @@ type ComparisonChartsProps = {
     repos: RepoData[];
 };
 
-// Цвета для графиков (teal theme)
 const CHART_COLORS = [
     'rgba(20, 184, 166, 0.8)', // teal-500
     'rgba(59, 130, 246, 0.8)', // blue-500
@@ -70,9 +52,7 @@ const CHART_BORDER_COLORS = [
 ];
 
 export function ComparisonCharts({ repos }: ComparisonChartsProps) {
-    // ============================================
-    // PREPARE DATA
-    // ============================================
+
     const repoNames = repos.map((r) => r.name);
 
     // Main metrics data
@@ -81,15 +61,12 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
     const watchersData = repos.map((r) => r.repo.watchers_count);
     const contributorsData = repos.map((r) => r.contributors.length);
 
-    // Languages data - берем топ-5 языков от каждого репо
+    // Languages data
     const allLanguages = new Set<string>();
     repos.forEach((repo) => {
         Object.keys(repo.languages).forEach((lang) => allLanguages.add(lang));
     });
 
-    // ============================================
-    // CHART CONFIGURATIONS
-    // ============================================
     const mainMetricsChart = {
         labels: repoNames,
         datasets: [
@@ -137,7 +114,6 @@ export function ComparisonCharts({ repos }: ComparisonChartsProps) {
             legend: {
                 position: 'top' as const,
                 labels: {
-                    // color: '#FFFFFF',
                     font: {
                         size: 14,
                     },

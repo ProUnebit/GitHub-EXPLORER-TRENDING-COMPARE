@@ -1,13 +1,3 @@
-// lib/errors/index.ts
-
-/**
- * ============================================
- * ERRORS BARREL EXPORT
- * ============================================
- * 
- * Центральная точка экспорта всех error types
- */
-
 export {
     GitHubAPIError,
     RateLimitError,

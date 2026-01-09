@@ -6,9 +6,6 @@ import { TrendingUp, Star, Code2, GitFork } from 'lucide-react';
 import { formatNumber } from '@/lib/utils/formatters';
 import type { GitHubSearchResponse } from '@/lib/github/types';
 
-// ============================================
-// ANIMATION VARIANTS
-// ============================================
 const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -39,11 +36,8 @@ type Stat = {
     gradient: string;
 };
 
-// ============================================
-// CLIENT WRAPPER для анимации
-// ============================================
 export function QuickStatsClient({ data }: { data: GitHubSearchResponse }) {
-    // Calculate statistics
+
     const totalStars = data.items.reduce(
         (sum, repo) => sum + repo.stargazers_count,
         0

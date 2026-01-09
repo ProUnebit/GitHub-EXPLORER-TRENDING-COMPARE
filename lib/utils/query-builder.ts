@@ -1,6 +1,3 @@
-/**
- * Строит GitHub API query string с фильтрами
- */
 export function buildSearchQuery(params: {
     query: string;
     language?: string;

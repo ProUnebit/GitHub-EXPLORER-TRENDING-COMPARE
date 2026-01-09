@@ -1,9 +1,6 @@
-// app/feedback/_components/FeedbackForm.tsx
-
 'use client';
 
 import { useState, useTransition, useRef } from 'react'; // ← Добавили useRef
-// import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { RatingStars } from './RatingStars';
 import { Button } from '@/components/ui/button';
@@ -36,7 +33,6 @@ export function FeedbackForm({
     const [rating, setRating] = useState<Rating>(() => {
         if (!initialData?.rating) return 5;
 
-        // Конвертируем string в number, затем в Rating
         const numericRating =
             typeof initialData.rating === 'string'
                 ? parseFloat(initialData.rating)
@@ -46,9 +42,7 @@ export function FeedbackForm({
     });
 
     const [isPending, startTransition] = useTransition();
-    // const router = useRouter();
 
-    // ✅ ДОБАВЛЯЕМ REF для формы
     const formRef = useRef<HTMLFormElement>(null);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -97,7 +91,6 @@ export function FeedbackForm({
                             : 'Feedback updated successfully!'
                     );
 
-                    // ✅ ИСПОЛЬЗУЕМ REF вместо event.currentTarget
                     if (mode === 'create') {
                         formRef.current?.reset();
                         setRating(5);
@@ -130,13 +123,11 @@ export function FeedbackForm({
             </CardHeader>
 
             <CardContent>
-                {/* ✅ ДОБАВЛЯЕМ ref={formRef} */}
                 <form
                     ref={formRef}
                     onSubmit={handleSubmit}
                     className="space-y-6"
                 >
-                    {/* NAME INPUT */}
                     <div className="space-y-2">
                         <Label htmlFor="userName">Your Name *</Label>
                         <Input

@@ -90,9 +90,6 @@ export async function generateMetadata({
 export default async function RepoPage({ params }: PageProps) {
     const { owner, name } = await params;
 
-    // ============================================
-    // ✅ ERROR HANDLING
-    // ============================================
     try {
         // Получаем все данные параллельно для экспорта
         const [repo, contributors, languages, commits, issuesAnalytics, packageJson] = await Promise.all([
@@ -103,16 +100,9 @@ export default async function RepoPage({ params }: PageProps) {
             getIssuesAnalytics(owner, name),
             getPackageJson(owner, name),
         ]);
-
-        // ============================================
-        // SUCCESS PATH - RENDER REPO PAGE
-        // ============================================
         return renderRepoPage({ owner, name, repo, contributors, languages, commits, issuesAnalytics, packageJson });
         
     } catch (error) {
-        // ============================================
-        // ERROR PATH - RENDER ERROR UI
-        // ============================================
         console.error('Repository page error:', error);
 
         // Rate Limit Error
@@ -148,9 +138,6 @@ export default async function RepoPage({ params }: PageProps) {
     }
 }
 
-// ============================================
-// HELPER: RENDER SUCCESS PAGE
-// ============================================
 function renderRepoPage({
     owner,
     name,
@@ -241,7 +228,6 @@ function renderRepoPage({
                 />
                 <RepoStats repo={repo} />
 
-                {/* ROW 1: Health Score | Languages | Dependencies */}
                 <div className="grid gap-8 lg:grid-cols-3">
                     <HealthScoreCard repo={repo} />
                     <Suspense fallback={<RepoSkeleton.Chart />}>
@@ -252,24 +238,16 @@ function renderRepoPage({
                     </Suspense>
                 </div>
 
-                {/* Issues Analytics */}
                 <Suspense fallback={<RepoSkeleton.IssuesAnalytics />}>
                     <IssuesAnalytics owner={owner} name={name} />
                 </Suspense>
 
-                {/* ============================================ */}
-                {/* COMMUNITY & ACTIVITY */}
-                {/* Recent Commits: 2/3 ширины, Contributors: 1/3 */}
-                {/* ============================================ */}
                 <div className="grid gap-8 lg:grid-cols-3 lg:items-start">
-                    {/* Recent Commits - занимает 2 колонки */}
                     <div className="lg:col-span-2">
                         <Suspense fallback={<RepoSkeleton.Commits />}>
                             <RecentCommits owner={owner} name={name} />
                         </Suspense>
                     </div>
-                    
-                    {/* Contributors - занимает 1 колонку */}
                     <Suspense fallback={<RepoSkeleton.Contributors />}>
                         <ContributorsList owner={owner} name={name} />
                     </Suspense>

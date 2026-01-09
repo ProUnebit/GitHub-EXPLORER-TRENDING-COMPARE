@@ -4,9 +4,7 @@ import { afterEach, beforeAll, afterAll, vi } from 'vitest';
 import { server } from './mocks/server';
 import React from 'react';
 
-// ============================================
 // POLYFILLS FOR RADIX UI / TESTING
-// ============================================
 
 // PointerEvent polyfill
 class MockPointerEvent extends MouseEvent {
@@ -90,9 +88,7 @@ Object.defineProperty(window, 'matchMedia', {
     })),
 });
 
-// ============================================
 // NEXT.JS MOCKS
-// ============================================
 
 vi.mock('next/navigation', () => ({
     useRouter: () => ({
@@ -118,9 +114,7 @@ vi.mock('next-view-transitions', () => ({
     }),
 }));
 
-// ============================================
 // TOAST MOCK
-// ============================================
 
 vi.mock('sonner', () => ({
     toast: {
@@ -132,9 +126,8 @@ vi.mock('sonner', () => ({
     Toaster: () => null,
 }));
 
-// ============================================
+
 // MSW SERVER LIFECYCLE
-// ============================================
 
 beforeAll(() => {
     server.listen({ onUnhandledRequest: 'error' });

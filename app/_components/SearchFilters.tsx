@@ -13,17 +13,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { getLanguageColor } from '@/lib/constants/language-colors';
 
-// ============================================
-// SEARCH FILTERS - Client Component
-// ============================================
-// Фильтры для поиска с индикаторами и очисткой
-//
-// Features:
-// - Language dropdown
-// - Min Stars input
-// - Active filters badges
-// - Clear all button
-
 type SearchFiltersProps = {
     language: string;
     minStars: string;
@@ -33,7 +22,6 @@ type SearchFiltersProps = {
     disabled?: boolean;
 };
 
-// Популярные языки программирования
 const LANGUAGES = [
     { value: 'all', label: 'All Languages' },
     { value: 'javascript', label: 'JavaScript' },
@@ -81,10 +69,9 @@ export function SearchFilters({
     onClearFilters,
     disabled = false,
 }: SearchFiltersProps) {
-    // Проверяем есть ли активные фильтры
+
     const hasActiveFilters = language !== '' || minStars !== '';
 
-    // Получаем название языка для badge
     const languageLabel = LANGUAGES.find((l) => l.value === language)?.label;
 
     return (

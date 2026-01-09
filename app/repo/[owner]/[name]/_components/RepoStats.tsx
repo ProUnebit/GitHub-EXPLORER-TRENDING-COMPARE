@@ -3,14 +3,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import type { GitHubRepo } from '@/lib/github/types';
 import { formatNumber } from '@/lib/utils/formatters';
 
-// ============================================
-// REPO STATS - Server Component
-// ============================================
-// Показывает статистику репозитория
-//
-// Design pattern: Stat Cards Grid
-// Легко расширять новыми метриками
-
 type RepoStatsProps = {
     repo: GitHubRepo;
 };

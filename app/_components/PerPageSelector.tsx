@@ -8,20 +8,6 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 
-// ============================================
-// PER PAGE SELECTOR - Client Component
-// ============================================
-// Dropdown для выбора количества результатов на странице
-//
-// Функционал:
-// - Варианты: 20, 30, 50
-// - При изменении вызывает callback
-// - Визуально показывает текущий выбор
-//
-// Почему Client Component:
-// - Интерактивность (onChange)
-// - Select от shadcn требует 'use client'
-
 type PerPageSelectorProps = {
     value: number;
     onChange: (value: number) => void;

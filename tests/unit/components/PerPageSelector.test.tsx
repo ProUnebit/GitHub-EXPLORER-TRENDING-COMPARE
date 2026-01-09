@@ -3,9 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PerPageSelector } from '@/app/_components/PerPageSelector';
 
-// ============================================
 // PerPageSelector COMPONENT TESTS
-// ============================================
 
 describe('PerPageSelector', () => {
     const mockOnChange = vi.fn();
@@ -14,9 +12,7 @@ describe('PerPageSelector', () => {
         vi.clearAllMocks();
     });
 
-    // ============================================
     // BASIC RENDERING
-    // ============================================
 
     describe('rendering', () => {
         it('renders with current value', () => {
@@ -43,9 +39,7 @@ describe('PerPageSelector', () => {
         });
     });
 
-    // ============================================
     // OPTIONS
-    // ============================================
 
     describe('options', () => {
         it('shows all options when opened', async () => {
@@ -73,9 +67,7 @@ describe('PerPageSelector', () => {
         });
     });
 
-    // ============================================
     // SELECTION
-    // ============================================
 
     describe('selection', () => {
         it('calls onChange when option selected', async () => {
@@ -119,9 +111,7 @@ describe('PerPageSelector', () => {
         });
     });
 
-    // ============================================
     // DISABLED STATE
-    // ============================================
 
     describe('disabled state', () => {
         it('can be disabled', () => {

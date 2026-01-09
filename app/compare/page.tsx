@@ -4,23 +4,10 @@ import { ComparisonView } from './_components/ComparisonView';
 import { ComparisonSkeleton } from './_components/ComparisonSkeleton';
 import { ChartBarStacked  } from 'lucide-react'
 
-// ============================================
-// METADATA
-// ============================================
 export const metadata = {
     title: 'Compare Repositories - GitHub Explorer',
     description: 'Compare multiple GitHub repositories side-by-side',
 };
-
-// ============================================
-// COMPARE PAGE
-// ============================================
-// Паттерн: URL-driven comparison
-// - Selector изменяет URL
-// - Server читает URL и фетчит все репо параллельно
-// - Client рендерит графики
-//
-// URL format: /compare?repos=owner1/repo1,owner2/repo2
 
 type ComparePageProps = {
     searchParams: Promise<{

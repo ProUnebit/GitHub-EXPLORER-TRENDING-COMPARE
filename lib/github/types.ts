@@ -100,9 +100,9 @@ export type DependencyInfo = {
     type: 'production' | 'development' | 'peer' | 'optional';
 };
 
-// ============================================
+
 // ISSUES TYPES
-// ============================================
+
 export interface GitHubIssue {
     id: number;
     number: number;

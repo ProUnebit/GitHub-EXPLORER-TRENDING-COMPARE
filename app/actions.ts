@@ -1,4 +1,3 @@
-// app/actions.ts
 'use server';
 
 import { revalidatePath } from 'next/cache';
@@ -11,9 +10,7 @@ type ActionResponse<T> =
   | { success: true; data: T }
   | { success: false; error: string };
 
-// ============================================
-// CREATE FEEDBACK ACTION
-// ============================================
+
 export async function createFeedbackAction(
   formData: FormData
 ): Promise<ActionResponse<Feedback>> {
@@ -40,13 +37,11 @@ export async function createFeedbackAction(
       return { success: false, error: 'Feedback must be at least 10 characters' };
     }
     
-    // ✅ ОБНОВЛЯЕМ валидацию для половинок
     const rating = parseFloat(ratingStr);
     if (isNaN(rating) || rating < 0.5 || rating > 5) {
       return { success: false, error: 'Rating must be between 0.5 and 5' };
     }
     
-    // Проверяем что это валидный rating (1, 1.5, 2, 2.5, ...)
     const validRatings: Rating[] = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
     if (!validRatings.includes(rating as Rating)) {
       return { success: false, error: 'Invalid rating value' };
@@ -75,9 +70,7 @@ export async function createFeedbackAction(
     };
   }
 }
-// ============================================
-// UPDATE FEEDBACK ACTION
-// ============================================
+
 export async function updateFeedbackAction(
   feedbackId: number,
   formData: FormData
@@ -146,14 +139,11 @@ export async function updateFeedbackAction(
   }
 }
 
-// ============================================
-// DELETE FEEDBACK ACTION
-// ============================================
 export async function deleteFeedbackAction(
   feedbackId: number
 ): Promise<ActionResponse<void>> {
   try {
-    // ✅ Используем getOrCreateUserId() в Server Action
+    // getOrCreateUserId() в Server Action
     const userId = await getOrCreateUserId();
     
     const existingFeedback = await feedbackQueries.getFeedbackById(feedbackId);

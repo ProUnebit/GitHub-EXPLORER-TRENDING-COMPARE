@@ -1,41 +1,14 @@
-// app/repo/[owner]/[name]/_components/TopIssuesList.tsx
-
-/**
- * ============================================
- * TOP ISSUES LIST
- * ============================================
- * 
- * Список самых "горячих" issues
- * 
- * Сортировка по:
- * - Количество комментариев
- * - Количество реакций
- * 
- * Показывает:
- * - Номер и название issue
- * - Метки (labels)
- * - Комментарии + реакции
- * - Ссылка на GitHub
- * 
- * Server Component - статичные данные
- */
-
 import type { GitHubIssue } from '@/lib/github/types';
 import { Badge } from '@/components/ui/badge';
 import { MessageSquare, Heart, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
-// ============================================
-// TYPES
-// ============================================
 type TopIssuesListProps = {
     issues: GitHubIssue[];
 };
 
-// ============================================
-// HELPER: Get label color class
-// ============================================
-// ПОЧЕМУ ФУНКЦИЯ: GitHub дает hex, нужно определить светлый/темный для текста
+
+// GitHub дает hex, нужно определить светлый/темный для текста
 function getLabelTextColor(hexColor: string): string {
     // Убираем # если есть
     const hex = hexColor.replace('#', '');
@@ -52,9 +25,6 @@ function getLabelTextColor(hexColor: string): string {
     return brightness > 155 ? '#000000' : '#ffffff';
 }
 
-// ============================================
-// COMPONENT
-// ============================================
 export function TopIssuesList({ issues }: TopIssuesListProps) {
     if (issues.length === 0) {
         return (
@@ -72,9 +42,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                     className="group rounded-lg border bg-card p-3 transition-all hover:border-teal-400 dark:border-teal-900/60 bg-linear-to-br from-background to-muted/20
                          duration-200 hover:shadow-md"
                 >
-                    {/* ============================================ */}
                     {/* HEADER - Issue number + title */}
-                    {/* ============================================ */}
                     <div className="mb-2 flex items-start gap-2">
                         {/* Rank badge */}
                         <div className="shrink-0">
@@ -112,9 +80,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                         </div>
                     </div>
 
-                    {/* ============================================ */}
                     {/* LABELS */}
-                    {/* ============================================ */}
                     {issue.labels.length > 0 && (
                         <div className="mb-2 flex flex-wrap gap-1">
                             {issue.labels.slice(0, 3).map((label) => (
@@ -139,9 +105,7 @@ export function TopIssuesList({ issues }: TopIssuesListProps) {
                         </div>
                     )}
 
-                    {/* ============================================ */}
                     {/* STATS - Comments + Reactions */}
-                    {/* ============================================ */}
                     <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
                         {/* Comments */}
                         <div className="flex items-center gap-1 shrink-0">

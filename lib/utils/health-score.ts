@@ -8,14 +8,6 @@ import {
     GRADES,
 } from '@/config';
 
-// ============================================
-// HEALTH SCORE CALCULATOR
-// ============================================
-// Вычисляет "здоровье" репозитория (0-100)
-//
-// ТЕПЕРЬ ИСПОЛЬЗУЕТ КОНФИГУРАЦИЮ ИЗ @/config
-// Все константы можно менять в одном месте!
-
 export type HealthScoreBreakdown = {
     activity: number;
     community: number;
@@ -32,18 +24,18 @@ export type HealthBadge = {
     bgColor: string;
 };
 
-// ============================================
+
 // CALCULATE HEALTH SCORE
-// ============================================
+
 export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
     let activityScore = 0;
     let communityScore = 0;
     let documentationScore = 0;
     let maintenanceScore = 0;
 
-    // ============================================
-    // 1. ACTIVITY SCORE (используем ACTIVITY config)
-    // ============================================
+
+    // 1. ACTIVITY SCORE
+
     const daysSinceUpdate = Math.floor(
         (Date.now() - new Date(repo.updated_at).getTime()) /
             (1000 * 60 * 60 * 24)
@@ -59,9 +51,9 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
         activityScore = 0; // Заброшен
     }
 
-    // ============================================
-    // 2. COMMUNITY SCORE (используем COMMUNITY config)
-    // ============================================
+
+    // 2. COMMUNITY SCORE
+
     // Stars weight (0-15 points)
     const starsWeight = Math.min(
         repo.stargazers_count / COMMUNITY.STARS_DIVISOR,
@@ -76,9 +68,9 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
 
     communityScore = Math.round(starsWeight + forksWeight);
 
-    // ============================================
-    // 3. DOCUMENTATION SCORE (используем DOCUMENTATION config)
-    // ============================================
+
+    // 3. DOCUMENTATION SCORE
+
     if (repo.description) {
         documentationScore += DOCUMENTATION.DESCRIPTION_POINTS;
     }
@@ -91,9 +83,9 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
         documentationScore += DOCUMENTATION.LICENSE_POINTS;
     }
 
-    // ============================================
-    // 4. MAINTENANCE SCORE (используем MAINTENANCE config)
-    // ============================================
+
+    // 4. MAINTENANCE SCORE
+
     const issueRatio = repo.open_issues_count / (repo.stargazers_count || 1);
 
     if (issueRatio < MAINTENANCE.EXCELLENT_RATIO) {
@@ -106,9 +98,9 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
         maintenanceScore = MAINTENANCE.POOR_POINTS; // Плохо
     }
 
-    // ============================================
+
     // TOTAL
-    // ============================================
+
     const total =
         activityScore + communityScore + documentationScore + maintenanceScore;
 
@@ -121,9 +113,9 @@ export function calculateHealthScore(repo: GitHubRepo): HealthScoreBreakdown {
     };
 }
 
-// ============================================
+
 // GET HEALTH BADGE
-// ============================================
+
 export function getHealthBadge(score: number): HealthBadge {
     // Ищем подходящий grade в порядке убывания
     if (score >= GRADES.EXCELLENT.MIN_SCORE) {
@@ -156,7 +148,7 @@ export function getHealthBadge(score: number): HealthBadge {
         };
     }
 
-    // POOR (все что меньше FAIR.MIN_SCORE)
+    // POOR (что меньше FAIR.MIN_SCORE)
     return {
         emoji: GRADES.POOR.EMOJI,
         label: GRADES.POOR.LABEL,

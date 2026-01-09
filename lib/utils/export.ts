@@ -2,10 +2,6 @@ import jsPDF from 'jspdf';
 import Papa from 'papaparse';
 import { TRUNCATE } from '@/config';
 
-// ============================================
-// PDF EXPORT UTILITIES
-// ============================================
-
 /**
  * Экспорт сравнения репозиториев в PDF
  */
@@ -110,7 +106,7 @@ export function exportRepoStatsToPDF(data: {
     license: string;
     created: string;
     updated: string;
-    healthScore: { // ✅ Добавил
+    healthScore: {
         score: number;
         grade: string;
         factors: {
@@ -122,15 +118,15 @@ export function exportRepoStatsToPDF(data: {
     };
     contributors: Array<{ login: string; contributions: number }>;
     languages: Array<{ name: string; percentage: number }>;
-    recentCommits: Array<{ message: string; author: string; date: string }>; // ✅ Добавил
-    issuesAnalytics: { // ✅ Добавил
+    recentCommits: Array<{ message: string; author: string; date: string }>;
+    issuesAnalytics: { 
         total: number;
         open: number;
         closed: number;
         avgCloseTime: number;
         topLabels: Array<{ name: string; count: number; percentage: number }>;
     };
-    dependencies: { // ✅ Добавил
+    dependencies: {
         total: number;
         prod: number;
         dev: number;
@@ -223,9 +219,9 @@ export function exportRepoStatsToPDF(data: {
 
     yPos += 10;
 
-    // ============================================
-    // ✅ HEALTH SCORE SECTION
-    // ============================================
+
+    // HEALTH SCORE SECTION
+
     if (yPos > 230) {
         doc.addPage();
         yPos = 20;
@@ -252,9 +248,9 @@ export function exportRepoStatsToPDF(data: {
     doc.text(`  Documentation: ${data.healthScore.factors.documentation}/100`, 25, yPos);
     yPos += 10;
 
-    // ============================================
-    // ✅ DEPENDENCIES SECTION
-    // ============================================
+
+    // DEPENDENCIES SECTION
+
     if (data.dependencies) {
         if (yPos > 250) {
             doc.addPage();
@@ -279,9 +275,9 @@ export function exportRepoStatsToPDF(data: {
         yPos += 10;
     }
 
-    // ============================================
-    // ✅ ISSUES ANALYTICS SECTION
-    // ============================================
+
+    // ISSUES ANALYTICS SECTION
+
     if (yPos > 220) {
         doc.addPage();
         yPos = 20;
@@ -321,9 +317,9 @@ export function exportRepoStatsToPDF(data: {
 
     yPos += 10;
 
-    // ============================================
-    // ✅ RECENT COMMITS SECTION
-    // ============================================
+
+    // RECENT COMMITS SECTION
+
     if (yPos > 220) {
         doc.addPage();
         yPos = 20;
@@ -368,9 +364,8 @@ export function exportRepoStatsToPDF(data: {
     doc.save(`${data.owner}-${data.name}-stats-${Date.now()}.pdf`);
 }
 
-// ============================================
+
 // CSV EXPORT UTILITIES
-// ============================================
 
 /**
  * Экспорт trending репозиториев в CSV

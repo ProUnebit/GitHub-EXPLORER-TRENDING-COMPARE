@@ -3,14 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { HealthBadge } from '@/components/HealthBadge';
 import { mockRepo, mockRepoAbandoned, mockRepoMediumActivity } from '@/tests/mocks/fixtures';
 
-// ============================================
 // HealthBadge COMPONENT TESTS
-// ============================================
 
 describe('HealthBadge', () => {
-    // ============================================
+
     // BASIC RENDERING
-    // ============================================
 
     describe('rendering', () => {
         it('renders health score', () => {
@@ -33,9 +30,7 @@ describe('HealthBadge', () => {
         });
     });
 
-    // ============================================
     // SCORE DISPLAY
-    // ============================================
 
     describe('score display', () => {
         it('displays numeric score', () => {
@@ -52,9 +47,7 @@ describe('HealthBadge', () => {
         });
     });
 
-    // ============================================
     // SHOW LABEL OPTION
-    // ============================================
 
     describe('showLabel option', () => {
         it('does not show label by default', () => {
@@ -73,9 +66,7 @@ describe('HealthBadge', () => {
         });
     });
 
-    // ============================================
     // DIFFERENT HEALTH STATES
-    // ============================================
 
     describe('different health states', () => {
         it('shows healthy badge for active repo with high stars', () => {
@@ -100,9 +91,7 @@ describe('HealthBadge', () => {
         });
     });
 
-    // ============================================
     // TITLE ATTRIBUTE
-    // ============================================
 
     describe('title attribute', () => {
         it('includes score and label in title', () => {

@@ -1,22 +1,4 @@
-// app/feedback/_components/FeedbackCard.tsx
-
 'use client';
-
-/**
- * ============================================
- * FEEDBACK CARD COMPONENT
- * ============================================
- *
- * Карточка отдельного отзыва
- *
- * Возможности:
- * - Показывает рейтинг (звезды)
- * - Показывает имя, дату, контент
- * - Кнопки Edit/Delete (только для своих отзывов)
- * - Modal для редактирования
- * - Confirm dialog для удаления
- * - Badge "(edited)" если отредактирован
- */
 
 import { useState, useTransition } from 'react';
 import { formatRelativeTime } from '@/lib/utils/formatters';
@@ -31,39 +13,21 @@ import { toast } from 'sonner';
 import type { Feedback } from '@/db/schema';
 import { getGradientById } from '@/lib/utils/gradients';
 
-// ============================================
-// TYPES
-// ============================================
 type FeedbackCardProps = {
     feedback: Feedback;
-    isOwner: boolean; // Это отзыв текущего пользователя?
+    isOwner: boolean;
 };
 
-// ============================================
-// COMPONENT
-// ============================================
 export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
-    // ============================================
-    // STATE
-    // ============================================
+
     const [isEditing, setIsEditing] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isPending, startTransition] = useTransition();
 
     const gradient = getGradientById(feedback.id);
 
-    // ============================================
-    // HANDLERS
-    // ============================================
-
-    /**
-     * Обработчик удаления отзыва
-     */
     async function handleDelete() {
-        // Подтверждение удаления
-        const confirmed = window.confirm(
-            'Are you sure you want to delete your feedback? This action cannot be undone.'
-        );
+        const confirmed = window.confirm('Are you sure you want to delete your feedback? This action cannot be undone.');
 
         if (!confirmed) return;
 
@@ -87,31 +51,16 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
         });
     }
 
-    /**
-     * Обработчик успешного редактирования
-     */
     function handleEditSuccess() {
         setIsEditing(false);
         toast.success('Feedback updated!');
     }
 
-    // ============================================
-    // RENDER - EDIT MODE
-    // ============================================
     if (isEditing) {
         return (
             <div className="space-y-4">
                 {/* Close button */}
                 <div className="flex justify-end">
-                    {/* <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setIsEditing(false)}
-                    >
-                        <X className="h-4 w-4" />
-                        Cancel
-                    </Button> */}
-
                     <Button
                         variant="ghost"
                         size="sm"
@@ -133,15 +82,11 @@ export function FeedbackCard({ feedback, isOwner }: FeedbackCardProps) {
         );
     }
 
-    // ============================================
-    // RENDER - VIEW MODE
-    // ============================================
     return (
         <Card
             id={`feedback-${feedback.id}`}
             className={`group relative overflow-hidden border-none bg-linear-to-br ${gradient} backdrop-blur-lg transition-all duration-300 ${isDeleting ? 'pointer-events-none opacity-50' : ''} `}
         >
-            {/* ✅ HOVER OVERLAY - появляется при наведении */}
             <div className="absolute inset-0 -z-10 bg-linear-to-br from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
             <CardContent className="relative z-10 p-6">

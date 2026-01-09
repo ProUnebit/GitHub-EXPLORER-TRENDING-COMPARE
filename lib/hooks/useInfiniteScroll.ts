@@ -3,23 +3,6 @@ import { searchRepositoriesClient } from '@/lib/github/api';
 import type { GitHubRepo } from '@/lib/github/types';
 import { toast } from 'sonner';
 
-// ============================================
-// USE INFINITE SCROLL HOOK
-// ============================================
-// Custom hook для управления infinite scroll логикой
-//
-// Ответственность:
-// - Управление состоянием (repos, page, loading, hasMore)
-// - Загрузка следующей страницы
-// - Intersection Observer для автоподгрузки
-// - Error handling
-// - Дедупликация репозиториев
-//
-// Тестируемость:
-// - Изолированная логика
-// - Легко мокировать API
-// - Можно unit-тестировать
-
 type UseInfiniteScrollProps = {
     initialRepos: GitHubRepo[];
     query: string;
@@ -40,9 +23,9 @@ type UseInfiniteScrollReturn = {
     observerTarget: React.RefObject<HTMLDivElement | null>;
 };
 
-// ============================================
+
 // HELPER: Deduplicate Repos
-// ============================================
+
 // GitHub API иногда возвращает дубликаты на разных страницах
 // Фильтруем по уникальному id
 function deduplicateRepos(repos: GitHubRepo[]): GitHubRepo[] {
@@ -63,9 +46,6 @@ export function useInfiniteScroll({
     totalCount,
     initialPerPage = 30,
 }: UseInfiniteScrollProps): UseInfiniteScrollReturn {
-    // ============================================
-    // STATE
-    // ============================================
     const [repos, setRepos] = useState<GitHubRepo[]>(
         deduplicateRepos(initialRepos)
     );
@@ -80,9 +60,6 @@ export function useInfiniteScroll({
     // Ref для Intersection Observer
     const observerTarget = useRef<HTMLDivElement>(null);
 
-    // ============================================
-    // LOAD MORE FUNCTION
-    // ============================================
     // Загружает следующую страницу и добавляет к существующим
     const loadMore = useCallback(async () => {
         // Защита от дублирующихся запросов
@@ -120,9 +97,6 @@ export function useInfiniteScroll({
         }
     }, [isLoading, hasMore, page, query, sort, perPage]);
 
-    // ============================================
-    // CHANGE PER PAGE FUNCTION
-    // ============================================
     // При изменении per_page:
     // 1. Сбрасываем на первую страницу
     // 2. Очищаем репозитории
@@ -164,9 +138,7 @@ export function useInfiniteScroll({
         [perPage, query, sort]
     );
 
-    // ============================================
     // INTERSECTION OBSERVER
-    // ============================================
     // Автоматически загружает следующую страницу при скролле
     useEffect(() => {
         const target = observerTarget.current;
@@ -180,7 +152,6 @@ export function useInfiniteScroll({
                 }
             },
             {
-                // Триггер на 300px до конца
                 rootMargin: '300px',
                 threshold: 0.1,
             }
@@ -188,7 +159,6 @@ export function useInfiniteScroll({
 
         observer.observe(target);
 
-        // Cleanup
         return () => {
             observer.disconnect();
         };

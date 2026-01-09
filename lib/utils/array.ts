@@ -1,7 +1,3 @@
-/**
- * Удаляет дубликаты по id
- * Generic функция - работает с любыми объектами с id
- */
 export function deduplicateById<T extends { id: number | string }>(
     items: T[]
 ): T[] {

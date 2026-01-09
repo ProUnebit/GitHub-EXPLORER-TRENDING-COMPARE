@@ -19,12 +19,11 @@ export function ScrollToFeedbackButton({
                 block: 'center',
             });
 
-            // Добавляем highlight эффект (опционально)
             element.classList.add('ring-3', 'ring-teal-400');
 
             setTimeout(() => {
                 element.classList.remove('ring-3', 'ring-teal-400');
-            }, 2000); // Убираем highlight через 2 секунды
+            }, 2000);
         }
     };
 

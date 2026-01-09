@@ -1,18 +1,3 @@
-// components/errors/RateLimitError.tsx
-
-/**
- * ============================================
- * RATE LIMIT ERROR UI
- * ============================================
- * 
- * Показывается когда превышен лимит GitHub API (403)
- * 
- * Features:
- * - Countdown timer до reset
- * - Советы по получению токена
- * - Retry button
- */
-
 'use client';
 
 import { useEffect, useState } from 'react';

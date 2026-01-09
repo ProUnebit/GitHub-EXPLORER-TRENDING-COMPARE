@@ -10,18 +10,14 @@ import {
 } from '@/lib/utils/formatters';
 import { calculateHealthScore, getHealthBadge } from '@/lib/utils/health-score';
 
-// ============================================
-// REPO EXPORT BUTTON - Client Component
-// ============================================
-
 type RepoExportButtonProps = {
     repo: GitHubRepo;
     contributors: Array<{ login: string; contributions: number }>;
     languages: { [key: string]: number };
-    commits: GitHubCommit[]; // ✅ Добавил
-    issuesAnalytics: IssuesAnalytics; // ✅ Добавил
+    commits: GitHubCommit[];
+    issuesAnalytics: IssuesAnalytics;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    packageJson: any | null; // ✅ Добавил
+    packageJson: any | null;
 };
 
 export function RepoExportButton({
@@ -35,7 +31,7 @@ export function RepoExportButton({
     const handleExportPDF = () => {
         const languageData = calculateLanguagePercentages(languages);
         
-        // Рассчитываем Health Score
+        // Health Score
         const healthScoreBreakdown = calculateHealthScore(repo);
         const healthBadge = getHealthBadge(healthScoreBreakdown.total);
         
@@ -50,7 +46,7 @@ export function RepoExportButton({
             },
         };
 
-        // Подготавливаем данные dependencies
+        // данные dependencies
         const dependencies = packageJson
             ? {
                   total:
@@ -73,7 +69,7 @@ export function RepoExportButton({
             license: repo.license?.name || 'None',
             created: formatDate(repo.created_at),
             updated: formatRelativeTime(repo.updated_at),
-            healthScore, // ✅ Добавил
+            healthScore,
             contributors: contributors.slice(0, 10).map((c) => ({
                 login: c.login,
                 contributions: c.contributions,
@@ -82,19 +78,19 @@ export function RepoExportButton({
                 name: l.name,
                 percentage: l.percentage,
             })),
-            recentCommits: commits.slice(0, 5).map((c) => ({ // ✅ Добавил
-                message: c.commit.message.split('\n')[0], // Первая строка
+            recentCommits: commits.slice(0, 5).map((c) => ({
+                message: c.commit.message.split('\n')[0],
                 author: c.commit.author.name,
                 date: formatDate(c.commit.author.date),
             })),
-            issuesAnalytics: { // ✅ Добавил
+            issuesAnalytics: {
                 total: issuesAnalytics.total,
                 open: issuesAnalytics.open,
                 closed: issuesAnalytics.closed,
                 avgCloseTime: issuesAnalytics.avgCloseTime,
                 topLabels: issuesAnalytics.topLabels.slice(0, 5),
             },
-            dependencies, // ✅ Добавил
+            dependencies,
         };
 
         exportRepoStatsToPDF(exportData);

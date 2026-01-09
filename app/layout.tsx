@@ -11,7 +11,6 @@ import { MobileNav } from '@/components/MobileNav'; // ✅ Добавили
 import { ViewTransitions, Link } from 'next-view-transitions';
 import { ThemeOption } from '@/lib/constants/theme';
 import { InitialLoader } from '@/components/InitialLoader';
-// import { Logo } from '@/components/Logo';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -116,7 +115,7 @@ export default function RootLayout({
                     <link rel="dns-prefetch" href="https://api.github.com" />
                     <link rel="preconnect" href="https://api.github.com" />
 
-                    {/* Prefetch для avatars (если будут использоваться) */}
+                    {/* Prefetch для avatars */}
                     <link
                         rel="dns-prefetch"
                         href="https://avatars.githubusercontent.com"
@@ -133,7 +132,7 @@ export default function RootLayout({
                         <div className="relative flex min-h-screen flex-col">
                             <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b px-4 backdrop-blur-md">
                                 <div className="container mx-auto flex h-14 items-center justify-between">
-                                    {/* Mobile Navigation - показываем только на мобильных */}
+                                    {/* Mobile Navigation - только на мобильных */}
                                     <div className="flex items-center gap-3 md:hidden">
                                         <MobileNav />
                                         <Link href="/" className="flex items-center">
@@ -171,7 +170,7 @@ export default function RootLayout({
                                         </Link>
                                     </div>
 
-                                    {/* Theme Toggle - всегда видимый */}
+                                    {/* Theme Toggle */}
                                     <ThemeToggle />
                                 </div>
                             </header>

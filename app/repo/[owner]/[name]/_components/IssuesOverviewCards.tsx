@@ -1,27 +1,6 @@
-// app/repo/[owner]/[name]/_components/IssuesOverviewCards.tsx
-
-/**
- * ============================================
- * ISSUES OVERVIEW CARDS
- * ============================================
- * 
- * Карточки с базовой статистикой issues
- * 
- * Показывает:
- * - Total issues
- * - Open issues (%)
- * - Closed issues (%)
- * - Average close time
- * 
- * Server Component - статичные данные
- */
-
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Circle, Clock, BarChart3 } from 'lucide-react';
 
-// ============================================
-// TYPES
-// ============================================
 type IssuesOverviewCardsProps = {
     total: number;
     open: number;
@@ -30,9 +9,6 @@ type IssuesOverviewCardsProps = {
     avgResponseTime: number; // в часах
 };
 
-// ============================================
-// HELPER: Format time
-// ============================================
 function formatCloseTime(days: number): string {
     if (days < 1) {
         return `${Math.round(days * 24)}h`;
@@ -48,9 +24,6 @@ function formatCloseTime(days: number): string {
     return `${months}mo`;
 }
 
-// ============================================
-// COMPONENT
-// ============================================
 export function IssuesOverviewCards({
     total,
     open,
@@ -63,7 +36,7 @@ export function IssuesOverviewCards({
     const closedPercentage = total > 0 ? Math.round((closed / total) * 100) : 0;
 
     // Определяем "здоровье" проекта по проценту open issues
-    // ПОЧЕМУ ТАК: >20% open issues = много нерешенных проблем
+    // >20% open issues = много нерешенных проблем
     const healthStatus =
         openPercentage <= 15
             ? 'excellent'

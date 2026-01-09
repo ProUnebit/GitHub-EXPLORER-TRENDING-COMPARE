@@ -5,20 +5,6 @@ import { getContributors } from '@/lib/github/api';
 import { formatNumber } from '@/lib/utils/formatters';
 import { Crown } from 'lucide-react';
 
-// ============================================
-// CONTRIBUTORS LIST - Server Component
-// ============================================
-// Показывает топ контрибьюторов репозитория
-//
-// Паттерн: Server-side data fetching
-// - Fetch на сервере (кеширование автоматическое)
-// - Next.js Image для оптимизации аватаров
-// - Простой UI, без интерактивности
-//
-// Архитектурное решение:
-// - Оборачиваем в Suspense в page.tsx
-// - Если fetch медленный → показываем skeleton
-// - Не блокируем рендер всей страницы
 
 type ContributorsListProps = {
     owner: string;
@@ -26,15 +12,9 @@ type ContributorsListProps = {
 };
 
 export async function ContributorsList({ owner, name }: ContributorsListProps) {
-    // ============================================
-    // DATA FETCHING
-    // ============================================
-    // Топ-10 контрибьюторов
-    // GitHub API сортирует по количеству коммитов
 
     const contributors = await getContributors(owner, name, 10);
 
-    // Edge case: нет контрибьюторов
     if (contributors.length === 0) {
         return (
             <Card>

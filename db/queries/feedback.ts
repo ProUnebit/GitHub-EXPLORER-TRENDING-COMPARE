@@ -1,25 +1,11 @@
 import type { Rating } from '@/db/schema';
-
-/**
- * ============================================
- * FEEDBACK QUERIES
- * ============================================
- *
- * Централизованное место для всех запросов к таблице feedback
- *
- * Архитектурный паттерн: Repository Pattern
- * - Все SQL логика изолирована в одном месте
- * - Server Actions просто вызывают эти функции
- * - Легко тестировать и мокать
- */
-
 import { db } from '@/db';
 import { feedback, type Feedback, type NewFeedback } from '@/db/schema';
 import { eq, desc, sql } from 'drizzle-orm';
 
-// ============================================
+
 // GET ALL FEEDBACKS
-// ============================================
+
 /**
  * Получить все отзывы, отсортированные по дате создания (новые первые)
  *
@@ -32,9 +18,9 @@ export async function getAllFeedbacks(): Promise<Feedback[]> {
     return await db.select().from(feedback).orderBy(desc(feedback.createdAt)); // desc = descending (по убыванию)
 }
 
-// ============================================
+
 // GET FEEDBACK BY ID
-// ============================================
+
 /**
  * Получить конкретный отзыв по ID
  *
@@ -56,9 +42,9 @@ export async function getFeedbackById(
     return result[0]; // Возвращаем первый элемент или undefined
 }
 
-// ============================================
+
 // GET FEEDBACKS BY USER ID
-// ============================================
+
 /**
  * Получить все отзывы конкретного пользователя
  *
@@ -82,9 +68,9 @@ export async function getFeedbacksByUserId(
         .orderBy(desc(feedback.createdAt));
 }
 
-// ============================================
+
 // GET USER'S FEEDBACK (SINGLE)
-// ============================================
+
 /**
  * Получить отзыв пользователя (предполагаем что один пользователь = один отзыв)
  *
@@ -107,9 +93,9 @@ export async function getUserFeedback(
     return result[0];
 }
 
-// ============================================
+
 // GET AVERAGE RATING
-// ============================================
+
 /**
  * Получить средний рейтинг всех отзывов
  *
@@ -139,9 +125,9 @@ export async function getAverageRating(): Promise<number> {
     return Math.round(avg * 10) / 10;
 }
 
-// ============================================
+
 // GET RATING DISTRIBUTION
-// ============================================
+
 /**
  * Получить распределение рейтингов (сколько отзывов на каждую звезду)
  *
@@ -169,9 +155,9 @@ export async function getRatingDistribution(): Promise<
         .orderBy(sql`ROUND(${feedback.rating}) DESC`); 
 }
 
-// ============================================
+
 // GET TOTAL COUNT
-// ============================================
+
 /**
  * Получить общее количество отзывов
  *
@@ -190,9 +176,9 @@ export async function getFeedbackCount(): Promise<number> {
     return result[0]?.count ?? 0;
 }
 
-// ============================================
+
 // CREATE FEEDBACK
-// ============================================
+
 /**
  * Создать новый отзыв
  *
@@ -210,9 +196,9 @@ export async function createFeedback(data: NewFeedback): Promise<Feedback> {
     return result[0];
 }
 
-// ============================================
+
 // UPDATE FEEDBACK
-// ============================================
+
 /**
  * Обновить существующий отзыв
  *
@@ -256,9 +242,9 @@ export async function updateFeedback(
     return result[0];
 }
 
-// ============================================
+
 // DELETE FEEDBACK
-// ============================================
+
 /**
  * Удалить отзыв
  *
@@ -277,9 +263,9 @@ export async function deleteFeedback(id: number): Promise<boolean> {
     return result.length > 0; // Если вернулась хоть одна запись = удалено успешно
 }
 
-// ============================================
+
 // CHECK IF USER HAS FEEDBACK
-// ============================================
+
 /**
  * Проверить есть ли у пользователя уже отзыв
  *

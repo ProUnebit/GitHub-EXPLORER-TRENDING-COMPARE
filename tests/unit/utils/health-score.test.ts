@@ -2,9 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { calculateHealthScore, getHealthBadge } from '@/lib/utils/health-score';
 import type { GitHubRepo } from '@/lib/github/types';
 
-// ============================================
 // HELPER: Create repo with specific attributes
-// ============================================
 
 function createMockRepo(overrides: Partial<GitHubRepo> = {}): GitHubRepo {
     return {
@@ -43,9 +41,7 @@ function createMockRepo(overrides: Partial<GitHubRepo> = {}): GitHubRepo {
     };
 }
 
-// ============================================
 // calculateHealthScore TESTS
-// ============================================
 
 describe('calculateHealthScore', () => {
     describe('activity score (30 points max)', () => {
@@ -270,9 +266,7 @@ describe('calculateHealthScore', () => {
     });
 });
 
-// ============================================
 // getHealthBadge TESTS
-// ============================================
 
 describe('getHealthBadge', () => {
     describe('excellent (90+)', () => {
