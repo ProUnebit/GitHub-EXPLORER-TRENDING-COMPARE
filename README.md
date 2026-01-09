@@ -78,9 +78,9 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       <h3>🚀 Tech Stack</h3>
       <p><b>Core:</b></p>
       <ul>
-        <li><b>Next.js 16</b> — App Router & RSC</li>
-        <li><b>React 19</b> — Server Components</li>
-        <li><b>TypeScript 5</b> — Strict type safety</li>
+        <li><b>Next.js 16</b></li>
+        <li><b>React 19</b></li>
+        <li><b>TypeScript 5</b></li>
       </ul>
       <p><b>UI & Styling:</b></p>
       <ul>
