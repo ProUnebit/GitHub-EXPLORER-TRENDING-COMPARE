@@ -40,17 +40,17 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       </ul>
       <p><b>Repository Analytics:</b></p>
       <ul>
-        <li><b>Health Score</b> - Custom algorithm evaluating activity, community, maintenance, documentation</li>
-        <li><b>Issues Analytics</b> - Timeline charts, label distribution, hottest issues</li>
-        <li><b>Contributor Insights</b> - Top contributors, commit history</li>
-        <li><b>Language Statistics</b> - Distribution visualization</li>
-        <li><b>Dependency Analysis</b> - Production/dev dependencies</li>
+        <li><b>Health Score</b> — Custom algorithm evaluating activity, community, maintenance, documentation</li>
+        <li><b>Issues Analytics</b> — Timeline charts, label distribution, hottest issues</li>
+        <li><b>Contributor Insights</b> — Top contributors, commit history</li>
+        <li><b>Language Statistics</b> — Distribution visualization</li>
+        <li><b>Dependency Analysis</b> — Production/dev dependencies</li>
       </ul>
       <p><b>Trending Repositories:</b></p>
       <ul>
         <li><b>Daily, weekly, monthly, yearly trends</b></li>
         <li><b>Language-specific filtering</b></li>
-        <li><b>Contributor Insights</b> - Top contributors, commit history</li>
+        <li><b>Contributor Insights</b> — Top contributors, commit history</li>
         <li><b>Real-time GitHub data</b></li>
       </ul>
       <p><b>Repository Comparison:</b></p>
@@ -61,12 +61,12 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       </ul>
       <p><b>Export Capabilities:</b></p>
       <ul>
-        <li><b>PDF Export</b> - Comprehensive repository reports</li>
-        <li><b>CSV Export</b> - Trending data for analysis</li>
+        <li><b>PDF Export</b> — Comprehensive repository reports</li>
+        <li><b>CSV Export</b> — Trending data for analysis</li>
       </ul>
       <p><b>UX Enhancements:</b></p>
       <ul>
-        <li><b>View Transitions API</b> - Smooth, native-like navigation between pages</li>
+        <li><b>View Transitions API</b> — Smooth, native-like navigation between pages</li>
         <li><b>Seamless animations during route changes</b></li>
         <li><b>Enhanced perceived performance</b></li>
         <li><b>Modern browser API integration</b></li>
@@ -79,13 +79,13 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
       <h3>🚀 Tech Stack</h3>
       <p><b>Core:</b></p>
       <ul>
-        <li><b>Next.js v16.1.0</b></li>
-        <li><b>React v19.2.3</b></li>
-        <li><b>TypeScript v5.9.3</b></li>
+        <li><b>Next.js</b> — v16.1.0</li>
+        <li><b>React</b> — v19.2.3</li>
+        <li><b>TypeScript</b> — v5.9.3</li>
       </ul>
       <p><b>UI & Styling:</b></p>
       <ul>
-        <li><b>Tailwind CSS v4</b> — Utility-first styling</li>
+        <li><b>Tailwind CSS 4</b> — Utility-first styling</li>
         <li><b>Radix UI</b> — Accessible primitives</li>
         <li><b>Framer Motion</b> — Smooth animations</li>
         <li><b>View Transitions API</b> — Native-like page transitions</li>
