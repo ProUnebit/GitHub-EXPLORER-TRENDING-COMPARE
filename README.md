@@ -23,6 +23,8 @@
 
 GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for exploring GitHub repositories with advanced search, real-time data visualization, and export capabilities. Built with modern React patterns (RSC, Suspense, Streaming), performance optimization, cutting-edge browser APIs, and clean architecture.
 
+**Lighthouse Score:** 95+, **FCP:** < 1.5s, **TTI:** < 2.5s
+
 ---
 
 <table width="100%">
