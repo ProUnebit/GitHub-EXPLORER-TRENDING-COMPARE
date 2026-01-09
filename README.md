@@ -70,6 +70,7 @@ GitHub Explorer | Trending | Compare is a comprehensive analytics dashboard for 
         <li><b>Seamless animations during route changes</b></li>
         <li><b>Enhanced perceived performance</b></li>
         <li><b>Modern browser API integration</b></li>
+        <li><b>Dark/Light theme mode</b></li>
         <li><b>Responsive Design</b></li>
       </ul>
       <p></p>
